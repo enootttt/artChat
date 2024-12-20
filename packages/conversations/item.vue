@@ -1,0 +1,96 @@
+<script setup lang="ts">
+import type { ItemProps } from './interface';
+
+import { computed, ref } from 'vue';
+
+import { ElButton, ElIcon, ElTooltip } from 'element-plus';
+
+import DropDown from '../dropdown/index.vue';
+import { useNamespace } from '../hooks/useNamespace';
+
+const props = withDefaults(defineProps<ItemProps>(), {
+  inEllipsis: true,
+  line: 1,
+});
+
+const emit = defineEmits(['click']);
+
+const opened = ref(false);
+
+const ns = useNamespace('conversations');
+
+const mergedCls = computed(() => [
+  props.className,
+  ns.b('item'),
+  { [ns.b('item-active')]: props.active && !props.info?.disabled },
+  { [ns.b('item-disabled')]: props.info?.disabled },
+]);
+
+const stopPropagation = (e: Event) => {
+  e.stopPropagation();
+};
+
+const textRef = ref<HTMLElement>();
+const textRefMouseenter = () => {
+  if (props.info?.disabled) {
+    opened.value = false;
+    return;
+  }
+  if (!textRef.value) return;
+  opened.value = !!(
+    textRef.value?.scrollWidth > textRef.value?.offsetWidth ||
+    textRef.value?.scrollHeight > textRef.value?.offsetHeight
+  );
+};
+
+const onInternalClick = () => {
+  if (!props.info?.disabled) {
+    emit('click', props.info);
+  }
+};
+</script>
+
+<template>
+  <ElTooltip
+    v-model:visible="opened"
+    :content="info?.label"
+    :disabled="inEllipsis && !opened"
+    :placement="direction === 'rtl' ? 'left' : 'right'"
+  >
+    <li :class="mergedCls" @click="onInternalClick">
+      <slot class="icon">
+        <div v-if="info!.icon" :class="ns.b('icon')">
+          <ElIcon v-if="typeof info!.icon === 'string'">
+            <component :is="info!.icon" />
+          </ElIcon>
+          <component :is="info!.icon" v-else />
+        </div>
+      </slot>
+      <div
+        ref="textRef"
+        :class="ns.b('label')"
+        :style="{ textOverflow: 'ellipsis', '-webkit-line-clamp': line }"
+        @mouseenter="textRefMouseenter"
+      >
+        <slot :item="info" name="label">
+          {{ info!.label }}
+        </slot>
+      </div>
+      <DropDown
+        v-if="menu && !info?.disabled"
+        :disabled="info?.disabled"
+        :menu="menu"
+        :placement="direction === 'rtl' ? 'bottom-start' : 'bottom-end'"
+        trigger="click"
+      >
+        <ElButton :disabled="info?.disabled" link @click="stopPropagation">
+          <ElIcon :class="ns.b('menu-icon')"><MoreFilled /></ElIcon>
+        </ElButton>
+      </DropDown>
+    </li>
+  </ElTooltip>
+</template>
+
+<style lang="scss" scoped>
+@import './index.scss';
+</style>

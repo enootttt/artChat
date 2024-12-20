@@ -1,0 +1,62 @@
+@import '../theme/index.scss';
+@import '../theme/mixin.scss';
+
+$prefix: 'conversations' !default;
+
+@include b(#{$prefix}-item) {
+  display: flex;
+  gap: $padding-xs;
+  align-items: center;
+  border-radius: $border-radius;
+  padding: $padding-sm;
+  cursor: pointer;
+  &:hover {
+    background-color: lighten($light, 12%);
+  }
+  &-active {
+    background-color: lighten($light, 18%);
+    &:hover {
+      background-color: lighten($light, 18%);
+    }
+  }
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  &:hover, &-active {
+    @include b(#{$prefix}-menu-icon) {
+      opacity: 1;
+    }
+  }
+  @include b(#{$prefix}-icon) {
+    
+  }
+  @include b(#{$prefix}-label) {
+    flex: 1;
+    color: $color-text;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+  }
+}
+
+@include b(#{$prefix}-item-active) {
+  background-color: light($light, 18%);
+}
+
+@include b($prefix) {
+  display: flex;
+  gap: $padding-xs;
+  flex-direction: column;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  &-list {
+    margin: 0;
+    padding: 0;
+  }
+}
+@include b(#{$prefix}-rtl) {
+  direction: rtl;
+}

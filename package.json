@@ -1,0 +1,46 @@
+{
+  "name": "@artmate/chat",
+  "version": "1.1.0",
+  "description": "借鉴字节开源react库AntX，通过vue实现的版本",
+  "keywords": [
+    "vite",
+    "vue3",
+    "element-plus",
+    "chat"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm vite build",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/es/types/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./dist/index.css": "./dist/es/index.css"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "vite": "^6.0.3",
+    "vite-plugin-dts": "^4.4.0"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "element-plus": "^2.9.1",
+    "sass": "~1.56.1",
+    "vue": "^3.5.13"
+  }
+}

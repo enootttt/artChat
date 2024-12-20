@@ -1,0 +1,122 @@
+@import '../theme/index.scss';
+@import '../theme/mixin.scss';
+
+$prefix: 'prompts' !default;
+
+@include b($prefix) {
+  max-width: 100%;
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+  &-title {
+    margin-block-start: 0;
+    font-weight: normal;
+    color: $color-text-tertiary;
+    margin-bottom: 0.5em;
+    font-size: $font-size-lg;
+    line-height: $line-height-lg;
+  }
+  &-list {
+    display: flex;
+    gap: $padding-sm;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block: 0;
+    align-items: stretch;
+    &#{&}-wrap {
+      flex-wrap: wrap;
+    }
+    &#{&}-vertical {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  &-item {
+    flex: none;
+    display: flex;
+    gap: $padding-xs;
+    height: auto;
+    padding-block: $padding-sm;
+    padding-inline: $padding;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-radius: $border-radius-lg;
+    background: $border-radius-lg;
+    transition: border $motion-duration-slow, background $motion-duration-slow;
+    border: $line-width $line-type $border-secondary;
+  }
+  &-item:not(#{$prefix}-item-has-nest) {
+    &:hover {
+      cursor: pointer;
+      background: $color-fill-tertiary;
+    }
+    &:active {
+      background: $color-fill;
+    }
+  }
+  &-content {
+    flex: auto;
+    min-width: 0;
+    display: flex;
+    gap: $padding-xxs;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-icon,
+  &-label,
+  &-desc {
+    margin: 0;
+    padding: 0;
+    font-size: $font-size;
+    line-height: $line-height;
+    text-align: start;
+    white-space: nowrap;
+  }
+  &-label {
+    color: $color-text-heading;
+    font-weight: 500;
+  }
+  &-label + &-desc {
+    color: $color-text-tertiary;
+  }
+  &-item-disabled {
+    pointer-events: none;
+    background: $color-fill;
+    .#{$prefix}-label,
+    .#{$prefix}-desc {
+      color: $color-text-tertiary;
+    }
+  }
+
+  &-item-has-nest {
+    &>.#{$prefix}-content {
+      &>.#{$prefix}-label {
+        font-size: $font-size-lg;
+        line-height: $line-height-lg;
+      }
+    }
+  }
+
+  &-nested {
+    margin-top: $padding-xs;
+    align-self: stretch;
+
+    @include b(#{$prefix}-list) {
+      align-items: stretch;
+    }
+
+    @include b(#{$prefix}-item) {
+      border: 0;
+      background: $color-fill-quaternary;
+    }
+  }
+}
+@include b(#{$prefix}-rtl) {
+  direction: rtl;
+}

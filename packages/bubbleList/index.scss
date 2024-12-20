@@ -1,0 +1,11 @@
+@import '../theme/index.scss';
+@import '../theme/mixin.scss';
+
+$prefix: 'bubble-list' !default;
+
+@include b($prefix) {
+  display: flex;
+  flex-direction: column;
+  gap: $padding;
+  overflow-y: auto;
+}

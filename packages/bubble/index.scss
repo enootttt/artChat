@@ -1,0 +1,137 @@
+@import '../theme/index.scss';
+@import '../theme/mixin.scss';
+
+$prefix: 'bubble' !default;
+
+@at-root {
+  @include b($prefix) {
+    display: flex;
+    column-gap: $padding-sm;
+    max-width: 100%;
+    @include b(#{$prefix}-avatar) {
+      display: inline-flex;
+      justify-content: center;
+      align-self: flex-start;
+    }
+    @include b(#{$prefix}-content-wrapper) {
+      flex: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    &-header,
+    &-footer {
+      font-size: $font-size;
+      line-height: $line-height;
+      color: $color-text;
+    }
+    @include b(#{$prefix}-header) {
+      margin-bottom: $padding-xxs;
+    }
+    @include b(#{$prefix}-footer) {
+      margin-top: $padding-sm;
+    }
+    @include b(#{$prefix}-content) {
+      line-height: $line-height;
+      min-height: calc($padding-sm * 2 + $line-height * $font-size);
+      word-break: break-word;
+      box-sizing: border-box;
+      font-size: $font-size;
+      position: relative;
+    }
+    &-content-filled,
+    &-content-shadow,
+    &-content-outlined {
+      padding: $padding-sm $padding;
+      border-radius: $border-radius-lg;
+    }
+    @include b(#{$prefix}-content-filled) {
+      background-color: lighten($light, 12%);
+    }
+    @include b(#{$prefix}-content-outlined) {
+      border: 1px solid $border-secondary;
+    }
+    @include b(#{$prefix}-content-shadow) {
+      box-shadow: 0 1px 2px 0 lighten($light, 3%), 0 1px 6px -1px lighten($light, 2%), 0 2px 4px 0 lighten($light, 2%);
+    }
+  }
+
+  .round {
+    border-radius: calc($font-size * $line-height / 2 + $padding-sm);
+    padding-inline: calc($padding * 1.25);
+  }
+  @include b(#{$prefix}-content-start-round) {
+    @extend .round;
+  }
+  @include b(#{$prefix}-content-end-round) {
+    @extend .round;
+  }
+  @include b(#{$prefix}-content-start-corner) {
+    border-start-start-radius: $border-radius-xs;
+  }
+  @include b(#{$prefix}-content-end-corner) {
+    border-start-end-radius: $border-radius-xs;
+  }
+  @include b(#{$prefix}-end) {
+    justify-content: end;
+    flex-direction: row-reverse;
+  }
+}
+
+@keyframes loadingMove {
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(4px);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes cursorBlink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+[class$='-dot'] {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  column-gap: $margin-xs;
+  padding: 0 $padding-xxs;
+  [class$='-dot-item'] {
+    background-color: $color-primary;
+    border-radius: 100%;
+    width: 4px;
+    height: 4px;
+    animation-name: loadingMove;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}

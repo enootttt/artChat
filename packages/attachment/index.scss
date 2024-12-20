@@ -1,0 +1,102 @@
+@import '../theme/index.scss';
+@import '../theme/mixin.scss';
+
+$prefix: 'attachment' !default;
+
+@at-root {
+  @include b(#{$prefix}) {
+    position: relative;
+    width: 100%;
+    &-placeholder-upload-wrapper,
+    &-upload-btn {
+      padding: 0;
+    }
+    &-placeholder-upload-wrapper {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+@include b(#{$prefix}-placeholder) {
+  height: 100%;
+  border-radius: $border-radius;
+  border-width: $line-width-bold;
+  border-style: dashed;
+  border-color: transparent;
+  position: relative;
+  backdrop-filter: blur(10px);
+  background-color: $attachments-color-bg-placeholder-hover;
+  &, * {
+    box-sizing: border-box;
+  }
+  &-inner {
+    display: flex;
+    flex-direction: column;
+    gap: calc($padding-xxs / 2);
+  }
+  &-icon {
+    font-size: $font-size-heading-2;
+    line-height: 1;
+  }
+  @include b(#{$prefix}-title) {
+    margin: 0;
+    font-size: $font-size;
+    line-height: $line-height;
+  }
+  &-description {
+    color: $color-text-description;
+  }
+}
+
+@include b(#{$prefix}-placeholder-drag-in) {
+  border-color: $color-primary-hover;
+}
+@include b(#{$prefix}-placeholder-disabled) {
+  opacity: 0.25;
+  pointer-events: none;
+}
+:deep(.el-upload) {
+  width: 100%;
+  height: 100%;
+}
+:deep(.el-upload-dragger) {
+  border-color: none !important;
+  border-width: 0;
+  background: transparent;
+  padding: $padding;
+  width: 100%;
+  height: 100%;
+  &.is-dragover {
+    border-color: none !important;
+    background: transparent;
+    border-width: 0;
+    padding: $padding;
+  }
+}
+
+@include b(#{$prefix}-drop-area) {
+  $prefix-drop-area: &;
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  &, * {
+    box-sizing: border-box;
+  }
+  @at-root {
+    #{$prefix-drop-area}-on-body {
+      position: fixed;
+      inset: 0;
+    }
+    #{$prefix-drop-area}-hide-placement {
+      @include b(#{$prefix}-placeholder-inner) {
+        display: none;
+      }
+    }
+  }
+}
+
+// Scroll
+@include b(#{$prefix}-list) {
+  
+}

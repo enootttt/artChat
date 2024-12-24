@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<fileListProps>(), {
 
 const ns = useNamespace('attachment-list');
 
+const TOLERANCE = 1;
 const containerRef = ref<HTMLElement>();
 const pingStart = ref(false);
 const pingEnd = ref(false);
@@ -28,10 +29,8 @@ const checkPing = () => {
   const containerEle = containerRef.value;
   if (!containerEle) return;
   if (props.overflow === 'scrollX') {
-    pingStart.value = containerEle.scrollLeft !== 0;
-    pingEnd.value =
-      containerEle.scrollWidth - containerEle.clientWidth !==
-      Math.abs(containerEle.scrollLeft);
+    pingStart.value = Math.abs(containerEle.scrollLeft) >= TOLERANCE;
+    pingEnd.value = containerEle.scrollWidth - containerEle.clientWidth - Math.abs(containerEle.scrollLeft) >= TOLERANCE;
   } else if (props.overflow === 'scrollY') {
     pingStart.value = containerEle.scrollTop !== 0;
     pingEnd.value =

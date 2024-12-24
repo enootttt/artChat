@@ -2,7 +2,7 @@ import Bubble from '../bubble/index.vue';
 import BubbleLoading from '../bubble/loading.vue';
 import BubbleList from './index.vue';
 
-export type { BubbleListProps } from './interface';
+export type * from './interface';
 
 type BubbleListType = {
   Bubble: typeof Bubble;

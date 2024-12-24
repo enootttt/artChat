@@ -1,7 +1,7 @@
 import SenderHeader from './header.vue';
 import Sender from './index.vue';
 
-export type { SenderProps } from './interface';
+export type * from './interface';
 
 type SenderType = {
   Header: typeof SenderHeader;

@@ -15,6 +15,7 @@ interface RequestFnInfo<Message>
   extends Partial<ArtAgentConfigPreset>,
     AnyObject {
   messages?: Message[];
+  message?: Message;
 }
 
 export type RequestFn<Message> = (
@@ -44,6 +45,7 @@ export class ArtAgent<Message = string> {
   public request: RequestFn<Message> = (info, callbacks) => {
     const { request } = this.config;
     const { onUpdate, onSuccess, onError } = callbacks;
+
     const id = uuid;
     uuid += 1;
     this.requestingMap[id] = true;
@@ -95,12 +97,12 @@ export default function useArtAgent<Message = string>(
       [
         new ArtAgent<Message>({
           request:
-            request ||
-            (ArtRequest({
+            request! ||
+            ArtRequest({
               baseURL: restConfig.baseURL as string,
               model: restConfig.model,
               dangerouslyApiKey: restConfig.dangerouslyApiKey,
-            }).create as unknown as RequestFn<Message>),
+            }).create,
           ...restConfig,
         }),
       ] as const,

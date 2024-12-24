@@ -62,13 +62,18 @@ function splitStream() {
 }
 
 /**
+ * @link https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#fields
+ */
+export type SSEFields = 'data' | 'event' | 'id' | 'retry';
+
+/**
  * @example
  * const sseObject = {
  *    event: 'delta',
  *    data: '{ key: "world!" }',
  * };
  */
-export type SSEOutput = Record<string, any>;
+export type SSEOutput = Partial<Record<SSEFields, any>>;
 
 /**
  * @description 将部分字符串转换为 {@link SSEOutput}
@@ -133,11 +138,13 @@ export interface ArtStreamOptions<Output> {
   transformStream?: TransformStream<string, Output>;
 }
 
+type ArtReadableStream<R = SSEOutput> = ReadableStream<R> & AsyncGenerator<R>;
+
 /**
  * @description 默认情况下，将 Uint8Array 二进制流转换为 {@link SSEOutput}
  * @warning "ArtStream" 仅支持 "utf-8" 编码。将来可能会有更多的编码支持。
  */
-async function* ArtStream<Output = SSEOutput>(
+function ArtStream<Output = SSEOutput>(
   options: ArtStreamOptions<Output>,
 ) {
   const { readableStream, transformStream } = options;
@@ -151,7 +158,7 @@ async function* ArtStream<Output = SSEOutput>(
   // 默认编码是 "utf-8"
   const decoderStream = new TextDecoderStream();
 
-  const stream = transformStream
+  const stream = (transformStream
     ? /**
        * Uint8Array binary -> string -> Output
        */
@@ -162,21 +169,25 @@ async function* ArtStream<Output = SSEOutput>(
       readableStream
         .pipeThrough(decoderStream)
         .pipeThrough(splitStream())
-        .pipeThrough(splitPart());
+        .pipeThrough(splitPart())) as ArtReadableStream<Output>;
 
-  const reader = stream.getReader() as ReadableStreamDefaultReader<Output>;
+  /** support async iterator */
+  stream[Symbol.asyncIterator] = async function* () {
+    const reader = this.getReader();
+    
+    while (true) {
+      const { done, value } = await reader.read();
 
-  // eslint-disable-next-line no-unmodified-loop-condition
-  while (reader instanceof ReadableStreamDefaultReader) {
-    const { value, done } = await reader.read();
+      if (done) break;
 
-    if (done) break;
+      if (!value) continue;
 
-    if (!value) continue;
-
-    // 通过所有转换管道转换的数据
-    yield value;
+      // Transformed data through all transform pipes
+      yield value;
+    }
   }
+
+  return stream;
 }
 
 export default ArtStream;

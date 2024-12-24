@@ -5,7 +5,7 @@ import Attachment from './index.vue';
 import PlaceholderUploader from './PlaceholderUploader.vue';
 import SilentUploader from './silentUploader.vue';
 
-export type { AttachmentProps } from './interface';
+export type * from './interface';
 
 type AttachmentType = {
   DropArea: typeof DropArea;

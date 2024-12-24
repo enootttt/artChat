@@ -1,6 +1,6 @@
 import Prompts from './index.vue';
 
-export type { PromptsProps } from './interface';
+export type * from './interface';
 
 type PromptsType = typeof Prompts;
 

@@ -92,7 +92,7 @@ export type ArtRequestFunction<Input = AnyObject, Output = SSEOutput> = (
 
 class ArtRequestClass {
   // eslint-disable-next-line no-use-before-define
-  private static instanceBuffer: Map<string, ArtRequestClass> = new Map();
+  private static instanceBuffer: Map<string | typeof fetch, ArtRequestClass> = new Map();
   private customOptions: ArtRequestCustomOptions;
 
   private defaultHeaders: RequestInit["headers"];
@@ -103,8 +103,6 @@ class ArtRequestClass {
     callbacks?: ArtRequestCallbacks<Output>,
     transformStream?: ArtStreamOptions<Output>["transformStream"]
   ) => {
-    const { onSuccess, onError, onUpdate } = callbacks || {};
-
     const requestInit = {
       method: "POST",
       body: JSON.stringify({
@@ -122,33 +120,26 @@ class ArtRequestClass {
 
       const contentType = response.headers.get("content-type") || "";
 
-      const chunks: Output[] = [];
-
-      if (contentType.includes("text/event-stream")) {
-        for await (const chunk of ArtStream({
-          // Uint8Array<ArrayBufferLike>
-          readableStream: response.body as ReadableStream<Uint8Array>,
-          transformStream,
-        })) {
-          chunks.push(chunk);
-
-          onUpdate?.(chunk);
-        }
-      } else if (contentType.includes("application/json")) {
-        const chunk: Output = await response.json();
-
-        chunks.push(chunk);
-
-        onUpdate?.(chunk);
-      } else {
-        throw new Error(`The response content-type: ${contentType} is not support!`);
+      if (transformStream) {
+        await this.customResponseHandler<Output>(response, callbacks, transformStream);
+        return;
       }
 
-      onSuccess?.(chunks);
+      switch (contentType) {
+        case 'text/event-stream':
+          await this.sseResponseHandler<Output>(response, callbacks);
+          break;
+        case 'application/json':
+          await this.jsonResponseHandler<Output>(response, callbacks);
+          break;
+        default:
+          throw new Error(`Unsupported content type: ${contentType}`);
+      }
+
     } catch (error) {
       const err = error instanceof Error ? error : new Error("Unknown error!");
 
-      onError?.(err);
+      callbacks?.onError?.(err);
 
       throw err;
     }
@@ -171,9 +162,9 @@ class ArtRequestClass {
   }
 
   public static init(options: ArtRequestOptions): ArtRequestClass {
-    const id = options.baseURL;
+    if (!options.baseURL || typeof options.baseURL !== "string") throw new Error("The baseURL is not valid!");
 
-    if (!id || typeof id !== "string") throw new Error("The baseURL is not valid!");
+    const id = options.fetch || options.baseURL;
 
     if (!ArtRequestClass.instanceBuffer.has(id)) {
       ArtRequestClass.instanceBuffer.set(id, new ArtRequestClass(options));
@@ -181,6 +172,47 @@ class ArtRequestClass {
 
     return ArtRequestClass.instanceBuffer.get(id) as ArtRequestClass;
   }
+
+  private customResponseHandler = async <Output = SSEOutput>(
+    response: Response,
+    callbacks?: ArtRequestCallbacks<Output>,
+    transformStream?: ArtStreamOptions<Output>["transformStream"]
+  ) => {
+    const chunks: Output[] = [];
+
+    for await (const chunk of ArtStream({
+      readableStream: response.body!,
+      transformStream,
+    })) {
+      chunks.push(chunk);
+
+      callbacks?.onUpdate?.(chunk);
+    }
+
+    callbacks?.onSuccess?.(chunks);
+  };
+
+  private sseResponseHandler = async <Output = SSEOutput>(response: Response, callbacks?: ArtRequestCallbacks<Output>) => {
+    const chunks: Output[] = [];
+
+    for await (const chunk of ArtStream<Output>({
+      readableStream: response.body!,
+    })) {
+      chunks.push(chunk);
+
+      callbacks?.onUpdate?.(chunk);
+    }
+
+    callbacks?.onSuccess?.(chunks);
+  };
+
+  private jsonResponseHandler = async <Output = SSEOutput>(response: Response, callbacks?: ArtRequestCallbacks<Output>) => {
+    const chunk: Output = await response.json();
+
+    callbacks?.onUpdate?.(chunk);
+
+    callbacks?.onSuccess?.([chunk]);
+  };
 }
 
 const ArtRequest = ArtRequestClass.init;

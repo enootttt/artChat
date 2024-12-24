@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<BubbleListProps>(), {
 
 const ns = useNamespace('bubble-list');
 
+const TOLERANCE = 1;
 const initialized = ref(false);
 const scrollReachEnd = ref(false);
 const updateCount = ref(0);
@@ -40,8 +41,8 @@ watch(
 
 const onInternalScroll = (e: Event) => {
   const target = e.target as HTMLElement;
-  scrollReachEnd.value =
-    target.scrollTop + target.clientHeight === target.scrollHeight;
+  // 兼容 1px 以内的误差
+  scrollReachEnd.value = target.scrollHeight - Math.abs(target.scrollTop) - target.clientHeight <= TOLERANCE
 };
 
 watch(

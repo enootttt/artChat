@@ -1,17 +1,27 @@
 {
   "name": "@artmate/chat",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "借鉴字节开源react库AntX，通过vue实现的版本",
   "keywords": [
+    "AI",
+    "Copilot",
+    "components",
     "vite",
     "vue3",
     "element-plus",
     "chat"
   ],
+  "bugs": {
+    "url": "https://gitee.com/asd1232rq3123/artmate-chat/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/asd1232rq3123/artmate-chat"
+  },
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "pnpm vite build",
+    "build": "vite build",
     "prepublishOnly": "npm run build"
   },
   "files": [
@@ -33,12 +43,12 @@
   },
   "devDependencies": {
     "@types/node": "22.10.2",
+    "@vitejs/plugin-vue": "^5.2.1",
     "vite": "^6.0.3",
     "vite-plugin-dts": "^4.4.0"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
-    "@vitejs/plugin-vue": "^5.2.1",
     "element-plus": "^2.9.1",
     "sass": "~1.56.1",
     "vue": "^3.5.13"

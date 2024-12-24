@@ -2,7 +2,7 @@ import ConversationsGroupTitle from './GroupTitle.vue';
 import Conversations from './index.vue';
 import ConversationsItem from './item.vue';
 
-export type { ConversationsProps } from './interface';
+export type * from './interface';
 
 type ConversationsType = {
   GroupTitle: typeof ConversationsGroupTitle;

@@ -1,4 +1,4 @@
-@use 'sass:map';
+@use "sass:map";
 
 $light: #000000;
 $dark: #ffffff;
@@ -8,66 +8,81 @@ $types: primary, success, warning, danger, error, info;
 $colors: () !default;
 $colors: map.deep-merge(
   (
-    'white': $dark,
-    'black': $light,
-    'primary': (
-      'base': #1677ff,
-      'hover': #3c89e8
+    "white": $dark,
+    "black": $light,
+    "primary": (
+      "base": #1677ff,
+      "hover": #4096ff,
+      "dark": #1677ff,
+      "dark-hover": #3c89e8,
     ),
-    'success': (
-      'base': #49aa19,
+    "success": (
+      "base": #52c41a,
+      "dark": #49aa19,
     ),
-    'warning': (
-      'base': #d89614,
+    "warning": (
+      "base": #faad14,
+      "dark": #d89614,
     ),
-    'error': (
-      'base': #dc4446
+    "error": (
+      "base": #ff4d4f,
+      "dark": #dc4446,
     ),
-    'info': (
-      'base': #1668dc,
+    "info": (
+      "base": #1677ff,
+      "dark": #1668dc,
     ),
-    'link': (
-      'base': #1668dc
-    )
+    "link": (
+      "base": #1677ff,
+      "dark": #1668dc,
+    ),
   ),
   $colors
 );
 
-$color-primary: map.get($colors, 'primary', 'base') !default;
-$color-primary-hover: map.get($colors, 'primary', 'hover') !default;
-$color-success: map.get($colors, 'success', 'base') !default;
-$color-warning: map.get($colors, 'warning', 'base') !default;
-$color-error: map.get($colors, 'error', 'base') !default;
-$color-info: map.get($colors, 'info', 'base') !default;
-$color-link: map.get($colors, 'link', 'base') !default;
+$color-primary: map.get($colors, "primary", "base") !default;
+$color-primary-hover: map.get($colors, "primary", "hover") !default;
+$color-success: map.get($colors, "success", "base") !default;
+$color-warning: map.get($colors, "warning", "base") !default;
+$color-error: map.get($colors, "error", "base") !default;
+$color-info: map.get($colors, "info", "base") !default;
+$color-link: map.get($colors, "link", "base") !default;
+
+$color-primary-dark: map.get($colors, "primary", "base") !default;
+$color-primary-dark-hover: map.get($colors, "primary", "hover") !default;
+$color-success-dark: map.get($colors, "success", "base") !default;
+$color-warning-dark: map.get($colors, "warning", "base") !default;
+$color-error-dark: map.get($colors, "error", "base") !default;
+$color-info-dark: map.get($colors, "info", "base") !default;
+$color-link-dark: map.get($colors, "link", "base") !default;
 
 $color-text: lighten($light, 85%);
 $color-text-disabled: lighten($light, 25%);
-$color-text-placeholder: #BFBFBF;
+$color-text-placeholder: #bfbfbf;
 $color-text-description: lighten($light, 45%);
 $color-text-tertiary: rgba($dark, 45%);
 $color-text-heading: lighten($light, 88%);
 
 $color-fill: lighten($light, 15%);
-$color-fill-content-hover: rgba($light, 18%);
 $color-fill-content: lighten($light, 12%);
+$color-fill-content-hover: rgba($light, 18%);
 $color-fill-alter: lighten($light, 4%);
 $color-fill-tertiary: lighten($light, 8%);
 $color-fill-quaternary: lighten($light, 2%);
 
-$color-bg-layout: #000000;
-$color-bg-container: #141414;
-$color-bg-elevated: #1f1f1f;
-$color-bg-spotlight: #424242;
-$color-bg-blur: lighten($light, 4%);
+$color-bg-layout: #ffffff;
+$color-bg-container: #ffffff;
+$color-bg-elevated: #ffffff;
+$color-bg-spotlight: rgba(0, 0, 0, 0.85);
+$color-bg-blur: lighten($dark, 4%);
 
 $border-radius: 6px;
 $border-radius-xs: 2px;
 $border-radius-sm: 4px;
 $border-radius-lg: 8px;
-$border-color: #414243;
+$border-color: #d9d9d9;
 
-$border-secondary: #303030;
+$border-secondary: #f0f0f0;
 
 $line-width-bold: 2px;
 
@@ -122,5 +137,4 @@ $box-shadow-secondary: 0 6px 16px 0 lighten($light, 8%), 0 3px 6px -4px lighten(
 
 $motion-duration-slow: 0.3s;
 
-
-$attachments-color-bg-placeholder-hover: rgba(20, 20, 20, 0.85);
+$attachments-color-bg-placeholder-hover: rgba(255, 255, 255, 0.85);

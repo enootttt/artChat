@@ -177,10 +177,20 @@ defineExpose({
       :on-typing-complete="() => onTypingCompleteFn(bubble)"
       :on-update="onBubbleUpdate"
       :typing="initialized ? (bubble.typing as boolean) : false"
-    />
+    >
+      <template #avatar>
+        <slot name="avatar" v-bind="bubble"></slot>
+      </template>
+      <template #header>
+        <slot name="header" v-bind="bubble"></slot>
+      </template>
+      <template #footer>
+        <slot name="footer" v-bind="bubble"></slot>
+      </template>
+    </Bubble>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './index.scss';
 </style>

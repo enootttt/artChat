@@ -65,7 +65,7 @@ const on = {
   </transition>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .bt-collapse-transition-leave-active,
 .bt-collapse-transition-enter-active {
   transition:

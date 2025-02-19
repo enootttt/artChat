@@ -11,12 +11,12 @@ $prefix: 'conversations' !default;
   padding: $padding-sm;
   cursor: pointer;
   &:hover {
-    background-color: lighten($light, 12%);
+    background-color: rgba(var(--light), 12%);
   }
   &-active {
-    background-color: lighten($light, 18%);
+    background-color: rgba(var(--light), 18%);
     &:hover {
-      background-color: lighten($light, 18%);
+      background-color: rgba(var(--light), 18%);
     }
   }
   &-disabled {
@@ -33,7 +33,7 @@ $prefix: 'conversations' !default;
   }
   @include b(#{$prefix}-label) {
     flex: 1;
-    color: $color-text;
+    color: var(--color-text);
     display: -webkit-box;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -42,7 +42,7 @@ $prefix: 'conversations' !default;
 }
 
 @include b(#{$prefix}-item-active) {
-  background-color: light($light, 18%);
+  background-color: rgba(var(--light), 18%);
 }
 
 @include b($prefix) {

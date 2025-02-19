@@ -1,6 +1,23 @@
 import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import type { OutputOptions } from 'rollup'
+
+// rollup 公共配置
+const rollupOutputBase: OutputOptions = {
+  assetFileNames: (assetInfo) => {
+    if (assetInfo.name?.endsWith('.css')) {
+      return 'index.css';
+    }
+    return assetInfo.name as string;
+  },
+  entryFileNames: '[name].js',
+  inlineDynamicImports: false,
+  manualChunks: undefined,
+  preserveModules: true,
+  preserveModulesRoot: 'packages',
+  exports: 'named'
+}
 
 export default defineConfig(() => {
   return {
@@ -11,54 +28,27 @@ export default defineConfig(() => {
         fileName: (format) => `artmate-chat.${format}.js`,
         name: 'ArtmateChat',
       },
-      // 添加以下配置
-      minify: false, // 暂时关闭压缩，看看是否解决问题
       rollupOptions: {
         external: ['vue', 'element-plus', '@element-plus/icons-vue'],
         output: [
           {
-            assetFileNames: (assetInfo) => {
-              if (assetInfo.name?.endsWith('.css')) {
-                return 'index.css';
-              }
-              return assetInfo.name as string;
-            },
+            ...rollupOutputBase,
             dir: 'dist/es',
-            entryFileNames: '[name].js',
             format: 'es',
-            // 添加以下配置
-            inlineDynamicImports: false,
-            manualChunks: undefined,
-            preserveModules: true,
-            preserveModulesRoot: 'packages',
-            exports: 'named'
           },
           {
-            assetFileNames: (assetInfo) => {
-              if (assetInfo.name?.endsWith('.css')) {
-                return 'index.css';
-              }
-              return assetInfo.name as string;
-            },
+            ...rollupOutputBase,
             dir: 'dist/cjs',
-            entryFileNames: '[name].js',
             format: 'cjs',
-            // 添加以下配置
-            inlineDynamicImports: false,
-            manualChunks: undefined,
-            preserveModules: true,
-            preserveModulesRoot: 'packages',
-            exports: 'named'
           },
         ],
       },
-      sourcemap: true, // 开启sourcemap方便调试
     },
     plugins: [
       vue(),
       dts({
         entryRoot: "./packages",
-        outDir: ['dist/es/types', 'dist/cjs/types'],
+        outDir: ['dist/typings'],
       }),
     ],
   };

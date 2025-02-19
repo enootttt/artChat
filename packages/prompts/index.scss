@@ -12,7 +12,7 @@ $prefix: 'prompts' !default;
   &-title {
     margin-block-start: 0;
     font-weight: normal;
-    color: $color-text-tertiary;
+    color: var(--color-text-tertiary);
     margin-bottom: 0.5em;
     font-size: $font-size-lg;
     line-height: $line-height-lg;
@@ -49,15 +49,15 @@ $prefix: 'prompts' !default;
     border-radius: $border-radius-lg;
     background: $border-radius-lg;
     transition: border $motion-duration-slow, background $motion-duration-slow;
-    border: $line-width $line-type $border-secondary;
+    border: $line-width $line-type var(--border-secondary);
   }
   &-item:not(#{$prefix}-item-has-nest) {
     &:hover {
       cursor: pointer;
-      background: $color-fill-tertiary;
+      background: var(--color-fill-tertiary);
     }
     &:active {
-      background: $color-fill;
+      background: var(--color-fill);
     }
   }
   &-content {
@@ -79,18 +79,18 @@ $prefix: 'prompts' !default;
     white-space: nowrap;
   }
   &-label {
-    color: $color-text-heading;
+    color: var(--color-text-heading);
     font-weight: 500;
   }
   &-label + &-desc {
-    color: $color-text-tertiary;
+    color: var(--color-text-tertiary);
   }
   &-item-disabled {
     pointer-events: none;
-    background: $color-fill;
+    background: var(--color-fill);
     .#{$prefix}-label,
     .#{$prefix}-desc {
-      color: $color-text-tertiary;
+      color: var(--color-text-tertiary);
     }
   }
 
@@ -113,7 +113,7 @@ $prefix: 'prompts' !default;
 
     @include b(#{$prefix}-item) {
       border: 0;
-      background: $color-fill-quaternary;
+      background: var(--color-fill-quaternary);
     }
   }
 }

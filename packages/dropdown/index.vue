@@ -27,4 +27,4 @@ const emit = defineEmits(['onOpenChange']);
   </ElDropdown>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss"></style>

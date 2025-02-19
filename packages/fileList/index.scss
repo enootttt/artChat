@@ -11,11 +11,11 @@ $prefix-card: 'attachment-list-card' !default;
   gap: $padding-xs;
   font-size: $font-size;
   line-height: $line-height;
-  color: $color-text;
+  color: var(--color-text);
   padding-block: $padding-sm;
   padding-inline: $padding;
   width: 100%;
-  background: $color-bg-container;
+  background: var(--color-bg-container);
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
@@ -79,11 +79,13 @@ $prefix-card: 'attachment-list-card' !default;
       background: linear-gradient(to top, rgba(0,0,0,0.06), rgba(0,0,0,0));
     }
   }
-  &-upload-btn {
+  .el-button#{&}-upload-btn {
     width: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm);
     height: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm);
     font-size: $font-size-heading-2;
-    color: #999;
+    &-icon {
+      color: #ffffff;
+    }
   }
 
   // prevNext
@@ -91,7 +93,7 @@ $prefix-card: 'attachment-list-card' !default;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    box-shadow: $box-shadow-tertiary;
+    box-shadow: var(--box-shadow-tertiary);
     opacity: 0;
     pointer-events: none;
   }
@@ -133,7 +135,7 @@ $prefix-card: 'attachment-list-card' !default;
 @include b($prefix-card) {
   border-radius: $border-radius;
   position: relative;
-  background: $color-fill-content;
+  background: var(--color-fill-content);
   border-width: $line-width;
   border-style: $line-type;
   border-color: transparent;
@@ -177,7 +179,7 @@ $prefix-card: 'attachment-list-card' !default;
       align-items: stretch;
     }
     #{$prefix-card}-desc {
-      color: $color-text-tertiary;
+      color: var(--color-text-tertiary);
     }
   }
   &-type-preview {
@@ -240,9 +242,9 @@ $prefix-card: 'attachment-list-card' !default;
     display: block;
   }
   &-status-error {
-    background-color: $color-error;
+    background-color: var(--color-error);
     #{$prefix-card}-desc {
-      color: $color-error;
+      color: var(--color-error);
     }
   }
 

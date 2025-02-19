@@ -24,7 +24,7 @@ $prefix: 'bubble' !default;
     &-footer {
       font-size: $font-size;
       line-height: $line-height;
-      color: $color-text;
+      color: var(--color-text);
     }
     @include b(#{$prefix}-header) {
       margin-bottom: $padding-xxs;
@@ -47,13 +47,13 @@ $prefix: 'bubble' !default;
       border-radius: $border-radius-lg;
     }
     @include b(#{$prefix}-content-filled) {
-      background-color: lighten($light, 12%);
+      background-color: rgba(var(--light), 12%);
     }
     @include b(#{$prefix}-content-outlined) {
-      border: 1px solid $border-secondary;
+      border: 1px solid var(--border-secondary);
     }
     @include b(#{$prefix}-content-shadow) {
-      box-shadow: 0 1px 2px 0 lighten($light, 3%), 0 1px 6px -1px lighten($light, 2%), 0 2px 4px 0 lighten($light, 2%);
+      box-shadow: 0 1px 2px 0 rgba(var(--light), 3%), 0 1px 6px -1px rgba(var(--light), 2%), 0 2px 4px 0 rgba(var(--light), 2%);
     }
   }
 
@@ -117,7 +117,7 @@ $prefix: 'bubble' !default;
   column-gap: $margin-xs;
   padding: 0 $padding-xxs;
   [class$='-dot-item'] {
-    background-color: $color-primary;
+    background-color: var(--color-primary);
     border-radius: 100%;
     width: 4px;
     height: 4px;

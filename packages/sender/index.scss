@@ -1,7 +1,7 @@
-@import '../theme/index.scss';
-@import '../theme/mixin.scss';
+@import "../theme/index.scss";
+@import "../theme/mixin.scss";
 
-$prefix: 'sender' !default;
+$prefix: "sender" !default;
 
 @include b($prefix) {
   position: relative;
@@ -9,86 +9,84 @@ $prefix: 'sender' !default;
   box-sizing: border-box;
   // top: 20px;
   width: 100%;
-  box-shadow: $box-shadow-tertiary;
+  box-shadow: var(--box-shadow-tertiary);
   transition: all $motion-duration-slow;
   border-radius: calc($border-radius * 2);
-  border-color: $border-color;
+  border-color: var(--border-color);
   border-width: 1px;
   border-style: solid;
   overflow: hidden;
   &:focus-within {
-    box-shadow: $box-shadow-secondary;
-    border-color: $color-primary;
+    box-shadow: var(--box-shadow-secondary);
+    border-color: var(--color-primary);
   }
 }
 
-@at-root {
-  @include b(#{$prefix}-content) {
-    width: 100%;
-    display: flex;
-    gap: $padding-xs;
-    padding-block: $padding-xs;
-    padding-inline-start: $padding;
-    padding-inline-end: $padding-sm;
+@include b(#{$prefix}-content) {
+  width: 100%;
+  display: flex;
+  gap: $padding-xs;
+  padding-block: $padding-xs;
+  padding-inline-start: $padding;
+  padding-inline-end: $padding-sm;
+  box-sizing: border-box;
+  align-items: flex-end;
+  @include b(#{$prefix}-input) {
+    overflow-y: hidden;
+    resize: none;
+    padding: 0;
+    border-radius: 0;
+    flex: auto;
+    align-self: center;
+    min-height: auto;
+    max-width: 100%;
+    line-height: $line-height;
+    vertical-align: bottom;
+    transition: all $motion-duration-slow, height 0s;
     box-sizing: border-box;
-    align-items: flex-end;
-    @include b(#{$prefix}-input) {
-      overflow-y: hidden;
-      resize: none;
+    margin: 0;
+    font-size: 14px;
+    list-style: none;
+    display: inline-block;
+    min-width: 0;
+    border: none !important;
+    .el-textarea__inner {
+      box-shadow: none !important;
+      background: transparent;
       padding: 0;
-      border-radius: 0;
-      flex: auto;
-      align-self: center;
-      min-height: auto;
-      max-width: 100%;
-      line-height: $line-height;
-      vertical-align: bottom;
-      transition: all $motion-duration-slow, height 0s;
-      box-sizing: border-box;
-      margin: 0;
-      font-size: 14px;
-      list-style: none;
-      display: inline-block;
-      min-width: 0;
+      color: currentColor;
+    }
+    &:focus {
       border: none !important;
-      :deep(.el-textarea__inner) {
-        box-shadow: none !important;
-        background: transparent;
-        padding: 0;
-        color: currentColor;
-      }
-      &:focus {
-        border: none !important;
-      }
-    }
-    @include b(#{$prefix}-actions-list) {
-      flex: none;
-      display: flex;
-      align-items: center;
-    }
-    @include b(#{$prefix}-prefix) {
-      flex: none;
-      display: flex;
-      align-items: center;
     }
   }
-  @include b(#{$prefix}-header) {
-    overflow: hidden;
-    border-bottom: 1px solid $border-color;
-    @include b(#{$prefix}-header-header) {
-      font-size: 14px;
-      line-height: $line-height;
-      padding-block: 10px;
-      padding-inline-start: 16px;
-      padding-inline-end: 8px;
-      display: flex;
-      background: lighten($light, 2%);
-      @include b(#{$prefix}-header-title) {
-        flex: auto;
-      }
+  @include b(#{$prefix}-actions-list) {
+    flex: none;
+    display: flex;
+    align-items: center;
+  }
+  @include b(#{$prefix}-prefix) {
+    flex: none;
+    display: flex;
+    align-items: center;
+  }
+}
+@include b(#{$prefix}-header) {
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-color);
+  @include b(#{$prefix}-header-header) {
+    font-size: 14px;
+    line-height: $line-height;
+    padding-block: 10px;
+    padding-inline-start: 16px;
+    padding-inline-end: 8px;
+    display: flex;
+    background: rgba(var(--light), 2%);
+    @include b(#{$prefix}-header-title) {
+      flex: auto;
     }
-    @include b(#{$prefix}-header-content) {
-      padding: 16px;
-    }
+  }
+  @include b(#{$prefix}-header-content) {
+    padding: 16px;
   }
 }

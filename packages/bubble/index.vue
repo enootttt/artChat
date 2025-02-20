@@ -2,7 +2,7 @@
 import type { BubbleProps } from "./interface";
 
 import { computed, h, ref, useSlots, watch, isVNode } from "vue";
-import type { Ref, VNode } from "vue";
+import type { Ref, VNode, Slots } from "vue";
 
 import { ElAvatar } from "element-plus";
 
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<BubbleProps>(), {
 
 const ns = useNamespace("bubble");
 
-const slots = useSlots();
+const slots: Slots = useSlots();
 
 const [typingEnabled, typingStep, typingInterval] = useTypingConfig(props.typing);
 

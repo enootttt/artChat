@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { BubbleListProps, scrollTopParameters } from './interface';
 
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
-import type { Component } from 'vue';
+import { computed, nextTick, onMounted, ref, watch, useSlots } from 'vue';
+import type { Component, Slots } from 'vue';
 
 import Bubble from '../bubble/index.vue';
 import { useNamespace } from '../hooks/useNamespace';
@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<BubbleListProps>(), {
 });
 
 const ns = useNamespace('bubble-list');
+
+const slots: Slots = useSlots();
 
 const TOLERANCE = 1;
 const initialized = ref(false);
@@ -179,14 +181,8 @@ defineExpose({
       :on-update="onBubbleUpdate"
       :typing="initialized ? (bubble.typing as boolean) : false"
     >
-      <template #avatar>
-        <slot name="avatar" v-bind="bubble"></slot>
-      </template>
-      <template #header>
-        <slot name="header" v-bind="bubble"></slot>
-      </template>
-      <template #footer>
-        <slot name="footer" v-bind="bubble"></slot>
+      <template v-for="(_slot, slotName) in slots" :key="slotName" #[slotName]="slotProps">
+        <slot :name="slotName" v-bind="{ ...slotProps, ...bubble }"></slot>
       </template>
     </Bubble>
   </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { BubbleProps } from "./interface";
 
-import { computed, h, ref, useSlots, watch } from "vue";
+import { computed, h, ref, useSlots, watch, isVNode } from "vue";
 import type { Ref, VNode } from "vue";
 
 import { ElAvatar } from "element-plus";
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<BubbleProps>(), {
 
 const ns = useNamespace("bubble");
 
-const slot = useSlots();
+const slots = useSlots();
 
 const [typingEnabled, typingStep, typingInterval] = useTypingConfig(props.typing);
 
@@ -50,6 +50,7 @@ watch(
 );
 
 const contentNode = computed<Function>(() => {
+  console.log('v-html...');
   return props.loading ? () => (props.loadingRender ? h(props.loadingRender()) : h(Loading, { prefixCls: ns.b() })) : (mergeContent.value as Function);
 });
 
@@ -71,13 +72,13 @@ watch(
 
 <template>
   <div :class="[ns.b(), ns.b(placement)]">
-    <div v-if="slot.avatar || avatar" :class="[ns.b('avatar'), props.classNames?.avatar]" :style="props.styles?.avatar">
+    <div v-if="slots.avatar || avatar" :class="[ns.b('avatar'), props.classNames?.avatar]" :style="props.styles?.avatar">
       <slot name="avatar">
         <ElAvatar v-if="typeof avatar === 'string'" :size="32" :src="avatar" />
         <component :is="avatar" v-else />
       </slot>
     </div>
-    <div v-if="slot.header || slot.footer" :class="[ns.b('content-wrapper')]">
+    <div v-if="slots.header || slots.footer" :class="[ns.b('content-wrapper')]">
       <div :class="[ns.b('header'), props.classNames?.header]" :style="props.styles?.header">
         <slot name="header"> </slot>
       </div>
@@ -92,7 +93,8 @@ watch(
         :class="[ns.b('content'), ns.b(`content-${props.variant}`), props.classNames?.content, props.shape && ns.b(`content-${props.placement}-${props.shape}`)]"
         :style="props.styles?.content"
       >
-        <component :is="contentNode" />
+        <component :is="contentNode" v-if="isVNode(contentNode)" />
+        <div v-html="contentNode" v-else></div>
       </div>
       <div :class="[ns.b('footer'), props.classNames?.footer]" :style="props.styles?.footer">
         <slot name="footer"></slot>
@@ -110,7 +112,8 @@ watch(
         :class="[ns.b('content'), ns.b(`content-${props.variant}`), props.classNames?.content, props.shape && ns.b(`content-${props.placement}-${props.shape}`)]"
         :style="props.styles?.content"
       >
-        <component :is="contentNode" />
+        <component :is="contentNode" v-if="isVNode(contentNode)" />
+        <div v-html="contentNode" v-else></div>
       </div>
     </template>
     <!-- <component :is="contentDom"></component> -->

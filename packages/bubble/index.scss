@@ -14,7 +14,7 @@ $prefix: 'bubble' !default;
       align-self: flex-start;
     }
     @include b(#{$prefix}-content-wrapper) {
-      flex: auto;
+      // flex: auto;
       display: flex;
       flex-direction: column;
       align-items: flex-start;

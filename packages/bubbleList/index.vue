@@ -148,7 +148,6 @@ const getBubbleRefs = (
 };
 
 onMounted(() => {
-  console.log('list mounted');
   nextTick(() => {
     scrollTo({ offset: listRef.value!.scrollHeight, behavior: 'auto' });
     initialized.value = true;

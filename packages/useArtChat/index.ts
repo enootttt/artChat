@@ -1,17 +1,26 @@
-import { computed, ref } from "vue";
-
-import { ArtAgent } from "../useArtAgent";
-import useSyncState from "./useSyncState";
+import { computed, ref } from 'vue';
+import { ArtAgent } from '../useArtAgent';
+import useSyncState from './useSyncState';
+import { useEventCallback } from '../hooks/useEventCallback';
 
 export type SimpleType = string | number | boolean | object;
 
-export type MessageStatus = "local" | "loading" | "success" | "error";
+export type MessageStatus = 'local' | 'loading' | 'success' | 'error';
 
-type RequestPlaceholderFn<Message extends SimpleType> = (message: Message, info: { messages: Message[] }) => Message;
+type RequestPlaceholderFn<Message extends SimpleType> = (
+  message: Message,
+  info: { messages: Message[] },
+) => Message;
 
-type RequestFallbackFn<Message extends SimpleType> = (message: Message, info: { error: Error; messages: Message[] }) => Message | Promise<Message>;
+type RequestFallbackFn<Message extends SimpleType> = (
+  message: Message,
+  info: { error: Error; messages: Message[] },
+) => Message | Promise<Message>;
 
-export interface ArtChatConfig<AgentMessage extends SimpleType = string, BubbleMessage extends SimpleType = AgentMessage> {
+export interface ArtChatConfig<
+  AgentMessage extends SimpleType = string,
+  BubbleMessage extends SimpleType = AgentMessage,
+> {
   agent?: ArtAgent<AgentMessage>;
 
   defaultMessages?: DefaultMessageInfo<AgentMessage>[];
@@ -29,16 +38,24 @@ export interface MessageInfo<Message extends SimpleType> {
   status: MessageStatus;
 }
 
-export type DefaultMessageInfo<Message extends SimpleType> = Pick<MessageInfo<Message>, "message"> & Partial<Omit<MessageInfo<Message>, "message">>;
+export type DefaultMessageInfo<Message extends SimpleType> = Pick<MessageInfo<Message>, 'message'> &
+  Partial<Omit<MessageInfo<Message>, 'message'>>;
 
 export type RequestResultObject<Message> = {
   message: Message | Message[];
   status: MessageStatus;
 };
 
-export type RequestResult<Message extends SimpleType> = Message | Message[] | RequestResultObject<Message> | RequestResultObject<Message>[];
+export type RequestResult<Message extends SimpleType> =
+  | Message
+  | Message[]
+  | RequestResultObject<Message>
+  | RequestResultObject<Message>[];
 
-export type StandardRequestResult<Message extends SimpleType> = Omit<RequestResultObject<Message>, "message" | "status"> & {
+export type StandardRequestResult<Message extends SimpleType> = Omit<
+  RequestResultObject<Message>,
+  'message' | 'status'
+> & {
   message: Message;
   status?: MessageStatus;
 };
@@ -47,19 +64,21 @@ function toArray<T>(item: T | T[]): T[] {
   return Array.isArray(item) ? item : [item];
 }
 
-export default function useArtChat<AgentMessage extends SimpleType = string, ParsedMessage extends SimpleType = AgentMessage>(config: ArtChatConfig<AgentMessage, ParsedMessage>) {
+export default function useArtChat<
+  AgentMessage extends SimpleType = string,
+  ParsedMessage extends SimpleType = AgentMessage,
+>(config: ArtChatConfig<AgentMessage, ParsedMessage>) {
   const { defaultMessages, agent, requestFallback, requestPlaceholder, parser } = config;
 
   // ========================= Agent Messages =========================
   const idRef = ref(0);
 
-  const [messages, setMessages, getMessages] = useSyncState<MessageInfo<AgentMessage>[]>(() =>
-    (defaultMessages || []).map((info, index) => ({
-      id: `default_${index}`,
-      status: "local",
-      ...info,
-    }))
-  );
+  const defaultMessage = computed<MessageInfo<AgentMessage>[]>(() => (defaultMessages || []).map((info, index) => ({
+    id: `default_${index}`,
+    status: 'local',
+    ...info,
+  })));
+  const [messages, setMessages] = useSyncState<MessageInfo<AgentMessage>[]>(defaultMessage.value, () => {});
 
   const createMessage = (message: AgentMessage, status: MessageStatus) => {
     const msg: MessageInfo<AgentMessage> = {
@@ -76,9 +95,8 @@ export default function useArtChat<AgentMessage extends SimpleType = string, Par
   // ========================= BubbleMessages =========================
   const parsedMessages = computed(() => {
     const list: MessageInfo<ParsedMessage>[] = [];
-
     messages.value.forEach((agentMsg) => {
-      const rawParsedMsg = parser ? parser(agentMsg.message as AgentMessage) : agentMsg.message;
+      const rawParsedMsg = parser ? parser(agentMsg.message) : agentMsg.message;
       const bubbleMsgs = toArray(rawParsedMsg as ParsedMessage);
 
       bubbleMsgs.forEach((bubbleMsg, bubbleMsgIndex) => {
@@ -99,29 +117,30 @@ export default function useArtChat<AgentMessage extends SimpleType = string, Par
   });
 
   // ============================ Request =============================
-  const getFilteredMessages = (msgs: MessageInfo<AgentMessage>[]) => msgs.filter((info) => info.status !== "loading" && info.status !== "error").map((info) => info.message);
+  const getFilteredMessages = (msgs: MessageInfo<AgentMessage>[]) =>
+    msgs
+      .filter((info) => info.status !== 'loading' && info.status !== 'error')
+      .map((info) => info.message);
 
   // For agent to use. Will filter out loading and error message
-  const getRequestMessages = () => {
-    return getFilteredMessages(getMessages());
-  };
+  const getRequestMessages = () => getFilteredMessages(messages.value);
 
-  const onRequest = (message: AgentMessage) => {
-    if (!agent) {
-      throw new Error("The agent parameter is required when using the onRequest method in an agent generated by useXAgent.");
-    }
+  const onRequest = useEventCallback((message: AgentMessage) => {
+    if (!agent)
+      throw new Error(
+        'The agent parameter is required when using the onRequest method in an agent generated by useArtAgent.',
+      );
 
-    let loadingMsgId: null | number | string = null;
+    let loadingMsgId: number | string | null = null;
 
     // Add placeholder message
     setMessages((ori) => {
-      let nextMessages: MessageInfo<AgentMessage>[] = [...ori, createMessage(message, "local")];
+      let nextMessages = [...ori, createMessage(message, 'local')];
 
       if (requestPlaceholder) {
         let placeholderMsg: AgentMessage;
 
-        // eslint-disable-next-line unicorn/prefer-ternary
-        if (typeof requestPlaceholder === "function") {
+        if (typeof requestPlaceholder === 'function') {
           // typescript has bug that not get real return type when use `typeof function` check
           placeholderMsg = (requestPlaceholder as RequestPlaceholderFn<AgentMessage>)(message, {
             messages: getFilteredMessages(nextMessages),
@@ -130,7 +149,7 @@ export default function useArtChat<AgentMessage extends SimpleType = string, Par
           placeholderMsg = requestPlaceholder;
         }
 
-        const loadingMsg = createMessage(placeholderMsg, "loading");
+        const loadingMsg = createMessage(placeholderMsg, 'loading');
         loadingMsgId = loadingMsg.id;
 
         nextMessages = [...nextMessages, loadingMsg];
@@ -140,14 +159,22 @@ export default function useArtChat<AgentMessage extends SimpleType = string, Par
     });
 
     // Request
-    let updatingMsgId: null | number | string = null;
+    let updatingMsgId: number | string | null = null;
     const updateMessage = (message: AgentMessage, status: MessageStatus) => {
-      let msg = getMessages().find((info: MessageInfo<AgentMessage>) => info.id === updatingMsgId);
+      let msg = messages.value.find((info) => info.id === updatingMsgId);
 
-      if (msg) {
+      if (!msg) {
+        // Create if not exist
+        msg = createMessage(message, status);
+        setMessages((ori) => {
+          const oriWithoutPending = ori.filter((info) => info.id !== loadingMsgId);
+          return [...oriWithoutPending, msg!];
+        });
+        updatingMsgId = msg.id;
+      } else {
         // Update directly
         setMessages((ori) => {
-          return ori.map((info: MessageInfo<AgentMessage>) => {
+          return ori.map((info) => {
             if (info.id === updatingMsgId) {
               return {
                 ...info,
@@ -158,15 +185,8 @@ export default function useArtChat<AgentMessage extends SimpleType = string, Par
             return info;
           });
         });
-      } else {
-        // Create if not exist
-        const msg = createMessage(message, status);
-        setMessages((ori) => {
-          const oriWithoutPending = ori.filter((info: MessageInfo<AgentMessage>) => info.id !== loadingMsgId);
-          return [...oriWithoutPending, msg as MessageInfo<AgentMessage>];
-        });
-        updatingMsgId = msg.id;
       }
+
       return msg;
     };
 
@@ -177,34 +197,40 @@ export default function useArtChat<AgentMessage extends SimpleType = string, Par
       },
       {
         onUpdate: (message) => {
-          updateMessage(message, "loading");
+          updateMessage(message, 'loading');
         },
         onSuccess: (message) => {
-          updateMessage(message, "success");
+          updateMessage(message, 'success');
         },
         onError: async (error: Error) => {
           if (requestFallback) {
-            // Update as error
-            // typescript has bug that not get real return type when use `typeof function` check
-            const fallbackMsg: AgentMessage =
-              typeof requestFallback === "function"
-                ? await (requestFallback as RequestFallbackFn<AgentMessage>)(message, {
-                    error,
-                    messages: getRequestMessages(),
-                  })
-                : requestFallback;
+            let fallbackMsg: AgentMessage;
 
-            setMessages((ori) => [...ori.filter((info: MessageInfo<AgentMessage>) => info.id !== loadingMsgId && info.id !== updatingMsgId), createMessage(fallbackMsg, "error")]);
+            // Update as error
+            if (typeof requestFallback === 'function') {
+              // typescript has bug that not get real return type when use `typeof function` check
+              fallbackMsg = await (requestFallback as RequestFallbackFn<AgentMessage>)(message, {
+                error,
+                messages: getRequestMessages(),
+              });
+            } else {
+              fallbackMsg = requestFallback;
+            }
+
+            setMessages((ori) => [
+              ...ori.filter((info) => info.id !== loadingMsgId && info.id !== updatingMsgId),
+              createMessage(fallbackMsg, 'error'),
+            ]);
           } else {
             // Remove directly
             setMessages((ori) => {
-              return ori.filter((info: MessageInfo<AgentMessage>) => info.id !== loadingMsgId && info.id !== updatingMsgId);
+              return ori.filter((info) => info.id !== loadingMsgId && info.id !== updatingMsgId);
             });
           }
         },
-      }
+      },
     );
-  };
+  });
 
   return {
     onRequest,

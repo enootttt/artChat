@@ -42,15 +42,7 @@ watch(
 
 const mergeContent = computed(() => props.messageRender ? props.messageRender((typedContent.value as () => string)?.() ?? "") : typedContent.value);
 
-watch(
-  () => mergeContent.value,
-  (newVal) => {
-    console.log(newVal);
-  }
-);
-
 const contentNode = computed<Function>(() => {
-  console.log('v-html...');
   return props.loading ? () => (props.loadingRender ? h(props.loadingRender()) : h(Loading, { prefixCls: ns.b() })) : (mergeContent.value as Function);
 });
 

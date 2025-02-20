@@ -1,25 +1,23 @@
-import { ref } from 'vue';
+// # copying form ant-design-vue/components/tabs/src/hooks/useSyncState.ts
+
 import type { Ref } from 'vue';
+import { ref } from 'vue';
+
+type Updater<T> = (prev: T) => T;
 
 export default function useSyncState<T>(
-  defaultValue: (() => T) | T,
-): [
-  state: Ref<T>,
-  setState: (val: ((state: T) => T) | T) => void,
-  getState: () => T,
-] {
-  const state = ref<T>(
-    defaultValue instanceof Function ? defaultValue() : defaultValue,
-  );
+  defaultState: T,
+  onChange: (newValue: T, prevValue: T) => void,
+): [Ref<T>, (updater: T | Updater<T>) => void] {
+  const stateRef = ref(defaultState);
 
-  const stateRef = ref<T>(state.value);
-  stateRef.value = state.value;
+  function setState(updater: any) {
+    const newValue = typeof updater === 'function' ? updater(stateRef.value) : updater;
+    if (newValue !== stateRef.value) {
+      onChange(newValue, stateRef.value as T);
+    }
+    stateRef.value = newValue;
+  }
 
-  const setState = (val: ((state: T) => T) | T) => {
-    state.value = val instanceof Function ? val(state.value) : val;
-  };
-
-  const getState = () => stateRef.value;
-
-  return [state as Ref<T>, setState, getState] as const;
+  return [stateRef as Ref<T>, setState];
 }

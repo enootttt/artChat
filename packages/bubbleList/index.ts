@@ -13,3 +13,9 @@ type BubbleListType = {
 (BubbleList as BubbleListType).Loading = BubbleLoading;
 
 export default BubbleList as BubbleListType;
+
+export {
+  BubbleList,
+  Bubble,
+  BubbleLoading,
+}

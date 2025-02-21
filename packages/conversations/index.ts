@@ -13,3 +13,9 @@ type ConversationsType = {
 (Conversations as ConversationsType).Item = ConversationsItem;
 
 export default Conversations as ConversationsType;
+
+export {
+  Conversations,
+  ConversationsGroupTitle,
+  ConversationsItem,
+}

@@ -6,19 +6,22 @@ export type * from './artRequest';
 export { default as ArtStream } from './artStream';
 export type * from './artStream';
 
-export { default as Attachments } from './attachment';
+export * from './attachment';
 export type * from './attachment';
 
-export { default as Bubble } from './bubbleList';
+export * from './bubbleList';
 export type * from './bubbleList';
 
-export { default as Conversations } from './conversations';
+export * from './conversations';
 export type * from './conversations';
+
+export * from './fileList';
+export type * from './fileList';
 
 export { default as Prompts } from './prompts';
 export type * from './prompts';
 
-export { default as Sender } from './sender';
+export * from './sender';
 export type * from './sender';
 
 export { default as useArtAgent } from './useArtAgent';

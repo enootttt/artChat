@@ -21,14 +21,13 @@ type AttachmentType = {
 (Attachment as AttachmentType).FileList = FileList;
 (Attachment as AttachmentType).FileCard = FileCard;
 
-// 完整引入示例
-// Attachment.install = (app: App) => {
-//   app.component(Attachment.name as string, Attachment);
-//   app.component(DropArea.name as string, DropArea);
-//   app.component(PlaceholderUploader.name as string, PlaceholderUploader);
-//   app.component(SilentUploader.name as string, SilentUploader);
-//   app.component(FileList.name as string, FileList);
-//   app.component(FileCard.name as string, FileCard);
-// }
-
 export default Attachment as AttachmentType;
+
+export {
+  Attachment,
+  DropArea,
+  FileCard,
+  FileList,
+  PlaceholderUploader,
+  SilentUploader
+}

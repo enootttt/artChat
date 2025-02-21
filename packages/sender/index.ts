@@ -10,3 +10,8 @@ type SenderType = {
 (Sender as SenderType).Header = SenderHeader;
 
 export default Sender as SenderType;
+
+export {
+  SenderHeader,
+  Sender,
+}

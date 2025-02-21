@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PromptsProps } from './interface';
 
-import { computed, useSlots } from 'vue';
+import { computed, Slots, useSlots } from 'vue';
 
 import { ElIcon } from 'element-plus';
 
@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<PromptsProps>(), {});
 
 const ns = useNamespace('prompts');
 
-const slots = useSlots();
+const slots: Slots = useSlots();
 
 const mergedCls = computed(() => [
   props.className,

@@ -8,7 +8,7 @@ export interface DropUploaderProps {
   disabled?: boolean;
 }
 
-export interface SilentUploaderProps {
+export interface SilentUploaderProps extends Partial<UploadProps> {
   upload?: Partial<UploadProps>;
   rootClassName?: string;
 }

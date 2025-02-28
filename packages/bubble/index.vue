@@ -91,7 +91,7 @@ defineExpose({
         </template>
         <template v-else>
           <!-- 根据 mergedContent 类型选择渲染方式 -->
-          <component :is="mergeContent" v-if="isString(mergeContent)" />
+          <component :is="mergeContent" v-if="!isString(mergeContent)" />
           <template v-else>
             <div v-html="mergeContent"></div>
           </template>
@@ -113,7 +113,7 @@ defineExpose({
         </template>
         <template v-else>
           <!-- 根据 mergedContent 类型选择渲染方式 -->
-          <component :is="mergeContent" v-if="isString(mergeContent)" />
+          <component :is="mergeContent" v-if="!isString(mergeContent)" />
           <template v-else>
             <div v-html="mergeContent"></div>
           </template>

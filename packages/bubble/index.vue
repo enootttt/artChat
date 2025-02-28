@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { BubbleProps } from "./interface";
 
-import { computed, h, ref, useSlots, watch, isVNode } from "vue";
-import type { Ref, VNode, Slots } from "vue";
+import { computed, ref, useSlots, watch } from "vue";
+import type { Ref, Slots, VNode } from "vue";
 
 import { ElAvatar } from "element-plus";
 
@@ -26,6 +26,8 @@ const ns = useNamespace("bubble");
 
 const slots: Slots = useSlots();
 
+const divRef = ref<HTMLDivElement>();
+
 const [typingEnabled, typingStep, typingInterval] = useTypingConfig(props.typing);
 
 const contents = computed(() => {
@@ -40,11 +42,7 @@ watch(
   }
 );
 
-const mergeContent = computed(() => props.messageRender ? props.messageRender((typedContent.value as () => string)?.() ?? "") : typedContent.value);
-
-const contentNode = computed<Function>(() => {
-  return props.loading ? () => (props.loadingRender ? h(props.loadingRender()) : h(Loading, { prefixCls: ns.b() })) : (mergeContent.value as Function);
-});
+const mergeContent = computed(() => (props.messageRender ? props.messageRender((typedContent.value as () => string)?.() ?? "") : typedContent.value));
 
 const triggerTypingCompleteRef = ref(false);
 watch(
@@ -60,10 +58,18 @@ watch(
     }
   }
 );
+
+const isString = (content: any) => {
+  return typeof content === "string";
+}
+
+defineExpose({
+  nativeElement: divRef,
+});
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.b(placement)]">
+  <div ref="divRef" :class="[ns.b(), ns.b(placement)]">
     <div v-if="slots.avatar || avatar" :class="[ns.b('avatar'), props.classNames?.avatar]" :style="props.styles?.avatar">
       <slot name="avatar">
         <ElAvatar v-if="typeof avatar === 'string'" :size="32" :src="avatar" />
@@ -71,47 +77,52 @@ watch(
       </slot>
     </div>
     <div v-if="slots.header || slots.footer" :class="[ns.b('content-wrapper')]">
-      <div :class="[ns.b('header'), props.classNames?.header]" :style="props.styles?.header">
+      <div v-if="slots.header" :class="[ns.b('header'), props.classNames?.header]" :style="props.styles?.header">
         <slot name="header"> </slot>
       </div>
       <div
-        v-if="Object.prototype.toString.call(contentNode) === '[object Fonction]' && !!loadingRender"
-        :class="[ns.b('content'), ns.b(`content-${props.variant}`), props.classNames?.content, props.shape && ns.b(`content-${props.placement}-${props.shape}`)]"
-        :style="props.styles?.content"
-        v-html="contentNode?.()"
-      ></div>
-      <div
-        v-else
         :class="[ns.b('content'), ns.b(`content-${props.variant}`), props.classNames?.content, props.shape && ns.b(`content-${props.placement}-${props.shape}`)]"
         :style="props.styles?.content"
       >
-        <component :is="contentNode" v-if="isVNode(contentNode)" />
-        <div v-html="contentNode" v-else></div>
+        <template v-if="props.loading">
+          <slot v-if="slots.loading" name="loading"></slot>
+          <component :is="loadingRender()" v-else-if="loadingRender" />
+          <Loading v-else :prefix-cls="ns.b()" />
+        </template>
+        <template v-else>
+          <!-- 根据 mergedContent 类型选择渲染方式 -->
+          <component :is="mergeContent" v-if="isString(mergeContent)" />
+          <template v-else>
+            <div v-html="mergeContent"></div>
+          </template>
+        </template>
       </div>
-      <div :class="[ns.b('footer'), props.classNames?.footer]" :style="props.styles?.footer">
+      <div v-if="slots.footer" :class="[ns.b('footer'), props.classNames?.footer]" :style="props.styles?.footer">
         <slot name="footer"></slot>
       </div>
     </div>
     <template v-else>
       <div
-        v-if="Object.prototype.toString.call(contentNode) === '[object String]' && !loadingRender"
-        :class="[ns.b('content'), ns.b(`content-${props.variant}`), props.classNames?.content, props.shape && ns.b(`content-${props.placement}-${props.shape}`)]"
-        :style="props.styles?.content"
-        v-dompurify-html="contentNode || ''"
-      ></div>
-      <div
-        v-else
         :class="[ns.b('content'), ns.b(`content-${props.variant}`), props.classNames?.content, props.shape && ns.b(`content-${props.placement}-${props.shape}`)]"
         :style="props.styles?.content"
       >
-        <component :is="contentNode" v-if="isVNode(contentNode)" />
-        <div v-html="contentNode" v-else></div>
+        <template v-if="props.loading">
+          <slot v-if="slots.loading" name="loading"></slot>
+          <component :is="loadingRender()" v-else-if="loadingRender" />
+          <Loading v-else :prefix-cls="ns.b()" />
+        </template>
+        <template v-else>
+          <!-- 根据 mergedContent 类型选择渲染方式 -->
+          <component :is="mergeContent" v-if="isString(mergeContent)" />
+          <template v-else>
+            <div v-html="mergeContent"></div>
+          </template>
+        </template>
       </div>
     </template>
-    <!-- <component :is="contentDom"></component> -->
   </div>
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import "./index.scss";
 </style>

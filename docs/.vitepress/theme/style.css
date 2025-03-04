@@ -137,3 +137,11 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+p {
+  margin: 0 !important;
+  padding: 0;
+}
+
+blockquote {
+  margin: 0 !important;
+}

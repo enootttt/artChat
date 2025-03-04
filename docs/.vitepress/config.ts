@@ -1,5 +1,7 @@
 import { defineConfig } from "vitepress";
 import path from "node:path";
+import { mdPlugin } from './config/plugins'
+import { MarkdownTransform } from './plugins/markdown-transform';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -15,7 +17,7 @@ export default defineConfig({
       ],
     },
     ssr: {
-      noExternal: ['element-plus', '@element-plus/icons-vue'], // 避免打包为 CommonJS
+      noExternal: ["element-plus", "@element-plus/icons-vue"], // 避免打包为 CommonJS
     },
     build: {
       rollupOptions: {
@@ -26,10 +28,16 @@ export default defineConfig({
         },
       },
     },
+    plugins: [
+      MarkdownTransform() as any
+    ]
+  },
+  markdown: {
+    config: (md) => mdPlugin(md),
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*k0oYSZQMoBwAAAAAAAAAAAAADgCCAQ/original',
+    logo: "https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*k0oYSZQMoBwAAAAAAAAAAAAADgCCAQ/original",
     nav: [
       { text: "组件", link: "/component/overview" },
       {
@@ -45,6 +53,10 @@ export default defineConfig({
       {
         text: "总览",
         link: "/component/overview",
+      },
+      {
+        text: "通用",
+        items: [{ text: "Bubble 对话气泡框", link: "/component/bubble" }],
       },
     ],
 

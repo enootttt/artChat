@@ -1,31 +1,61 @@
 {
-  "hash": "af0889b8",
-  "configHash": "2c9a9597",
-  "lockfileHash": "95f99e5a",
-  "browserHash": "8fed6999",
+  "hash": "798a2240",
+  "configHash": "0075db45",
+  "lockfileHash": "a217b203",
+  "browserHash": "08a6b1cb",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "2edf4f0b",
+      "fileHash": "9c96dfa9",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "ab785902",
+      "fileHash": "134b5f81",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "c567ce41",
+      "fileHash": "4f1e25d0",
+      "needsInterop": false
+    },
+    "@element-plus/icons-vue": {
+      "src": "../../../../node_modules/@element-plus/icons-vue/dist/index.js",
+      "file": "@element-plus_icons-vue.js",
+      "fileHash": "dbad13ea",
+      "needsInterop": false
+    },
+    "element-plus": {
+      "src": "../../../../node_modules/element-plus/es/index.mjs",
+      "file": "element-plus.js",
+      "fileHash": "bb2b6547",
+      "needsInterop": false
+    },
+    "markdown-it": {
+      "src": "../../../../node_modules/markdown-it/index.mjs",
+      "file": "markdown-it.js",
+      "fileHash": "ac2eb13a",
+      "needsInterop": false
+    },
+    "@element-plus/icons-vue/global": {
+      "src": "../../../../node_modules/@element-plus/icons-vue/dist/global.js",
+      "file": "@element-plus_icons-vue_global.js",
+      "fileHash": "e7f02818",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-LW4I4DCF": {
-      "file": "chunk-LW4I4DCF.js"
+    "chunk-K7JYRSNN": {
+      "file": "chunk-K7JYRSNN.js"
+    },
+    "chunk-SSSTV3QS": {
+      "file": "chunk-SSSTV3QS.js"
+    },
+    "chunk-G3PMV62Z": {
+      "file": "chunk-G3PMV62Z.js"
     }
   }
 }

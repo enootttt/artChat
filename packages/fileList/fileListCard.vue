@@ -5,6 +5,7 @@ import { computed, ref, toRaw, watch } from 'vue';
 import type { Component } from 'vue';
 
 import { ElIcon } from 'element-plus';
+import { CircleCloseFilled } from "@element-plus/icons-vue";
 
 import { previewImage } from '../attachment/util';
 import { useNamespace } from '../hooks/useNamespace';

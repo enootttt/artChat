@@ -5,6 +5,8 @@ import { onMounted, ref, watch } from 'vue';
 
 import { ElButton, ElIcon } from 'element-plus';
 
+import { UploadFilled } from "@element-plus/icons-vue";
+
 import SilentUploader from '../attachment/silentUploader.vue';
 import { useNamespace } from '../hooks/useNamespace';
 import fileListCard from './fileListCard.vue';
@@ -96,7 +98,7 @@ onMounted(() => {
       <ElButton :class="[ns.b('upload-btn')]" type="info">
         <template #icon>
           <ElIcon :class="[ns.b('upload-btn-icon')]">
-            <upload-filled />
+            <UploadFilled />
           </ElIcon>
         </template>
       </ElButton>

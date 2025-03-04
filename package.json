@@ -47,6 +47,9 @@
   "devDependencies": {
     "@types/node": "22.10.2",
     "@vitejs/plugin-vue": "^5.2.1",
+    "fast-glob": "^3.3.3",
+    "markdown-it": "^14.1.0",
+    "markdown-it-container": "^4.0.0",
     "rollup": "^4.34.8",
     "vite": "^6.0.3",
     "vite-plugin-dts": "^4.4.0",

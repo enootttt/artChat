@@ -19,7 +19,7 @@ const ns = useNamespace("bubble-list");
 const slots: Slots = useSlots();
 
 const TOLERANCE = 1;
-const initialized = ref(false);
+const initialized = ref(true);
 const scrollReachEnd = ref(false);
 const updateCount = ref(0);
 const listRef = ref<HTMLElement>();
@@ -117,8 +117,8 @@ const scrollTo = ({ key, offset, behavior = "smooth", block }: scrollTopParamete
   }
 };
 
-const getBubbleRefs = (node: Component<InstanceType<typeof Bubble>> | null, key: number | string | undefined) => {
-  if (!key) return;
+const getBubbleRefs = (node: Component<InstanceType<typeof Bubble>> | null, key: number | string | undefined, bubble) => {
+  if (key === null || key === undefined) return;
   if (node) {
     Reflect.set(bubbleRefs.value, key, node);
   } else {
@@ -129,7 +129,6 @@ const getBubbleRefs = (node: Component<InstanceType<typeof Bubble>> | null, key:
 onMounted(() => {
   nextTick(() => {
     scrollTo({ offset: listRef.value!.scrollHeight, behavior: "auto" });
-    initialized.value = true;
   });
 });
 
@@ -145,7 +144,7 @@ defineExpose({
       v-for="bubble in displayData"
       :key="bubble.key"
       v-bind="bubble"
-      :ref="(node) => getBubbleRefs(node, bubble.key)"
+      :ref="(node) => getBubbleRefs(node, bubble.key, bubble)"
       :on-typing-complete="() => onTypingCompleteFn(bubble)"
       :on-update="onBubbleUpdate"
       :typing="initialized ? (bubble.typing as boolean) : false"

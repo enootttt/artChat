@@ -1,6 +1,6 @@
 {
   "name": "@artmate/chat",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "借鉴字节开源react库AntX，通过vue实现的版本",
   "keywords": [
     "AI",
@@ -22,7 +22,10 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "files": [
     "dist"
@@ -44,9 +47,13 @@
   "devDependencies": {
     "@types/node": "22.10.2",
     "@vitejs/plugin-vue": "^5.2.1",
+    "fast-glob": "^3.3.3",
+    "markdown-it": "^14.1.0",
+    "markdown-it-container": "^4.0.0",
     "rollup": "^4.34.8",
     "vite": "^6.0.3",
-    "vite-plugin-dts": "^4.4.0"
+    "vite-plugin-dts": "^4.4.0",
+    "vitepress": "^1.6.3"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",

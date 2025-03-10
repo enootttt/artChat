@@ -4,6 +4,7 @@
 $prefix: 'prompts' !default;
 
 @include b($prefix) {
+  $component-prefix: &;
   max-width: 100%;
   box-sizing: border-box;
   * {
@@ -34,6 +35,9 @@ $prefix: 'prompts' !default;
     &#{&}-vertical {
       flex-direction: column;
       align-items: flex-start;
+      #{$component-prefix}-item {
+        align-items:  center;
+      }
     }
   }
 
@@ -51,7 +55,7 @@ $prefix: 'prompts' !default;
     transition: border $motion-duration-slow, background $motion-duration-slow;
     border: $line-width $line-type var(--border-secondary);
   }
-  &-item:not(#{$prefix}-item-has-nest) {
+  &-item:not(#{$component-prefix}-item-has-nest) {
     &:hover {
       cursor: pointer;
       background: var(--color-fill-tertiary);
@@ -66,7 +70,6 @@ $prefix: 'prompts' !default;
     display: flex;
     gap: $padding-xxs;
     flex-direction: column;
-    align-items: center;
   }
   &-icon,
   &-label,
@@ -88,15 +91,15 @@ $prefix: 'prompts' !default;
   &-item-disabled {
     pointer-events: none;
     background: var(--color-fill);
-    .#{$prefix}-label,
-    .#{$prefix}-desc {
+    #{$component-prefix}-label,
+    #{$component-prefix}-desc {
       color: var(--color-text-tertiary);
     }
   }
 
   &-item-has-nest {
-    &>.#{$prefix}-content {
-      &>.#{$prefix}-label {
+    &>#{$component-prefix}-content {
+      &>#{$component-prefix}-label {
         font-size: $font-size-lg;
         line-height: $line-height-lg;
       }

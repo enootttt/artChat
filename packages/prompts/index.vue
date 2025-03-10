@@ -95,7 +95,7 @@ const mergedListCls = computed(() => [
               list: props.styles?.subList,
               item: props.styles?.subItem,
             }"
-            :vertical="props.vertical"
+            vertical
           />
         </div>
       </div>

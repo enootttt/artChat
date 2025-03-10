@@ -61,6 +61,12 @@ export default defineConfig({
           { text: "Conversations 管理对话", link: "/component/conversations" }
         ],
       },
+      {
+        text: "唤醒",
+        items: [
+          { text: "Prompts 提示集", link: "/component/prompts" },
+        ],
+      },
     ],
 
     socialLinks: [{ icon: "gitee", link: "https://gitee.com/asd1232rq3123/artmate-chat" }],

@@ -117,7 +117,7 @@ const scrollTo = ({ key, offset, behavior = "smooth", block }: scrollTopParamete
   }
 };
 
-const getBubbleRefs = (node: Component<InstanceType<typeof Bubble>> | null, key: number | string | undefined, bubble) => {
+const getBubbleRefs = (node: Component<InstanceType<typeof Bubble>> | null, key: number | string | undefined) => {
   if (key === null || key === undefined) return;
   if (node) {
     Reflect.set(bubbleRefs.value, key, node);
@@ -144,7 +144,7 @@ defineExpose({
       v-for="bubble in displayData"
       :key="bubble.key"
       v-bind="bubble"
-      :ref="(node) => getBubbleRefs(node, bubble.key, bubble)"
+      :ref="(node) => getBubbleRefs(node, bubble.key)"
       :on-typing-complete="() => onTypingCompleteFn(bubble)"
       :on-update="onBubbleUpdate"
       :typing="initialized ? (bubble.typing as boolean) : false"

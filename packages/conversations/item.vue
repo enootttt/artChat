@@ -4,6 +4,7 @@ import type { ItemProps } from './interface';
 import { computed, ref } from 'vue';
 
 import { ElButton, ElIcon, ElTooltip } from 'element-plus';
+import { MoreFilled } from '@element-plus/icons-vue';
 
 import DropDown from '../dropdown/index.vue';
 import { useNamespace } from '../hooks/useNamespace';
@@ -48,6 +49,12 @@ const onInternalClick = () => {
     emit('click', props.info);
   }
 };
+
+const handleCommand = (e: any) => {
+  if (Array.isArray(props.menu)) return;
+  if (!props.info) return;
+  props.menu?.onClick?.({ ...props.info, key: e });
+}
 </script>
 
 <template>
@@ -79,9 +86,10 @@ const onInternalClick = () => {
       <DropDown
         v-if="menu && !info?.disabled"
         :disabled="info?.disabled"
-        :menu="menu"
+        :menu="Array.isArray(menu) ? menu : menu.items"
         :placement="direction === 'rtl' ? 'bottom-start' : 'bottom-end'"
         trigger="click"
+        @command="handleCommand"
       >
         <ElButton :disabled="info?.disabled" link @click="stopPropagation">
           <ElIcon :class="ns.b('menu-icon')"><MoreFilled /></ElIcon>

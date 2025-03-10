@@ -3,6 +3,11 @@ import type { DropDownItemProps } from '../dropdown/interface';
 import type { Component, CSSProperties, VNode } from 'vue';
 
 type GroupType = string;
+
+export interface MenuProps {
+  items: DropDownItemProps[];
+  onClick?: (value: Conversation) => void;
+}
 /**
  * @desc 会话数据
  * @descEN Conversation data
@@ -50,7 +55,7 @@ export interface ItemProps {
   className?: string;
   active?: boolean;
   info?: Conversation;
-  menu?: DropDownItemProps[];
+  menu?: MenuProps | DropDownItemProps[];
   inEllipsis?: boolean;
   line?: number;
 }
@@ -102,7 +107,7 @@ export interface ConversationsProps {
     item: CSSProperties;
   };
   // 菜单
-  menu?: ((value: Conversation) => DropDownItemProps[]) | DropDownItemProps[];
+  menu?: ((value: Conversation) => MenuProps) | DropDownItemProps[];
 }
 
 export interface GroupTitleProps {

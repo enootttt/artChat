@@ -30,4 +30,8 @@ export type * from './useArtAgent';
 export { default as useArtChat } from './useArtChat';
 export type * from './useArtChat';
 
+export { default as Welcome } from './welcome/index.vue';
+export type * from './welcome/index.vue';
+
+
 export { default as version } from './version';

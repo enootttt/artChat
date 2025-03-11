@@ -1,79 +1,117 @@
-@use 'sass:map';
+@import '../theme/index.scss';  
+@import '../theme/mixin.scss';  
 
-.welcome-container {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background-color: var(--el-bg-color);
+$prefix: 'welcome' !default;  
+
+@include b($prefix) {  
+  $component-prefix: &;  
+  height: 100%;  
+  width: 100%;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  padding: 20px;  
+  background-color: var(--el-bg-color);  
+  transition: background-color 0.3s ease;  
+  box-sizing: border-box;  
   
-  // 内容区域样式
-  .welcome-content {
-    display: flex;
-    align-items: center;
-    max-width: 800px;
-    width: 100%;
-    padding: 40px;
-    border-radius: 8px;
-    background: var(--el-bg-color-overlay);
-    box-shadow: var(--el-box-shadow-light);
+  &-content {  
+    display: flex;  
+    align-items: center;  
+    max-width: 800px;  
+    width: 100%;  
+    padding: 40px;  
+    border-radius: 8px;  
+    background: var(--el-bg-color-overlay);  
+    box-shadow: var(--el-box-shadow-light);  
+    transition: all 0.3s ease;  
+    box-sizing: border-box;  
 
-    // 左侧区域
-    .welcome-left {
-      flex: 0 0 80px;
-      margin-right: 40px;
+    &-left {  
+      flex: 0 0 80px;  
+      margin-right: 40px;  
+      min-width: 80px;  
 
-      // 图标样式
-      .welcome-icon {
-        width: 80px;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      &-icon {  
+        width: 80px;  
+        height: 80px;  
+        display: flex;  
+        align-items: center;  
+        justify-content: center;  
+        cursor: pointer;  
+        transition: transform 0.3s ease;  
         
-        img {
-          max-width: 100%;
-          max-height: 100%;
-        }
-      }
-    }
+        &:hover {  
+          transform: scale(1.05);  
+        }  
+        
+        img {  
+          max-width: 100%;  
+          max-height: 100%;  
+          object-fit: contain;  
+        }  
+      }  
+    }  
 
-    // 右侧区域
-    .welcome-right {
-      flex: 1;
-      text-align: left;
-      position: relative;
+    &-right {  
+      flex: 1;  
+      text-align: left;  
+      position: relative;  
+      min-width: 0;  
 
-      // 右上角操作区域
-      .welcome-extra {
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
+      &-extra {  
+        position: absolute;  
+        top: 0;  
+        right: 0;  
+        transition: opacity 0.3s ease;  
+        z-index: 1;  
 
-      // 标题样式
-      .welcome-title {
-        font-size: 28px;
-        font-weight: bold;
-        color: var(--el-text-color-primary);
-        margin-bottom: 16px;
-      }
+        &:hover {  
+          opacity: 0.85;  
+        }  
+      }  
 
-      // 描述文本样式  
-      .welcome-description {
-        font-size: 16px;
-        color: var(--el-text-color-regular);
-        line-height: 1.8;
-      }
-    }
-  }
-}
+      &-title {  
+        font-size: 28px;  
+        font-weight: bold;  
+        color: var(--el-text-color-primary);  
+        margin-bottom: 16px;  
+        cursor: pointer;  
+        transition: color 0.3s ease;  
+        word-break: break-word;  
 
-// 无边框变体样式
-.welcome-borderless {
-  .welcome-content {
-    box-shadow: none;
-    background: transparent;
-  }
-}
+        &:hover {  
+          color: var(--el-color-primary);  
+        }  
+      }  
+
+      &-description {  
+        font-size: 16px;  
+        color: var(--el-text-color-regular);  
+        line-height: 1.8;  
+        word-break: break-word;  
+      }  
+    }  
+  }  
+
+  &#{&}-filled {  
+    #{$component-prefix}-content {  
+      background: var(--el-bg-color-overlay);  
+      box-shadow: var(--el-box-shadow-light);  
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;  
+    }  
+  }  
+
+  &#{&}-borderless {  
+    #{$component-prefix}-content {  
+      box-shadow: none;  
+      background: transparent;  
+      padding: 0;  
+      transition: background-color 0.3s ease;  
+    }  
+  }  
+}  
+
+@include b(#{$prefix}-rtl) {  
+  direction: rtl;  
+}  

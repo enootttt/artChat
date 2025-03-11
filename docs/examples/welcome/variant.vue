@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { Welcome } from '@artmate/chat';
 
-const handleStart = () => {
-  console.log('开始使用');
-};
-
 const welcomeProps = {
   icon: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*k0oYSZQMoBwAAAAAAAAAAAAADgCCAQ/original',
   title: '欢迎使用 ArtChat',
@@ -14,16 +10,31 @@ const welcomeProps = {
     extra: {
       width: '100px',
       padding: '8px 16px',
-      background: '#1677ff', 
-      color: 'white',
+      background: '#1677ff',
+      color: 'white', 
       border: 'none',
       borderRadius: '6px',
       cursor: 'pointer'
     }
   }
-};
+} as const;
+
 </script>
 
 <template>
-  <Welcome v-bind="welcomeProps" @start="handleStart" />
+  <div class="variant-demo">
+    <!-- 默认变体 -->
+    <Welcome v-bind="welcomeProps" variant="filled" />
+    
+    <!-- 无边框变体 -->
+    <Welcome v-bind="welcomeProps" variant="borderless" />
+  </div>
 </template>
+
+<style scoped>
+.variant-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+</style>

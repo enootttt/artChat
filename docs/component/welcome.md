@@ -20,6 +20,16 @@ welcome/basic
 
 :::
 
+### 变体样式
+
+Welcome 组件提供了两种变体样式: filled(默认) 和 borderless。
+
+:::demo 通过设置 variant 属性来切换不同的变体样式。
+
+welcome/variant
+
+:::
+
 ## API
 
 ### WelcomeProps

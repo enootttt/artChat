@@ -1,117 +1,77 @@
-@import '../theme/index.scss';  
-@import '../theme/mixin.scss';  
+@import "../theme/index.scss";
+@import "../theme/mixin.scss";
 
-$prefix: 'welcome' !default;  
+$prefix: "welcome" !default;
 
-@include b($prefix) {  
-  $component-prefix: &;  
-  height: 100%;  
-  width: 100%;  
-  display: flex;  
-  align-items: center;  
-  justify-content: center;  
-  padding: var(--padding);  
-  background-color: var(--color-bg-container);  
-  transition: background-color var(--motion-duration-slow) ease;  
-  box-sizing: border-box;  
-  
-  &-content {  
-    display: flex;  
-    align-items: center;  
-    max-width: 800px;  
-    width: 100%;  
-    padding: var(--padding-xl);  
-    border-radius: var(--border-radius-lg);  
-    background-color: var(--color-bg-container);  
-    box-shadow: var(--box-shadow-tertiary);  
-    transition: all var(--motion-duration-slow) ease;  
-    box-sizing: border-box;  
+@include b($prefix) {
+  $component-prefix: &;
+  display: flex;
+  gap: 16px;
+  box-sizing: border-box;
 
-    &-left {  
-      flex: 0 0 80px;  
-      margin-right: var(--margin-xl);  
-      min-width: 80px;  
+  &-icon {
+    height: 58px;
+    display: flex;
 
-      &-icon {  
-        width: 80px;  
-        height: 80px;  
-        display: flex;  
-        align-items: center;  
-        justify-content: center;  
-        cursor: pointer;  
-        transition: transform var(--motion-duration-slow) ease;  
-        
-        &:hover {  
-          transform: scale(1.05);  
-        }  
-        
-        img {  
-          max-width: 100%;  
-          max-height: 100%;  
-          object-fit: contain;  
-        }  
-      }  
-    }  
+    img {
+      max-width: 100%;
+      height: 100%;
+    }
+  }
 
-    &-right {  
-      flex: 1;  
-      text-align: left;  
-      position: relative;  
-      min-width: 0;  
+  &-content-wrapper {
+    flex: auto;
+    gap: var(--padding-xs);
+    width: 0;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
 
-      &-extra {  
-        position: absolute;  
-        top: 0;  
-        right: 0;  
-        transition: opacity var(--motion-duration-slow) ease;  
-        z-index: 1;  
+    #{$component-prefix}-title {
+      color: var(--color-text-heading);
+      word-break: break-word;
+      font-size: var(--font-size-heading-4);
+      line-height: var(--line-height-heading-4);
 
-        &:hover {  
-          opacity: 0.85;  
-        }  
-      }  
+      h4 {
+        margin: 0;
+        padding: 0;
+      }
 
-      &-title {  
-        font-size: var(--font-size-heading-3);  
-        font-weight: bold;  
-        color: var(--color-text-heading);  
-        margin-bottom: var(--margin);  
-        cursor: pointer;  
-        transition: color var(--motion-duration-slow) ease;  
-        word-break: break-word;  
+      &.extra {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--padding-xs);
+      }
 
-        &:hover {  
-          color: var(--color-primary);  
-        }  
-      }  
+      #{$component-prefix}-extra {
+        margin-inline-start: auto;
+      }
+    }
 
-      &-description {  
-        font-size: var(--font-size-lg);  
-        color: var(--color-text);  
-        line-height: var(--line-height);  
-        word-break: break-word;  
-      }  
-    }  
-  }  
+    &-description {
+      font-size: var(--font-size);
+      color: var(--color-text);
+      line-height: var(--line-height);
+      word-break: break-word;
+      box-sizing: border-box;
+    }
+  }
 
-  &#{&}-filled {  
-    #{$component-prefix}-content {  
-      background-color: var(--color-bg-container);  
-      box-shadow: var(--box-shadow-tertiary);  
-      transition: background-color var(--motion-duration-slow) ease, box-shadow var(--motion-duration-slow) ease;  
-    }  
-  }  
+  &#{&}-filled {
+    padding-inline: 16px;
+    padding-block: 12px;
+    border-radius: 8px;
+    background: rgba(var(--light), 0.12);
+    padding-inline: var(--padding);
+    padding-block: var(--padding-sm);
+    border-radius: var(--border-radius-lg);
+  }
 
-  &#{&}-borderless {  
-    #{$component-prefix}-content {  
-      box-shadow: none;  
-      background: transparent;  
-      padding: 0;  
-      transition: background-color var(--motion-duration-slow) ease;  
-    }  
-  }  
-}  
-
-@include b(#{$prefix}-rtl) {  
-  direction: rtl;  
-}  
+  &#{&}-borderless {
+    #{$component-prefix}-title {
+      font-size: var(--font-size-heading-3);
+      line-height: var(--line-height-heading-3);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'vue';
+import type { CSSProperties, VNode } from 'vue';
 
 // Welcome 组件属性接口定义
 export interface WelcomeProps {
@@ -7,9 +7,9 @@ export interface WelcomeProps {
   // 描述文本
   description?: string | number;
   // 额外的操作区域内容
-  extra?: string | number | JSX.Element;
+  extra?: string | number;
   // 图标内容
-  icon?: string | JSX.Element;
+  icon?: string | VNode;
   // 根元素类名
   rootClassName?: string;
   // 各部分的自定义样式
@@ -18,14 +18,4 @@ export interface WelcomeProps {
   title?: string | number;
   // 组件变体类型
   variant?: 'filled' | 'borderless';
-}
-
-// Welcome 组件事件接口定义
-export interface WelcomeEmits {
-  // 开始使用按钮点击事件
-  (e: 'start'): void;
-  // 点击图标事件
-  (e: 'click-icon'): void;
-  // 点击标题事件
-  (e: 'click-title'): void;
 }

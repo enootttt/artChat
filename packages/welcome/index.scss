@@ -10,9 +10,9 @@ $prefix: 'welcome' !default;
   display: flex;  
   align-items: center;  
   justify-content: center;  
-  padding: 20px;  
-  background-color: var(--el-bg-color);  
-  transition: background-color 0.3s ease;  
+  padding: var(--padding);  
+  background-color: var(--color-bg-container);  
+  transition: background-color var(--motion-duration-slow) ease;  
   box-sizing: border-box;  
   
   &-content {  
@@ -20,16 +20,16 @@ $prefix: 'welcome' !default;
     align-items: center;  
     max-width: 800px;  
     width: 100%;  
-    padding: 40px;  
-    border-radius: 8px;  
-    background: var(--el-bg-color-overlay);  
-    box-shadow: var(--el-box-shadow-light);  
-    transition: all 0.3s ease;  
+    padding: var(--padding-xl);  
+    border-radius: var(--border-radius-lg);  
+    background-color: var(--color-bg-container);  
+    box-shadow: var(--box-shadow-tertiary);  
+    transition: all var(--motion-duration-slow) ease;  
     box-sizing: border-box;  
 
     &-left {  
       flex: 0 0 80px;  
-      margin-right: 40px;  
+      margin-right: var(--margin-xl);  
       min-width: 80px;  
 
       &-icon {  
@@ -39,7 +39,7 @@ $prefix: 'welcome' !default;
         align-items: center;  
         justify-content: center;  
         cursor: pointer;  
-        transition: transform 0.3s ease;  
+        transition: transform var(--motion-duration-slow) ease;  
         
         &:hover {  
           transform: scale(1.05);  
@@ -63,7 +63,7 @@ $prefix: 'welcome' !default;
         position: absolute;  
         top: 0;  
         right: 0;  
-        transition: opacity 0.3s ease;  
+        transition: opacity var(--motion-duration-slow) ease;  
         z-index: 1;  
 
         &:hover {  
@@ -72,23 +72,23 @@ $prefix: 'welcome' !default;
       }  
 
       &-title {  
-        font-size: 28px;  
+        font-size: var(--font-size-heading-3);  
         font-weight: bold;  
-        color: var(--el-text-color-primary);  
-        margin-bottom: 16px;  
+        color: var(--color-text-heading);  
+        margin-bottom: var(--margin);  
         cursor: pointer;  
-        transition: color 0.3s ease;  
+        transition: color var(--motion-duration-slow) ease;  
         word-break: break-word;  
 
         &:hover {  
-          color: var(--el-color-primary);  
+          color: var(--color-primary);  
         }  
       }  
 
       &-description {  
-        font-size: 16px;  
-        color: var(--el-text-color-regular);  
-        line-height: 1.8;  
+        font-size: var(--font-size-lg);  
+        color: var(--color-text);  
+        line-height: var(--line-height);  
         word-break: break-word;  
       }  
     }  
@@ -96,9 +96,9 @@ $prefix: 'welcome' !default;
 
   &#{&}-filled {  
     #{$component-prefix}-content {  
-      background: var(--el-bg-color-overlay);  
-      box-shadow: var(--el-box-shadow-light);  
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;  
+      background-color: var(--color-bg-container);  
+      box-shadow: var(--box-shadow-tertiary);  
+      transition: background-color var(--motion-duration-slow) ease, box-shadow var(--motion-duration-slow) ease;  
     }  
   }  
 
@@ -107,7 +107,7 @@ $prefix: 'welcome' !default;
       box-shadow: none;  
       background: transparent;  
       padding: 0;  
-      transition: background-color 0.3s ease;  
+      transition: background-color var(--motion-duration-slow) ease;  
     }  
   }  
 }  

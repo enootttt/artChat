@@ -64,7 +64,7 @@ const onInternalKeyPress = (e: KeyboardEvent) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), rootClassName]">
+  <div :class="[ns.b(), disabled && ns.b('disabled'), rootClassName]">
     <ArtCollapseTransition>
       <slot name="header"></slot>
     </ArtCollapseTransition>

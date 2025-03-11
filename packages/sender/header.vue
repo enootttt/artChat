@@ -48,7 +48,7 @@ watch(
         />
       </div>
     </div>
-    <div :class="ns.b('content')">
+    <div :class="ns.b('content')" v-if="slot.default">
       <slot></slot>
     </div>
   </div>

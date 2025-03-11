@@ -1,0 +1,119 @@
+<script setup lang="ts">
+import { useArtChat } from '@artmate/chat'
+import { ref } from 'vue'
+
+const inputText = ref('')
+
+const { messages, setMessages } = useArtChat({
+  initialMessages: [
+    {
+      id: '1',
+      type: 'text',
+      content: '你好,我是AI助手',
+      sender: 'assistant'
+    }
+  ]
+})
+
+const handleSend = () => {
+  if (!inputText.value) return
+
+  // 添加用户消息
+  setMessages([
+    ...messages.value,
+    {
+      id: String(Date.now()),
+      type: 'text', 
+      content: inputText.value,
+      sender: 'user'
+    }
+  ])
+
+  // 模拟AI回复
+  setTimeout(() => {
+    setMessages([
+      ...messages.value,
+      {
+        id: String(Date.now()),
+        type: 'text',
+        content: '收到你的消息了!',
+        sender: 'assistant'  
+      }
+    ])
+  }, 500)
+
+  inputText.value = ''
+}
+</script>
+
+<template>
+  <div class="chat-container">
+    <!-- 消息列表 -->
+    <div class="messages">
+      <div v-for="msg in messages" :key="msg.id" :class="msg.sender">
+        {{ msg.content }}
+      </div>
+    </div>
+
+    <!-- 发送消息区域 -->
+    <div class="input-area">
+      <input 
+        v-model="inputText"
+        type="text" 
+        placeholder="请输入消息"
+        @keyup.enter="handleSend"
+      />
+      <button @click="handleSend">发送</button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.chat-container {
+  padding: 20px;
+}
+
+.messages {
+  min-height: 300px;
+  border: 1px solid #eee;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.user {
+  text-align: right;
+  color: #1890ff;
+  margin: 10px 0;
+}
+
+.assistant {
+  text-align: left;
+  color: #333;
+  margin: 10px 0;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.input-area button {
+  padding: 8px 16px;
+  background: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  background: #40a9ff;
+}
+</style>

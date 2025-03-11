@@ -61,12 +61,17 @@ export default defineConfig({
           { text: "Conversations 管理对话", link: "/component/conversations" }
         ],
       },
-      
       {
         text: "唤醒",
         items: [
           { text: "Welcome 欢迎页", link: "/component/welcome" },
           { text: "Prompts 提示集", link: "/component/prompts" },
+        ],
+      },
+      {
+        text: "工具",
+        items: [
+          { text: "useArtChat 管理聊天状态", link: "/component/useArtChat" },
         ],
       },
     ],

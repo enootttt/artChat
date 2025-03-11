@@ -10,7 +10,8 @@ const { messages, setMessages } = useArtChat({
       id: '1',
       type: 'text',
       content: '你好,我是AI助手',
-      sender: 'assistant'
+      sender: 'assistant',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=assistant'
     }
   ]
 })
@@ -25,7 +26,8 @@ const handleSend = () => {
       id: String(Date.now()),
       type: 'text', 
       content: inputText.value,
-      sender: 'user'
+      sender: 'user',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=user'
     }
   ])
 
@@ -37,7 +39,8 @@ const handleSend = () => {
         id: String(Date.now()),
         type: 'text',
         content: '收到你的消息了!',
-        sender: 'assistant'  
+        sender: 'assistant',
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=assistant'
       }
     ])
   }, 500)
@@ -50,8 +53,9 @@ const handleSend = () => {
   <div class="chat-container">
     <!-- 消息列表 -->
     <div class="messages">
-      <div v-for="msg in messages" :key="msg.id" :class="msg.sender">
-        {{ msg.content }}
+      <div v-for="msg in messages" :key="msg.id" class="message" :class="msg.sender">
+        <img :src="msg.avatar" class="avatar" :alt="msg.sender" />
+        <div class="content">{{ msg.content }}</div>
       </div>
     </div>
 
@@ -80,16 +84,38 @@ const handleSend = () => {
   padding: 10px;
 }
 
-.user {
-  text-align: right;
-  color: #1890ff;
+.message {
+  display: flex;
+  align-items: flex-start;
   margin: 10px 0;
+  gap: 8px;
 }
 
-.assistant {
-  text-align: left;
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f0f0f0;
+}
+
+.content {
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 70%;
+}
+
+.user .content {
+  background: #1890ff;
+  color: white;
+}
+
+.assistant .content {
+  background: #f0f0f0;
   color: #333;
-  margin: 10px 0;
 }
 
 .input-area {

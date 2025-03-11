@@ -69,6 +69,12 @@ export default defineConfig({
         ],
       },
       {
+        text: "表达",
+        items: [
+          { text: "Sender 输入框", link: "/component/sender" },
+        ],
+      },
+      {
         text: "工具",
         items: [
           { text: "useArtChat 管理聊天状态", link: "/component/useArtChat" },

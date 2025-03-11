@@ -96,11 +96,3 @@ type SemanticType = 'list' | 'item' | 'content' | 'title' | 'subList' | 'subItem
 | icon        | 提示图标显示在提示项的左侧   | VNode           | -       | -    |
 | key         | 唯一标识用于区分每个提示项   | string          | -       | -    |
 | label       | 提示标签显示提示的主要内容   | VNode \| string | -       | -    |
-
-## Semantic DOM
-
-<vp-semantic component="Prompts"></vp-semantic>
-
-## 主题变量（Design Token）
-
-<!-- <ComponentTokenTable component="Prompts"></ComponentTokenTable> -->

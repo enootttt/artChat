@@ -145,11 +145,3 @@ bubble/gpt-vis
 | autoScroll | 当内容更新时，自动滚动到最新位置。如果用户滚动，则会暂停自动滚动。 | boolean                                                     | true   |      |
 | items      | 气泡数据列表                                                       | (BubbleProps & { key?: string \| number, role?: string })[] | -      |      |
 | roles      | 设置气泡默认属性，`items` 中的 `role` 会进行自动对应               | Record<string, BubbleProps> \| (bubble) => BubbleProps      | -      |      |
-
-## Semantic DOM
-
-<!-- <code src="./demo/_semantic.tsx" simplify="true"></code> -->
-
-## 主题变量（Design Token）
-
-<!-- <ComponentTokenTable component="Bubble"></ComponentTokenTable> -->

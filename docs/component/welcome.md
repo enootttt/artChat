@@ -10,9 +10,7 @@ Welcome 组件用于展示一个美观的欢迎页面,可以包含图标、标�
 
 ## 代码演示
 
-### 基础用法
-
-基础的欢迎页面,展示了图标、标题、描述文本和操作按钮。
+### 基本
 
 :::demo 通过设置 icon、title、description 和 extra 属性来自定义欢迎页的各个部分。
 
@@ -20,9 +18,7 @@ welcome/basic
 
 :::
 
-### 变体样式
-
-Welcome 组件提供了两种变体样式: filled(默认) 和 borderless。
+### 变体
 
 :::demo 通过设置 variant 属性来切换不同的变体样式。
 
@@ -38,20 +34,12 @@ welcome/variant
 | --- | --- | --- | --- | --- |
 | classNames | 各部分的自定义类名 | Record<'icon' \| 'title' \| 'description' \| 'extra', string> | - | - |
 | description | 描述文本 | string \| number | - | - |
-| extra | 额外的操作区域内容 | string \| number \| JSX.Element | - | - |
+| extra | 额外的操作区域内容 | string \| number | - | - |
 | icon | 图标内容 | string \| JSX.Element | - | - |
 | rootClassName | 根元素类名 | string | - | - |
 | styles | 各部分的自定义样式 | Record<'icon' \| 'title' \| 'description' \| 'extra', CSSProperties> | - | - |
 | title | 标题文本 | string \| number | - | - |
 | variant | 组件变体类型 | 'filled' \| 'borderless' | 'filled' | - |
-
-### Welcome Events
-
-| 事件名 | 说明 | 类型 |
-| --- | --- | --- |
-| start | 开始使用按钮点击事件 | () => void |
-| click-icon | 点击图标事件 | () => void |
-| click-title | 点击标题事件 | () => void |
 
 ### Welcome Slots
 

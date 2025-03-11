@@ -20,6 +20,11 @@ $prefix: "sender" !default;
     box-shadow: var(--box-shadow-secondary);
     border-color: var(--color-primary);
   }
+
+  &#{&}-disabled {
+    background: rgb(var(--light), 0.04);
+    color: rgba(var(--light), 0.25);
+  }
 }
 
 @include b(#{$prefix}-content) {

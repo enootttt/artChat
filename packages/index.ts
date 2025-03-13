@@ -24,6 +24,9 @@ export type * from './prompts';
 export * from './sender';
 export type * from './sender';
 
+export * from './thought-chain';
+export type * from './thought-chain';
+
 export { default as useArtAgent } from './useArtAgent';
 export type * from './useArtAgent';
 

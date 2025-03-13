@@ -1,0 +1,274 @@
+@use "sass:map";
+@import "../theme/index.scss";
+@import "../theme/mixin.scss";
+
+$prefix: "thought-chain" !default;
+$prefix-item: "thought-chain-item" !default;
+
+$colors: (
+  pending: #{$color-primary},
+  success: #{$color-success},
+  error: #{$color-error},
+);
+
+@mixin getArg($size, $font-size) {
+  &-icon {
+    height: $size;
+    width: $size;
+    font-size: $font-size;
+  }
+  &-extra {
+    height: $size;
+    max-height: $size;
+  }
+  &-title {
+    height: $size;
+    line-height: $size;
+    max-height: $size;
+    font-size: $font-size;
+  }
+  &-desc {
+    font-size: $font-size;
+  }
+}
+
+@include b($prefix) {
+  display: flex;
+  flex-direction: column;
+  &#{&}-small {
+    padding-inline-start: 20px;
+    gap: 12px;
+    @include b($prefix-item) {
+      $component-prefix: &;
+      &-header {
+        margin-inline-start: -20px;
+        margin-bottom: 12px;
+        gap: 12px;
+        &::before {
+          top: 20px;
+          bottom: -24px;
+          inset-inline-start: 9px;
+        }
+      }
+      @include getArg(20px, 12px);
+      &-content {
+        margin-inline-start: -20px;
+        &::before {
+          inset-inline-start: 9px;
+          bottom: -12px;
+        }
+      }
+      &-footer {
+        margin-top: 12px;
+        &::before {
+          inset-inline-start: -11px;
+          bottom: -12px;
+        }
+      }
+    }
+  }
+  &#{&}-middle {
+    padding-inline-start: 28px;
+    gap: 16px;
+    @include b($prefix-item) {
+      $component-prefix: &;
+      &-header {
+        margin-inline-start: -28px;
+        margin-bottom: 16px;
+        gap: 16px;
+        &::before {
+          top: 28px;
+          bottom: -32px;
+          inset-inline-start: 13px;
+        }
+      }
+      @include getArg(28px, 14px);
+      &-content {
+        margin-inline-start: -28px;
+        &::before {
+          inset-inline-start: 13px;
+          bottom: -16px;
+        }
+      }
+      &-footer {
+        margin-top: 16px;
+        &::before {
+          inset-inline-start: -15px;
+          bottom: -16px;
+        }
+      }
+    }
+  }
+  &#{&}-large {
+    padding-inline-start: 36px;
+    gap: 24px;
+    @include b($prefix-item) {
+      $component-prefix: &;
+      &-header {
+        margin-inline-start: -36px;
+        margin-bottom: 24px;
+        gap: 24px;
+        &::before {
+          top: 36px;
+          bottom: -48px;
+          inset-inline-start: 17px;
+        }
+      }
+      @include getArg(36px, 16px);
+      &-content {
+        margin-inline-start: -36px;
+        &::before {
+          inset-inline-start: 17px;
+          bottom: -24px;
+        }
+      }
+      &-footer {
+        margin-top: 24px;
+        &::before {
+          inset-inline-start: -19px;
+          bottom: -24px;
+        }
+      }
+    }
+  }
+}
+
+@include b($prefix-item) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  $component-prefix: &;
+  // 判断是否是最后一个元素
+  &:last-child &-header:last-child {
+    &::before {
+      display: none;
+    }
+  }
+  // 判断子元素是否包含 content
+  :has(&-content) &-title {
+    cursor: pointer;
+    user-select: none;
+  }
+  :has(&-content) {
+    &:last-child {
+      &-header {
+        &::before {
+          display: block;
+        }
+      }
+    }
+  }
+  &-header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    &::before {
+      content: "";
+      width: 2px;
+      display: block;
+      position: absolute;
+      inset-inline-end: none;
+      background-color: rgba(var(--light), 0.25);
+      box-sizing: border-box;
+      z-index: 0;
+    }
+
+    #{$component-prefix}-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+    &-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      #{$component-prefix}-title {
+        color: rgba(var(--light), 0.88);
+        display: inline-block;
+        max-width: 100%;
+        white-space: nowrap;
+        word-break: break-word;
+        box-sizing: border-box;
+        strong {
+          font-weight: 600;
+          display: flex;
+          #{$component-prefix}-collapse-icon {
+            margin-inline-end: 8px;
+            &.rotate {
+              transform: rotate(90deg);
+            }
+          }
+        }
+      }
+      #{$component-prefix}-desc {
+        color: rgba(var(--light), 0.45);
+        display: inline-block;
+        max-width: 100%;
+        white-space: nowrap;
+        word-break: break-word;
+        box-sizing: border-box;
+      }
+    }
+  }
+  &-content {
+    width: 100%;
+    position: relative;
+    margin-inline-start: -28px;
+    &::before {
+      content: "";
+      width: 2px;
+      display: block;
+      position: absolute;
+      inset-inline-end: none;
+      background-color: rgba(var(--light), 0.25);
+      top: 100%;
+      box-sizing: border-box;
+    }
+    &-box {
+      width: 100%;
+      padding: 16px;
+      display: inline-block;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background-color: var(--color-bg-container);
+      border: 1px solid var(--border-secondary);
+    }
+  }
+  &-footer {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    &::before {
+      content: "";
+      position: absolute;
+      width: 2px;
+      display: block;
+      inset-inline-end: none;
+      background-color: rgba(var(--light), 0.25);
+      top: 0;
+    }
+  }
+  @at-root {
+    @each $key, $value in $colors {
+      $statusColor: map-get($colors, $key);
+      @each $nextStatus in map-keys($colors) {
+        @include b(#{$prefix-item}-#{$key}-#{$nextStatus}) {
+          #{$component-prefix}-icon,
+          & > *::before {
+            background-color: $statusColor;
+          }
+          & > :last-child::before {
+            @if $key == $nextStatus {
+            } @else {
+              background-color: none !important;
+              background: linear-gradient($statusColor, map-get($colors, $nextStatus));
+            }
+          }
+        }
+      }
+    }
+  }
+}

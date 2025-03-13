@@ -2,14 +2,13 @@ import { globals } from "../vitepress";
 import type { Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import "./style.css";
+import "element-plus/theme-chalk/dark/css-vars.css";
 
-console.log(DefaultTheme);
- 
 const define = <T>(value: T): T => value;
 
 // 添加重新加载页面的函数
 const reloadContent = () => {
-  console.log('123 - 检测到内容更新失败');
+  console.log('检测到内容更新失败');
   setTimeout(() => {
     window.location.reload();
   }, 0);
@@ -18,7 +17,7 @@ const reloadContent = () => {
 // 全局错误处理 (直接写死这个臭vitepress错误，捕获住直接刷新页面)
 window.onerror = function(msg, url, line, column, error) {
   if (error && error.toString().includes("Cannot read properties of null (reading 'type')")) {
-    console.log('123 - window.onerror 捕获到错误');
+    console.log('window.onerror 捕获到错误');
     reloadContent();
     return true;
   }
@@ -26,7 +25,7 @@ window.onerror = function(msg, url, line, column, error) {
 // 全局错误处理 (直接写死这个臭vitepress错误，捕获住直接刷新页面)
 window.onunhandledrejection = function(event) {
   if (event.reason && event.reason.toString().includes("Cannot read properties of null (reading 'type')")) {
-    console.log('123 - onunhandledrejection 捕获到错误');
+    console.log('onunhandledrejection 捕获到错误');
     event.preventDefault();
     reloadContent();
     return true;

@@ -75,6 +75,12 @@ export default defineConfig({
         ],
       },
       {
+        text: "确认",
+        items: [
+          { text: "ThoughtChain 思维链", link: "/component/thought-chain" },
+        ],
+      },
+      {
         text: "工具",
         items: [
           { text: "useArtChat 管理聊天状态", link: "/component/useArtChat" },

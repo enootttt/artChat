@@ -3,8 +3,8 @@ import { isVNode, shallowRef } from "vue";
 import { ElCard, ElIcon, ElButton } from "element-plus";
 import { CircleCheck, MoreFilled } from "@element-plus/icons-vue";
 import { ThoughtChain } from "@artmate/chat";
-import type { ThoughtChainItem, ThoughtChainProps } from "@artmate/chat";
-const customizationProps: ThoughtChainItem = {
+import type { ThoughtChainItemProps, ThoughtChainProps } from "@artmate/chat";
+const customizationProps: ThoughtChainItemProps = {
   title: "Thought Chain Item Title",
   description: "description",
   icon: CircleCheck,
@@ -19,7 +19,7 @@ const customizationProps: ThoughtChainItem = {
         development`,
   ],
 };
-const CustomizationPropsFn = (op: ThoughtChainItem) => {
+const CustomizationPropsFn = (op: ThoughtChainItemProps) => {
   return Object.fromEntries(
     Object.entries(op).map(([k, v]) => {
       return [k, isVNode(v) ? shallowRef(v) : v];

@@ -19,7 +19,7 @@ export enum THOUGHT_CHAIN_ITEM_STATUS {
   ERROR = "error",
 }
 
-export interface ThoughtChainItem {
+export interface ThoughtChainItemProps {
   /**
    * @desc 思维节点唯一标识符
    */
@@ -49,7 +49,7 @@ export interface ThoughtChainProps {
   /**
    * @desc 思维节点集合
    */
-  items?: ThoughtChainItem[];
+  items?: ThoughtChainItemProps[];
   /**
    * @desc 是否可折叠
    */

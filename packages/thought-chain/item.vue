@@ -4,11 +4,11 @@ import type { CSSProperties } from "vue";
 import { ElIcon } from "element-plus";
 import { ArrowRightBold } from "@element-plus/icons-vue";
 import { useNamespace } from "../hooks/useNamespace";
-import { ThoughtChainProps, ThoughtChainItem } from "./interface";
+import { ThoughtChainProps, ThoughtChainItemProps } from "./interface";
 
 interface ThoughtChainNodeProps {
-  info?: ThoughtChainItem;
-  nextStatus?: ThoughtChainItem["status"];
+  info?: ThoughtChainItemProps;
+  nextStatus?: ThoughtChainItemProps["status"];
   headerClick?: (key: string) => void;
   expandedKeys?: string[];
   className?: string;

@@ -5,7 +5,7 @@ import { onMounted, ref, watch } from 'vue';
 
 import { ElButton, ElIcon } from 'element-plus';
 
-import { UploadFilled } from "@element-plus/icons-vue";
+import { UploadFilled, ArrowLeftBold, ArrowRightBold } from "@element-plus/icons-vue";
 
 import SilentUploader from '../attachment/silentUploader.vue';
 import { useNamespace } from '../hooks/useNamespace';
@@ -107,19 +107,24 @@ onMounted(() => {
       <ElButton
         :class="[ns.b('prev-btn')]"
         circle
-        icon="ArrowLeftBold"
         size="small"
-        type="primary"
         @click="onScrollLeft"
-      />
+      >
+        <template #icon>
+          <ArrowLeftBold />
+        </template>
+      </ElButton>
       <ElButton
         :class="[ns.b('next-btn')]"
         circle
-        icon="ArrowRightBold"
+        icon=""
         size="small"
-        type="primary"
         @click="onScrollRight"
-      />
+      >
+        <template #icon>
+          <ArrowRightBold />
+        </template>
+      </ElButton>
     </template>
   </div>
 </template>

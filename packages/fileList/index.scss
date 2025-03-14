@@ -1,9 +1,9 @@
-@import '../theme/index.scss';
-@import '../theme/mixin.scss';
+@import "../theme/index.scss";
+@import "../theme/mixin.scss";
 
-$prefix-root: 'attachment' !default;
-$prefix: 'attachment-list' !default;
-$prefix-card: 'attachment-list-card' !default;
+$prefix-root: "attachment" !default;
+$prefix: "attachment-list" !default;
+$prefix-card: "attachment-list-card" !default;
 
 @include b($prefix) {
   display: flex;
@@ -22,9 +22,11 @@ $prefix-card: 'attachment-list-card' !default;
     display: none;
   }
 
-  &-overflow-scrollX, &-overflow-scrollY {
-    &::before, &::after {
-      content: '';
+  &-overflow-scrollX,
+  &-overflow-scrollY {
+    &::before,
+    &::after {
+      content: "";
       position: absolute;
       opacity: 0;
       transition: opacity $motion-duration-slow;
@@ -41,24 +43,25 @@ $prefix-card: 'attachment-list-card' !default;
     overflow-x: auto;
     overflow-y: hidden;
     flex-wrap: nowrap;
-    &::before, &::after {
+    &::before,
+    &::after {
       inset-block: 0;
       width: 8px;
     }
     &::before {
       inset-inline-start: 0;
-      background: linear-gradient(to right, rgba(0,0,0,0.06), rgba(0,0,0,0));
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
     }
     &::after {
       inset-inline-end: 0;
-      background: linear-gradient(to left, rgba(0,0,0,0.06), rgba(0,0,0,0));
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
     }
     &:dir(rtl) {
       &::before {
-        background: linear-gradient(to left, rgba(0,0,0,0.06), rgba(0,0,0,0));
+        background: linear-gradient(to left, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
       }
       &::after {
-        background: linear-gradient(to right, rgba(0,0,0,0.06), rgba(0,0,0,0));
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
       }
     }
   }
@@ -66,17 +69,18 @@ $prefix-card: 'attachment-list-card' !default;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm * 3);
-    &::before, &::after {
+    &::before,
+    &::after {
       inset-inline: 0;
       height: 8px;
     }
     &::before {
       inset-block-start: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.06), rgba(0,0,0,0));
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
     }
     &::after {
       inset-block-end: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.06), rgba(0,0,0,0));
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
     }
   }
   .el-button#{&}-upload-btn {
@@ -89,7 +93,8 @@ $prefix-card: 'attachment-list-card' !default;
   }
 
   // prevNext
-  &-prev-btn, &-next-btn {
+  &-prev-btn,
+  &-next-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -133,6 +138,7 @@ $prefix-card: 'attachment-list-card' !default;
 }
 
 @include b($prefix-card) {
+  $component-prefix: &;
   border-radius: $border-radius;
   position: relative;
   background: var(--color-fill-content);
@@ -141,6 +147,10 @@ $prefix-card: 'attachment-list-card' !default;
   border-color: transparent;
   flex: none;
   font-size: $font-size;
+  .el-progress-circle {
+    width: 100% !important;
+    height: 100% !important;
+  }
   &-name,
   &-desc {
     display: flex;
@@ -165,20 +175,20 @@ $prefix-card: 'attachment-list-card' !default;
     gap: $padding-xs;
     align-items: flex-start;
     width: 236px;
-    #{$prefix-card}-icon {
+    #{$component-prefix}-icon {
       font-size: calc($font-size-lg * 2);
       line-height: 1;
       padding-top: calc($padding-xxs * 1.5);
       flex: none;
     }
-    #{$prefix-card}-content {
+    #{$component-prefix}-content {
       flex: auto;
       min-width: 0px;
       display: flex;
       flex-direction: column;
       align-items: stretch;
     }
-    #{$prefix-card}-desc {
+    #{$component-prefix}-desc {
       color: var(--color-text-tertiary);
     }
   }
@@ -186,7 +196,7 @@ $prefix-card: 'attachment-list-card' !default;
     width: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm);
     height: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm);
     line-height: 1;
-    &:not(#{$prefix-card}-status-error) {
+    &:not(#{$component-prefix}-status-fail) {
       border: 0;
     }
     img {
@@ -196,7 +206,7 @@ $prefix-card: 'attachment-list-card' !default;
       object-fit: cover;
       border-radius: inherit;
     }
-    #{$prefix-card}-img-mask {
+    #{$component-prefix}-img-mask {
       position: absolute;
       inset: 0;
       display: flex;
@@ -205,11 +215,12 @@ $prefix-card: 'attachment-list-card' !default;
       background: rgba(0, 0, 0, 0.65);
       border-radius: inherit;
     }
-    #{$prefix-card}-status-error {
-      img, #{$prefix-card}-img-mask {
+    #{$component-prefix}-status-fail {
+      img,
+      #{$component-prefix}-img-mask {
         border-radius: calc($border-radius - $line-width);
       }
-      #{$prefix-card}-desc {
+      #{$component-prefix}-desc {
         padding: $padding-xxs;
       }
     }
@@ -241,9 +252,8 @@ $prefix-card: 'attachment-list-card' !default;
   &:hover &-remove {
     display: block;
   }
-  &-status-error {
-    background-color: var(--color-error);
-    #{$prefix-card}-desc {
+  &-status-fail {
+    #{$component-prefix}-desc {
       color: var(--color-error);
     }
   }
@@ -252,7 +262,7 @@ $prefix-card: 'attachment-list-card' !default;
   &-motion {
     overflow: hidden;
     transition: opacity $motion-duration-slow, width $motion-duration-slow, margin $motion-duration-slow, padding $motion-duration-slow;
-    #{$prefix-card}-remove {
+    #{$component-prefix}-remove {
       display: none !important;
     }
     &-appear-start {

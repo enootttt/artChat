@@ -178,7 +178,7 @@ const isImgPreview = computed(
     <template v-if="isImgPreview">
       <img :src="previewUrl" alt="preview" />
       <div
-        v-if="props.item?.status !== 'ready'"
+        v-if="props.item?.status && props.item?.status !== 'ready'"
         :class="[`${ns.b('img-mask')}`]"
       >
         <Progress

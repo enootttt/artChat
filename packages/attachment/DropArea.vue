@@ -25,6 +25,9 @@ watch(
       container.value = nextContainer;
     }
   },
+  {
+    immediate: true,
+  }
 );
 
 // =========================== Visible ============================
@@ -69,6 +72,9 @@ watch(
       document.addEventListener('drop', onDrop, true);
     }
   },
+  {
+    immediate: true,
+  }
 );
 onUnmounted(() => {
   if (container.value) {

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { UploadFile } from 'element-plus';
+import type { UploadFile, UploadProps } from 'element-plus';
 
 import type { Attachment, AttachmentProps } from './interface';
 
-import { computed, ref, useSlots } from 'vue';
+import { computed, ref, useSlots, watch } from 'vue';
 
 import FileList from '../fileList/index.vue';
 import { useNamespace } from '../hooks/useNamespace';
@@ -29,7 +29,11 @@ const containerRef = ref<HTMLElement>();
 
 const fileList = ref(props.items);
 
-const triggerChange = (uploadFile: UploadFile, uploadFiles: UploadFile[]) => {
+watch(() => props.items, (value) => {
+  fileList.value = value;
+})
+
+const triggerChange = (uploadFile: Partial<UploadFile>, uploadFiles: Partial<UploadFile>[]) => {
   const info = {
     file: uploadFile,
     fileList: uploadFiles,
@@ -42,7 +46,7 @@ const mergedUploadProps = computed(() => ({
   ...props.uploadProps,
   fileList: fileList.value,
   onChange: triggerChange,
-}));
+}) as UploadProps);
 
 const onItemRemove = (item: Attachment) => {
   const newFileList = fileList.value.filter(

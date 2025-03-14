@@ -6,9 +6,9 @@ $prefix: "thought-chain" !default;
 $prefix-item: "thought-chain-item" !default;
 
 $colors: (
-  pending: #{$color-primary},
-  success: #{$color-success},
-  error: #{$color-error},
+  pending: var(--color-primary),
+  success: var(--color-success),
+  error: var(--color-error),
 );
 
 @mixin getArg($size, $font-size) {
@@ -50,7 +50,7 @@ $colors: (
           inset-inline-start: 9px;
         }
       }
-      @include getArg(20px, 12px);
+      @include getArg(20px, var(--font-size-sm));
       &-content {
         margin-inline-start: -20px;
         &::before {
@@ -82,7 +82,7 @@ $colors: (
           inset-inline-start: 13px;
         }
       }
-      @include getArg(28px, 14px);
+      @include getArg(28px, var(--font-size));
       &-content {
         margin-inline-start: -28px;
         &::before {
@@ -114,7 +114,7 @@ $colors: (
           inset-inline-start: 17px;
         }
       }
-      @include getArg(36px, 16px);
+      @include getArg(36px, var(--font-size-lg));
       &-content {
         margin-inline-start: -36px;
         &::before {
@@ -145,7 +145,7 @@ $colors: (
     }
   }
   // 判断子元素是否包含 content
-  :has(&-content) &-title {
+  &-title:has(&-collapse-icon) {
     cursor: pointer;
     user-select: none;
   }

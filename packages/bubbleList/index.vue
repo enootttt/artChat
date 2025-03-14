@@ -56,10 +56,8 @@ watch(
   () => updateCount.value,
   () => {
     if (props.autoScroll && listRef.value && scrollReachEnd.value) {
-      nextTick(() => {
-        listRef.value!.scrollTo({
-          top: listRef.value!.scrollHeight,
-        });
+      listRef.value!.scrollTo({
+        top: listRef.value!.scrollHeight,
       });
     }
   }
@@ -68,20 +66,22 @@ watch(
 watch(
   () => displayData.value.length,
   () => {
-    if (props.autoScroll) {
-      const lastItemKey = displayData.value[displayData.value.length - 2]?.key;
-      const bubbleInst = bubbleRefs.value[lastItemKey!];
-      if (bubbleInst) {
-        const { nativeElement } = bubbleInst;
-        const { top = 0, bottom = 0 } = nativeElement?.getBoundingClientRect() ?? {};
-        const { top: listTop, bottom: listBottom } = listRef.value!.getBoundingClientRect();
-        const isVisible = top < listBottom && bottom > listTop;
-        if (isVisible) {
-          updateCount.value += 1;
-          scrollReachEnd.value = true;
+    nextTick(() => {
+      if (props.autoScroll) {
+        const lastItemKey = displayData.value[displayData.value.length - 2]?.key;
+        const bubbleInst = bubbleRefs.value[lastItemKey!];
+        if (bubbleInst) {
+          const { nativeElement } = bubbleInst;
+          const { top = 0, bottom = 0 } = nativeElement?.getBoundingClientRect() ?? {};
+          const { top: listTop, bottom: listBottom } = listRef.value!.getBoundingClientRect();
+          const isVisible = top < listBottom && bottom > listTop;
+          if (isVisible) {
+            updateCount.value += 1;
+            scrollReachEnd.value = true;
+          }
         }
       }
-    }
+    });
   }
 );
 

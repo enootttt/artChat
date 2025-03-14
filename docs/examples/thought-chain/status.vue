@@ -3,9 +3,9 @@ import { ref, shallowRef } from "vue";
 import { ElCard, ElButton, ElIcon } from "element-plus";
 import { CircleCheck, Warning, Loading } from "@element-plus/icons-vue";
 import { ThoughtChain } from "@artmate/chat";
-import type { ThoughtChainItem } from "@artmate/chat";
+import type { ThoughtChainItemProps } from "@artmate/chat";
 
-function getStatusIcon(status: ThoughtChainItem["status"]) {
+function getStatusIcon(status: ThoughtChainItemProps["status"]) {
   switch (status) {
     case "success":
       return shallowRef(CircleCheck);
@@ -18,7 +18,7 @@ function getStatusIcon(status: ThoughtChainItem["status"]) {
   }
 }
 
-const mockServerResponseData: ThoughtChainItem[] = [
+const mockServerResponseData: ThoughtChainItemProps[] = [
   {
     title: "Thought Chain Item - 1",
     status: "success",
@@ -51,14 +51,14 @@ function addChainItem() {
   });
 }
 
-async function updateChainItem(status: ThoughtChainItem["status"]) {
+async function updateChainItem(status: ThoughtChainItemProps["status"]) {
   await delay(800);
   mockServerResponseData[mockServerResponseData.length - 1].status = status;
   mockServerResponseData[mockServerResponseData.length - 1].icon = getStatusIcon(status);
   mockServerResponseData[mockServerResponseData.length - 1].description = `status: ${status}`;
 }
 
-const items = ref<ThoughtChainItem[]>(mockServerResponseData);
+const items = ref<ThoughtChainItemProps[]>(mockServerResponseData);
 const loading = ref(false);
 
 const mockStatusChange = async () => {

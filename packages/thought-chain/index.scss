@@ -228,7 +228,6 @@ $colors: (
       box-sizing: border-box;
     }
     &-box {
-      width: 100%;
       padding: 16px;
       display: inline-block;
       box-sizing: border-box;
@@ -239,7 +238,7 @@ $colors: (
   }
   &-footer {
     position: relative;
-    width: 100%;
+    width: calc(100% - 28px);
     display: inline-flex;
     &::before {
       content: "";

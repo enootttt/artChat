@@ -3,6 +3,7 @@ import type { BubbleProps } from '../bubble/interface';
 export type BubbleDataType = {
   key?: number | string;
   role?: string;
+  [key: string]: any;
 } & BubbleProps;
 export type RoleType = Partial<Omit<BubbleProps, 'content'>>;
 export interface BubbleListProps {

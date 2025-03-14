@@ -5,8 +5,6 @@ import { Promotion } from "@element-plus/icons-vue";
 import { BubbleList, Sender, useArtAgent, useArtChat } from "@artmate/chat";
 import type { BubbleListProps } from "@artmate/chat";
 
-const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
-
 const roles: BubbleListProps["roles"] = {
   ai: {
     placement: "start",
@@ -17,39 +15,36 @@ const roles: BubbleListProps["roles"] = {
   },
 };
 
-const mockSuccess = ref(false);
 const content = ref("");
 const senderLoading = ref(false);
 
 // Agent for request
 const [agent] = useArtAgent({
-  request: async ({ message }, { onSuccess, onError }) => {
+  request: async ({ message }, { onUpdate, onSuccess }) => {
     senderLoading.value = true;
-    await sleep();
+    const fullContent = `Streaming output instead of Bubble typing effect. You typed: ${message}`;
+    let currentContent = "";
+    const id = setInterval(() => {
+      currentContent = fullContent.slice(0, currentContent.length + 2);
+      onUpdate(currentContent);
 
-    senderLoading.value = false;
-
-    mockSuccess.value = !mockSuccess.value;
-
-    if (mockSuccess.value) {
-      onSuccess(`Mock success return. You said: ${message}`);
-    }
-
-    onError(new Error("Mock request failed"));
+      if (currentContent === fullContent) {
+        senderLoading.value = false;
+        clearInterval(id);
+        onSuccess(fullContent);
+      }
+    }, 100);
   },
 });
 
 // Chat messages
 const { onRequest, messages } = useArtChat({
   agent,
-  requestPlaceholder: "Waiting...",
-  requestFallback: "Mock failed return. Please try again later.",
 });
 
 const messageList = computed(() => {
   return messages.value.map(({ id, message, status }) => ({
     key: id,
-    loading: status === "loading",
     role: status === "local" ? "local" : "ai",
     content: message,
   }));
@@ -58,11 +53,11 @@ const messageList = computed(() => {
 const submit = () => {
   onRequest(content.value);
   content.value = "";
-}
+};
 </script>
 
 <template>
-  <ElSpace direction="vertical" style="width: 100%;" fill>
+  <ElSpace direction="vertical" style="width: 100%" fill>
     <BubbleList :roles="roles" :style="{ maxHeight: '300px' }" :items="messageList">
       <template #avatar="{ info }">
         <ElAvatar>
@@ -81,4 +76,3 @@ const submit = () => {
     </Sender>
   </ElSpace>
 </template>
-

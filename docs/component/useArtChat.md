@@ -1,24 +1,69 @@
-# useArtChat
 
-`useArtChat` 是一个用于管理聊天状态的 Vue Composition API Hook。它提供了一系列方法来管理聊天消息、对话状态等功能。
+# useArtChat 数据管理
 
-## 基础用法
+配合 Agent hook 进行对话数据管理。
 
-通过 `useArtChat` 可以快速实现一个基础的聊天功能。它提供了 `messages` 和 `addMessage` 等基础 API 来管理消息。
+## 何时使用
 
-### 代码演示
+通过 Agent 进行会话数据管理，并产出供页面渲染使用的数据。
 
-:::demo 使用 `useArtChat` 实现基础的消息发送和展示功能
+## 代码演示
+
+### 基本
+
+:::demo 基础用法。
+
 useArtChat/basic
+
 :::
 
-### API
+### 流式输出
 
-#### useArtChat 返回值
+:::demo 使用流式输出更新内容。
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| messages | 消息列表 | `Message[]` | `[]` |
-| addMessage | 添加一条消息 | `(message: Message) => void` | - |
+useArtChat/stream
 
-#### Message 类型
+:::
+
+### 打断输出
+
+:::demo 打断正在流式输出的内容。
+
+useArtChat/stream-cancel
+
+:::
+
+<!-- ### 多项建议
+
+:::demo 通过定制能力，返回多个推荐内容。
+
+useArtChat/suggestions
+
+::: -->
+
+## API
+
+```ts | pure
+type useArtChat<AgentMessage, ParsedMessage = AgentMessage> = (
+  config: ArtChatConfig<AgentMessage, ParsedMessage>,
+) => ArtChatConfigReturnType;
+```
+
+### ArtChatConfig
+
+| 属性    | 说明        | 类型             | 默认值 | 版本 |
+| ------ | ----------- | ---------------- | ------ | ---- |
+| agent  | 通过 `useArtAgent` 生成的 `agent`，当使用 `onRequest` 方法时, `agent` 参数是必需的。 | ArtAgent | - |   |
+| defaultMessages | 默认展示信息   | { status, message }[]                                    | - |      |
+| parser | 将 AgentMessage 转换成消费使用的 ParsedMessage，不设置时则直接消费 AgentMessage。支持将一条 AgentMessage 转换成多条 ParsedMessage | (message: AgentMessage) => BubbleMessage \| BubbleMessage[] | - |      |
+| requestFallback |   请求失败的兜底信息，不提供则不会展示   | AgentMessage \| () => AgentMessage |   -   |      |
+| requestPlaceholder | 请求中的占位信息，不提供则不会展示 | AgentMessage \| () => AgentMessage   | -      |      |
+
+### ArtChatConfigReturnType
+
+| 属性           | 说明                            | 类型                                      | 版本 |
+| -------------- | ------------------------------- | ----------------------------------------- | ---- |
+| messages       | 当前管理的内容                  | AgentMessages[]                           |      |
+| parsedMessages | 经过 `parser` 转译过的内容      | ParsedMessages[]                          |      |
+| onRequest      | 添加一条 Message，并且触发请求  | (message) => void                         |      |
+| setMessages    | 直接修改 messages，不会触发请求 | (messages: { message, status }[]) => void |      |

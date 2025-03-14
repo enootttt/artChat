@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useNamespace } from "../hooks/useNamespace";
-import { ThoughtChainItem, ThoughtChainProps } from "./interface";
+import type { ThoughtChainItemProps, ThoughtChainProps } from "./interface";
 import useCollapsible from "./hooks/useCollapsible";
 import ThoughtChainNode from "./item.vue";
 
@@ -18,10 +18,10 @@ const props = withDefaults(defineProps<ThoughtChainProps>(), {
 });
 
 const slots = defineSlots<{
-  icon?(slotProps: { info: ThoughtChainItem }): void;
-  content?(slotProps: { info: ThoughtChainItem }): void;
-  extra?(slotProps: { info: ThoughtChainItem }): void;
-  footer?(slotProps: { info: ThoughtChainItem }): void;
+  icon?(slotProps: { info: ThoughtChainItemProps }): void;
+  content?(slotProps: { info: ThoughtChainItemProps }): void;
+  extra?(slotProps: { info: ThoughtChainItemProps }): void;
+  footer?(slotProps: { info: ThoughtChainItemProps }): void;
 }>();
 
 const [enableCollapse, expandedKeys, onItemExpand] = useCollapsible(props.collapsible);

@@ -64,7 +64,7 @@ export default defineConfig({
       {
         text: "唤醒",
         items: [
-          { text: "Welcome 欢迎页", link: "/component/welcome" },
+          { text: "Welcome 欢迎", link: "/component/welcome" },
           { text: "Prompts 提示集", link: "/component/prompts" },
         ],
       },
@@ -85,7 +85,7 @@ export default defineConfig({
         text: "工具",
         items: [
           { text: "useArtAgent 模型调度", link: "/component/useArtAgent" },
-          { text: "useArtChat 管理聊天状态", link: "/component/useArtChat" },
+          { text: "useArtChat 数据管理", link: "/component/useArtChat" },
           { text: "ArtStream 流", link: "/component/ArtStream" },
           { text: "ArtRequest 请求", link: "/component/ArtRequest" },
         ],

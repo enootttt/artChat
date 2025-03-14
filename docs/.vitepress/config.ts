@@ -83,6 +83,7 @@ export default defineConfig({
       {
         text: "工具",
         items: [
+          { text: "useArtAgent 模型调度", link: "/component/useArtAgent" },
           { text: "useArtChat 管理聊天状态", link: "/component/useArtChat" },
         ],
       },

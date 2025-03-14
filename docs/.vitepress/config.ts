@@ -72,6 +72,7 @@ export default defineConfig({
         text: "表达",
         items: [
           { text: "Sender 输入框", link: "/component/sender" },
+          { text: "Attachments 输入附件", link: "/component/attachments" },
         ],
       },
       {

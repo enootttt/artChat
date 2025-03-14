@@ -107,11 +107,6 @@ bubble/gpt-vis
 
 :::
 
-
-## API
-
-<!-- 通用属性参考：[通用属性](/docs/react/common-props) -->
-
 ### Bubble
 
 | 属性             | 说明                                                         | 类型                                                | 默认值   | 版本 |

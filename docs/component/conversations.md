@@ -81,5 +81,3 @@ conversations/group-sort
 | --- | --- | --- | --- | --- |
 | `sort` | 分组排序函数 | (a: string, b: string) => number | - | - |
 | `title` | 自定义渲染组件 | ((group: string, info: { components: { GroupTitle: typeof GroupTitle } }) => VNode) | - | - |
-
-## 主题变量（Design Token）

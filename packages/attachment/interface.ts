@@ -1,6 +1,6 @@
-import type { UploadFile, UploadProps } from 'element-plus';
+import type { UploadFile, UploadProps } from "element-plus";
 
-import type { CSSProperties, VNode } from 'vue';
+import type { CSSProperties } from "vue";
 
 export interface DropUploaderProps {
   className?: string;
@@ -21,15 +21,16 @@ export interface PlaceholderUploaderProps {
 }
 
 export type Attachment = {
-  description?: VNode;
-  status: UploadFile['status'];
-  uid: number;
-} & UploadProps['fileList'][number];
+  description?: string;
+  status?: UploadFile["status"];
+  uid?: number | string;
+  [key: string]: any;
+} & Partial<UploadProps["fileList"][number]>;
 
-type SemanticType = 'item' | 'list' | 'placeholder';
+type SemanticType = "item" | "list" | "placeholder";
 
 export interface AttachmentProps {
-  direction?: 'ltr' | 'rtl';
+  direction?: "ltr" | "rtl";
   uploadProps?: SilentUploaderProps;
   items?: Attachment[];
   rootClassName?: string;
@@ -40,5 +41,5 @@ export interface AttachmentProps {
   rootStyle?: CSSProperties;
   onChange?: (files: { file: Attachment; fileList: Attachment[] }) => void;
   disabled?: boolean;
-  overflow?: 'scrollX' | 'scrollY' | 'wrap';
+  overflow?: "scrollX" | "scrollY" | "wrap";
 }

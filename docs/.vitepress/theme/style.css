@@ -130,17 +130,10 @@
 }
 
 p {
-  margin: 0 !important;
-  padding: 0;
   white-space: normal !important;
-  line-height: 1 !important;
 }
 
 ul {
   margin: 0 !important;
   padding: 0;
-}
-
-blockquote {
-  margin: 0 !important;
 }

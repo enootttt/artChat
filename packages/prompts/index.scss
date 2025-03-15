@@ -79,10 +79,9 @@ $prefix: 'prompts' !default;
     font-size: $font-size;
     line-height: $line-height;
     text-align: start;
-    white-space: nowrap;
+    white-space: normal;
   }
   &-label {
-    color: var(--color-text-heading);
     font-weight: 500;
   }
   &-label + &-desc {

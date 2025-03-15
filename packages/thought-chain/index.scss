@@ -189,7 +189,7 @@ $colors: (
         color: rgba(var(--light), 0.88);
         display: inline-block;
         max-width: 100%;
-        white-space: nowrap;
+        white-space: normal;
         word-break: break-word;
         box-sizing: border-box;
         strong {
@@ -207,7 +207,7 @@ $colors: (
         color: rgba(var(--light), 0.45);
         display: inline-block;
         max-width: 100%;
-        white-space: nowrap;
+        white-space: normal;
         word-break: break-word;
         box-sizing: border-box;
       }

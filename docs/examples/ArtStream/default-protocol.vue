@@ -51,7 +51,7 @@ const items = computed<ThoughtChainItemProps[]>(() => {
 </script>
 
 <template>
-  <ElSpace alignment="flex-start" :size="20">
+  <ElSpace alignment="flex-start" :size="20" wrap>
     <ElSpace alignment="flex-start" direction="vertical">
       <ElButton type="primary" @click="readStream">Mock Default Protocol - SSE</ElButton>
       <Bubble v-if="content" :content="content" />

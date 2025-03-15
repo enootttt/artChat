@@ -35,8 +35,8 @@ const FileChange = () => {};
 </script>
 
 <template>
-  <div direction="vertical" fill>
-    <div style="display: flex; justify-content: space-between; padding: 0 10px;">
+  <div>
+    <div class="top">
       <ElSegmented v-model="overflow" :options="sizeOptions" style="margin-inline-end: auto" />
 
       <ElSpace>
@@ -56,4 +56,11 @@ const FileChange = () => {};
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.top {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  flex-wrap: wrap;
+}
+</style>

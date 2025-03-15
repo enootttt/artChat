@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { ElSpace, ElButton, ElIcon } from "element-plus";
+import { ElButton, ElIcon } from "element-plus";
 import { Loading, Discount } from "@element-plus/icons-vue";
 import { ArtRequest, ThoughtChain } from "@artmate/chat";
 import type { ThoughtChainItemProps } from "@artmate/chat";
@@ -88,7 +88,7 @@ const items = computed<ThoughtChainItemProps[]>(() => [
 </script>
 
 <template>
-  <ElSpace alignment="flex-start" :size="20">
+  <div class="demo">
     <ElButton type="primary" :disabled="status === 'pending'" @click="request">Agent Request</ElButton>
     <ThoughtChain :items="items">
       <template #icon="{ info }">
@@ -103,7 +103,7 @@ const items = computed<ThoughtChainItemProps[]>(() => [
         </pre>
       </template>
     </ThoughtChain>
-  </ElSpace>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -117,5 +117,12 @@ pre {
     padding: 12px 16px;
     font-size: 14px;
   }
+}
+
+.demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow-x: auto;
 }
 </style>

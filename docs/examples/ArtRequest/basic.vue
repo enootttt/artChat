@@ -65,7 +65,7 @@ const items = computed<ThoughtChainItemProps[]>(() => [
 </script>
 
 <template>
-  <ElSpace alignment="flex-start" :size="20">
+  <div class="demo">
     <ElButton type="primary" :disabled="status === 'pending'" @click="request">Agent Request</ElButton>
     <ThoughtChain :items="items">
       <template #icon="{ info }">
@@ -81,7 +81,14 @@ const items = computed<ThoughtChainItemProps[]>(() => [
         </ElSpace>
       </template>
     </ThoughtChain>
-  </ElSpace>
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow-x: auto;
+}
+</style>

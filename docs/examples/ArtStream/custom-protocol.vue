@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { ElSpace, ElButton, ElIcon } from "element-plus";
+import { ElButton, ElIcon } from "element-plus";
 import { Discount } from "@element-plus/icons-vue";
 import { ArtStream, ThoughtChain } from "@artmate/chat";
 import type { ThoughtChainItemProps } from "@artmate/chat";
@@ -61,7 +61,7 @@ const items = computed<ThoughtChainItemProps[]>(() => {
 </script>
 
 <template>
-  <ElSpace alignment="flex-start" :size="20">
+  <div class="demo">
     <ElButton type="primary" @click="readStream">Mock Custom Protocol - SIP</ElButton>
     <ThoughtChain :items="items">
       <template #icon="{ info }">
@@ -75,7 +75,14 @@ const items = computed<ThoughtChainItemProps[]>(() => {
         </pre>
       </template>
     </ThoughtChain>
-  </ElSpace>
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow-x: auto;
+}
+</style>

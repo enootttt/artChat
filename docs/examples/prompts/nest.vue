@@ -64,7 +64,8 @@ const style = {
     flex: "none",
     width: "calc(30% - 6px)",
     backgroundImage: `linear-gradient(137deg, #e5f4ff 0%, #efe7ff 100%)`,
-    border: 0
+    border: 0,
+    color: '#000'
   },
   subItem: {
     background: "rgba(255,255,255,0.45)",
@@ -74,7 +75,15 @@ const style = {
 </script>
 
 <template>
-  <Prompts title="Do you want?" :items="items" wrap :styles="style" />
+  <div class="prompts">
+    <Prompts title="Do you want?" :items="items" wrap :styles="style" />
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.prompts {
+  background: #FFFFFF;
+  padding: 24px;
+  --color-text-tertiary: rgba(var(--dark), 45%);
+}
+</style>

@@ -6,32 +6,44 @@ import "element-plus/theme-chalk/dark/css-vars.css";
 
 const define = <T>(value: T): T => value;
 
-// 添加重新加载页面的函数
-const reloadContent = () => {
-  console.log('检测到内容更新失败');
-  setTimeout(() => {
-    window.location.reload();
-  }, 0);
-};
+// 将代码包装在一个函数中  
+const setupErrorHandlers = () => {  
+  // 确保代码运行在浏览器环境中  
+  if (typeof window === 'undefined') return;  
 
-// 全局错误处理 (直接写死这个臭vitepress错误，捕获住直接刷新页面)
-window.onerror = function(msg, url, line, column, error) {
-  if (error && error.toString().includes("Cannot read properties of null (reading 'type')")) {
-    console.log('window.onerror 捕获到错误');
-    reloadContent();
-    return true;
-  }
-};
-// 全局错误处理 (直接写死这个臭vitepress错误，捕获住直接刷新页面)
-window.onunhandledrejection = function(event) {
-  if (event.reason && event.reason.toString().includes("Cannot read properties of null (reading 'type')")) {
-    console.log('onunhandledrejection 捕获到错误');
-    event.preventDefault();
-    reloadContent();
-    return true;
-  }
-};
+  // 添加重新加载页面的函数  
+  const reloadContent = () => {  
+    console.log('检测到内容更新失败');  
+    setTimeout(() => {  
+      window.location.reload();  
+    }, 0);  
+  };  
+  
 
+  // 全局错误处理  
+  window.onerror = function(msg, url, line, column, error) {  
+    if (error && error.toString().includes("Cannot read properties of null (reading 'type')")) {  
+      console.log('window.onerror 捕获到错误');  
+      reloadContent();  
+      return true;  
+    }  
+  };  
+
+  // 未处理的 Promise 错误处理  
+  window.onunhandledrejection = function(event) {  
+    if (event.reason && event.reason.toString().includes("Cannot read properties of null (reading 'type')")) {  
+      console.log('onunhandledrejection 捕获到错误');  
+      event.preventDefault();  
+      reloadContent();  
+      return true;  
+    }  
+  };  
+};  
+
+if (typeof window !== 'undefined') {  
+  // 确保在客户端环境中执行  
+  setupErrorHandlers();  
+}  
 
 export default define<Theme>({
   extends: DefaultTheme,

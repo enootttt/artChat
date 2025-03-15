@@ -27,7 +27,8 @@ const showData = ref(true)
 function dataChange(value: string | number | boolean) {
   if (value) {
     items.value = presetFiles
-  } else {
+  }
+  else {
     items.value = []
   }
 }
@@ -62,8 +63,12 @@ function FileChange() {}
           <UploadFilled />
         </ElIcon>
       </template>
-      <template #title>Click or Drop files here</template>
-      <template #description>Support file type: image, video, audio, document, etc.</template>
+      <template #title>
+        Click or Drop files here
+      </template>
+      <template #description>
+        Support file type: image, video, audio, document, etc.
+      </template>
     </Attachment>
   </div>
 </template>

@@ -24,7 +24,7 @@ async function mockFetch() {
     new ReadableStream({
       async start(controller) {
         for (const chunk of chunks) {
-          await new Promise((resolve) => setTimeout(resolve, 100))
+          await new Promise(resolve => setTimeout(resolve, 100))
           controller.enqueue(new TextEncoder().encode(chunk))
         }
         controller.close()
@@ -34,7 +34,7 @@ async function mockFetch() {
       headers: {
         'Content-Type': 'application/x-ndjson',
       },
-    }
+    },
   )
 
   return response
@@ -75,7 +75,7 @@ async function request() {
       transform(chunk, controller) {
         controller.enqueue(chunk)
       },
-    })
+    }),
   )
 }
 const items = computed<ThoughtChainItemProps[]>(() => [

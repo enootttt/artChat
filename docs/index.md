@@ -23,6 +23,6 @@ features:
   - title: AI 界面解决方案
     details: 基于RICH，全新 AGI 混合界面（Hybrid-UI）解决方案，完美融合 GUI 和自然会话交互。
   - title: 组件丰富，选用自如
-    details: Ant Design X Vue 全新 AI 组件 , 大量实用组件满足你的需求 , 灵活定制与拓展
+    details: Ant Design X Vue (Element Plus) 全新 AI 组件 , 大量实用组件满足你的需求 , 灵活定制与拓展
 ---
 

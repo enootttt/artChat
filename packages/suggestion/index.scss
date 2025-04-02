@@ -23,8 +23,8 @@ $prefix: "suggestion" !default;
   }
 }
 
-@include b(#{$prefix}-block) {
-  @include b(#{$prefix}-item-extra) {
-    margin-inline-start: auto;
+@include b(#{$prefix}-cascader-panel) {
+  :deep(.el-cascader-menu) {
+    width: 100%;
   }
 }

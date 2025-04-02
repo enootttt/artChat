@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T = any">
-import { ref, computed } from "vue";
-import { ElTooltip, ElCascaderPanel } from "element-plus";
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ElPopover, ElCascaderPanel } from "element-plus";
 import { useNamespace } from "../hooks/useNamespace";
 import useActive from "./useActive";
 import type { RenderChildrenProps, SuggestionProps } from "./interface";
@@ -65,32 +65,55 @@ const onDropdownVisibleChange = (nextOpen: boolean) => {
   if (!nextOpen) {
     onClose();
   } else {
+    console.log(activePath.value);
     onInternalChange(activePath.value);
   }
 };
+
+const popoverWidth = computed(() => {
+  if (props.block && defaultContainer.value) {
+    return defaultContainer.value.offsetWidth + "px";
+  }
+  return "max-content";
+});
+
+// ============================ Document Click =============================
+const documentClick = (e: Event) => {
+  if (defaultContainer.value && !defaultContainer.value.contains(e.target as HTMLElement)) {
+    onClose();
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", documentClick);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", documentClick);
+});
 </script>
 
 <template>
-  <ElTooltip
+  <ElPopover
     :class-name="[props.rootClassName]"
-    trigger="cilck"
+    trigger="click"
     :placement="isRTL ? 'top-end' : 'top-start'"
     :visible="mergedOpen"
     :stop-popper-mouse-event="false"
     :gpu-acceleration="false"
-    :popper-class="ns.b('block')"
+    :width="popoverWidth"
     effect="light"
     pure
     persistent
-    @update:visible.once="onDropdownVisibleChange"
+    @hide="onDropdownVisibleChange"
   >
-    <div ref="defaultContainer" :class="[ns.b(), props.rootClassName, props.className, ns.b('wrapper')]" :style="props.style">
-      <slot :onTrigger="onTrigger" :onKeyDown="onKeyDown" />
-    </div>
-    <template #content>
-      <ElCascaderPanel ref="CascaderPanelRef" :options="itemList" :border="false" :model-value="activePath" @close="onDropdownVisibleChange(true)" />
+    <template #reference>
+      <div ref="defaultContainer" :class="[ns.b(), props.rootClassName, props.className, ns.b('wrapper')]" :style="props.style">
+        <slot :onTrigger="onTrigger" :onKeyDown="onKeyDown" />
+      </div>
     </template>
-  </ElTooltip>
+    <ElCascaderPanel ref="CascaderPanelRef" :class="ns.b('cascader-panel')" :options="itemList" :border="false" :model-value="activePath" @close="onDropdownVisibleChange(true)" />
+  </ElPopover>
 </template>
 
 <style lang="scss" scoped>

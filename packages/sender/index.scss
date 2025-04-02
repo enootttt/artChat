@@ -8,7 +8,6 @@ $prefix: "sender" !default;
   width: 100%;
   box-sizing: border-box;
   // top: 20px;
-  width: 100%;
   box-shadow: var(--box-shadow-tertiary);
   transition: all $motion-duration-slow;
   border-radius: calc($border-radius * 2);

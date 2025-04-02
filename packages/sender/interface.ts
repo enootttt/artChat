@@ -14,6 +14,7 @@ export interface SenderProps {
     input?: string;
     prefix?: string;
   };
+  placeholder?: string;
   disabled?: boolean;
   loading?: boolean;
   readOnly?: boolean;

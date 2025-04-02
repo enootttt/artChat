@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { SenderProps } from './interface';
 
+import { useSlots } from 'vue';
 import { ElInput } from 'element-plus';
+import type { SenderProps } from './interface';
 
 import ArtCollapseTransition from '../collapseTransition/index.vue';
 import { useNamespace } from '../hooks/useNamespace';
@@ -12,11 +13,14 @@ const props = withDefaults(defineProps<SenderProps>(), {
   submitType: 'enter',
   classNames: undefined,
   rootClassName: '',
+  placeholder: '',
   onChange: () => {},
   onKeyPress: () => {},
 });
 
 const emit = defineEmits(['update:modelValue', 'onSubmit']);
+
+const slots = useSlots();
 
 const ns = useNamespace('sender');
 
@@ -69,7 +73,7 @@ const onInternalKeyPress = (e: KeyboardEvent) => {
       <slot name="header"></slot>
     </ArtCollapseTransition>
     <div :class="ns.b('content')">
-      <div :class="[ns.b('prefix'), classNames?.prefix]">
+      <div :class="[ns.b('prefix'), classNames?.prefix]" v-if="slots.prefix">
         <slot name="prefix"></slot>
       </div>
       <slot name="components">
@@ -79,7 +83,7 @@ const onInternalKeyPress = (e: KeyboardEvent) => {
           :disabled="disabled"
           :model-value="modelValue"
           :readonly="readOnly"
-          placeholder="请输入内容"
+          :placeholder="props.placeholder"
           resize="none"
           type="textarea"
           v-bind="$attrs"
@@ -88,7 +92,7 @@ const onInternalKeyPress = (e: KeyboardEvent) => {
           @update:model-value="emit('update:modelValue', $event)"
         />
       </slot>
-      <div :class="[ns.b('actions-list'), classNames?.actions]">
+      <div :class="[ns.b('actions-list'), classNames?.actions]" v-if="slots.actions">
         <slot name="actions"></slot>
       </div>
     </div>

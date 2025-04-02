@@ -79,6 +79,7 @@ const popoverWidth = computed(() => {
 
 // ============================ Document Click =============================
 const documentClick = (e: Event) => {
+  if (!mergedOpen.value) return;
   if (defaultContainer.value && !defaultContainer.value.contains(e.target as HTMLElement)) {
     onClose();
   }

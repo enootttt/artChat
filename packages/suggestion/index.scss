@@ -1,0 +1,30 @@
+@import "../theme/index.scss";
+@import "../theme/mixin.scss";
+
+$prefix: "suggestion" !default;
+
+@include b($prefix) {
+  .el-cascader-menus .el-cascader-menu {
+    height: auto;
+  }
+
+  .el-popper {
+    width: 100%;
+  }
+
+  &-item {
+    &-icon {
+      margin-inline-end: var(--padding-xxs);
+    }
+
+    &-extra {
+      margin-inline-start: var(--padding);
+    }
+  }
+}
+
+@include b(#{$prefix}-block) {
+  @include b(#{$prefix}-item-extra) {
+    margin-inline-start: auto;
+  }
+}

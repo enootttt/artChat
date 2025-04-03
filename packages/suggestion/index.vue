@@ -1,9 +1,10 @@
 <script setup lang="ts" generic="T = any">
-import { ref, computed, onMounted, onUnmounted } from "vue";
-import { ElPopover, ElCascaderPanel } from "element-plus";
+import { ref, computed } from "vue";
+import { ElTooltip, ElCascaderPanel } from "element-plus";
 import { useNamespace } from "../hooks/useNamespace";
 import useActive from "./useActive";
 import type { RenderChildrenProps, SuggestionProps } from "./interface";
+import { onClickOutside } from "@vueuse/core";
 
 const props = withDefaults(defineProps<SuggestionProps<T>>(), {
   rootClassName: "",
@@ -24,6 +25,8 @@ const info = ref<T | undefined>();
 const isRTL = computed(() => props.direction === "rtl");
 
 const defaultContainer = ref<HTMLElement>();
+// popperRef
+const popperRef = ref<InstanceType<typeof ElTooltip>>();
 
 // =========================== Trigger ============================
 const mergedOpen = ref(props.open);
@@ -65,7 +68,6 @@ const onDropdownVisibleChange = (nextOpen: boolean) => {
   if (!nextOpen) {
     onClose();
   } else {
-    console.log(activePath.value);
     onInternalChange(activePath.value);
   }
 };
@@ -78,43 +80,34 @@ const popoverWidth = computed(() => {
 });
 
 // ============================ Document Click =============================
-const documentClick = (e: Event) => {
-  if (!mergedOpen.value) return;
-  if (defaultContainer.value && !defaultContainer.value.contains(e.target as HTMLElement)) {
-    onClose();
-  }
-};
-
-onMounted(() => {
-  document.addEventListener("click", documentClick);
-});
-
-onUnmounted(() => {
-  document.removeEventListener("click", documentClick);
+onClickOutside(defaultContainer, () => {
+  if (popperRef.value?.isFocusInsideContent()) return;
+  mergedOpen.value && onClose();
 });
 </script>
 
 <template>
-  <ElPopover
+  <ElTooltip
+    ref="popperRef"
     :class-name="[props.rootClassName]"
     trigger="click"
     :placement="isRTL ? 'top-end' : 'top-start'"
     :visible="mergedOpen"
-    :stop-popper-mouse-event="false"
     :gpu-acceleration="false"
-    :width="popoverWidth"
     effect="light"
     pure
+    manual-mode
     persistent
+    role="listbox"
     @hide="onDropdownVisibleChange"
   >
-    <template #reference>
-      <div ref="defaultContainer" :class="[ns.b(), props.rootClassName, props.className, ns.b('wrapper')]" :style="props.style">
-        <slot :onTrigger="onTrigger" :onKeyDown="onKeyDown" />
-      </div>
+    <div ref="defaultContainer" :class="[ns.b(), props.rootClassName, props.className, ns.b('wrapper')]" :style="props.style">
+      <slot :onTrigger="onTrigger" :onKeyDown="onKeyDown" />
+    </div>
+    <template #content>
+      <ElCascaderPanel ref="CascaderPanelRef" :style="{ width: popoverWidth }" :class="ns.b('cascader-panel')" :options="itemList" :border="false" :model-value="activePath" @close="onDropdownVisibleChange(true)" />
     </template>
-    <ElCascaderPanel ref="CascaderPanelRef" :class="ns.b('cascader-panel')" :options="itemList" :border="false" :model-value="activePath" @close="onDropdownVisibleChange(true)" />
-  </ElPopover>
+  </ElTooltip>
 </template>
 
 <style lang="scss" scoped>

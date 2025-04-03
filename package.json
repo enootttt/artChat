@@ -48,7 +48,6 @@
     "@types/node": "22.10.2",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/shared": "^3.5.13",
-    "@vueuse/core": "^13.0.0",
     "fast-glob": "^3.3.3",
     "markdown-it": "^14.1.0",
     "markdown-it-container": "^4.0.0",
@@ -59,6 +58,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@vueuse/core": "^13.0.0",
     "element-plus": "^2.9.1",
     "sass": "~1.56.1",
     "vue": "^3.5.13"

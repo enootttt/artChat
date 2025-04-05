@@ -1,4 +1,3 @@
-
 # Bubble 对话气泡
 
 用于聊天的气泡组件。
@@ -99,7 +98,7 @@ bubble/list-custom
 
 ### 使用 GPT-Vis 渲染图表 (no support)
 
-@antv/GPT-Vis 仅支持React。
+@antv/GPT-Vis 仅支持 React。
 
 :::demo 配合 @antv/GPT-Vis 实现大模型输出的图表渲染，支持模型流式输出。
 
@@ -126,12 +125,12 @@ bubble/gpt-vis
 
 ### Bubble Slots
 
-| 插槽名  | 说明        | 类型                  |
-| ------- | ----------- | --------------------- |
-| avatar  | 头像        | -                     |
-| header  | 头部面板    | -                     |
-| footer  | 底部内容    | -                     |
-| loading | loading占位 | -                     |
+| 插槽名  | 说明         | 类型 |
+| ------- | ------------ | ---- |
+| avatar  | 头像         | -    |
+| header  | 头部面板     | -    |
+| footer  | 底部内容     | -    |
+| loading | loading 占位 | -    |
 
 ### Bubble.List
 

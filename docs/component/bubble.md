@@ -108,20 +108,21 @@ bubble/gpt-vis
 
 ### Bubble
 
-| 属性             | 说明                                                         | 类型                                                | 默认值   | 版本 |
-| ---------------- | ------------------------------------------------------------ | --------------------------------------------------- | -------- | ---- |
-| avatar           | 展示头像                                                     | VNode \| String \| Slot                             | -        |      |
-| classNames       | 语义化结构 class                                             | [Record<SemanticDOM, string>](#semantic-dom)        | -        |      |
-| content          | 聊天内容                                                     | string                                              | -        |      |
-| loading          | 聊天内容加载状态                                             | boolean                                             | -        |      |
-| placement        | 信息位置                                                     | `start` \| `end`                                    | `start`  |      |
-| shape            | 气泡形状                                                     | `round` \| `corner`                                 | -        |      |
-| styles           | 语义化结构 style                                             | [Record<SemanticDOM, CSSProperties>](#semantic-dom) | -        |      |
-| typing           | 设置聊天内容打字动画                                         | boolean \| \{ step?: number, interval?: number \}   | false    |      |
-| variant          | 气泡样式变体                                                 | `filled` \| `borderless` \| `outlined` \| `shadow`  | `filled` |      |
-| loadingRender    | 自定义渲染加载态内容                                         | () => VNode                                         | -        |      |
-| messageRender    | 自定义渲染内容                                               | (content?: string) => VNode                         | -        |      |
-| onTypingComplete | 打字效果完成时的回调，如果没有设置 typing 将在渲染时立刻触发 | () => void                                          | -        |      |
+| 属性             | 说明                                                         | 类型                                                                   | 默认值   | 版本 |
+| ---------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------- | -------- | ---- |
+| avatar           | 展示头像                                                     | VNode \| String                                                        | -        |      |
+| classNames       | 语义化结构 class                                             | Record<"avatar" \| "content" \| "footer" \| "header", string>          | -        |      |
+| content          | 聊天内容                                                     | string                                                                 | -        |      |
+| loading          | 聊天内容加载状态                                             | boolean                                                                | -        |      |
+| placement        | 信息位置                                                     | `start` \| `end`                                                       | `start`  |      |
+| shape            | 气泡形状                                                     | `round` \| `corner`                                                    | -        |      |
+| styles           | 语义化结构 style                                             | [Record<"avatar" \| "content" \| "footer" \| "header", CSSProperties>] | -        |      |
+| typing           | 设置聊天内容打字动画                                         | boolean \| \{ step?: number, interval?: number \}                      | false    |      |
+| variant          | 气泡样式变体                                                 | `filled` \| `borderless` \| `outlined` \| `shadow`                     | `filled` |      |
+| loadingRender    | 自定义渲染加载态内容                                         | () => VNode                                                            | -        |      |
+| messageRender    | 自定义渲染内容                                               | (content?: string) => VNode                                            | -        |      |
+| onTypingComplete | 打字效果完成时的回调，如果没有设置 typing 将在渲染时立刻触发 | () => void                                                             | -        |      |
+| onUpdate         | 内容更新时会触发                                             | () => void                                                             | -        | -    |
 
 ### Bubble Slots
 

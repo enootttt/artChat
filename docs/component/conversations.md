@@ -55,7 +55,7 @@ conversations/group-sort
 
 | 属性 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
-| activeKey | 当前选中的值 | string | - | - |
+| v-model:activeKey | 当前选中的值 | string | - | - |
 | defaultActiveKey | 默认选中值 | string | - | - |
 | items | 会话列表数据源 | `Conversation`[] | - | - |
 | onActiveChange | 选中变更回调 | (value: string) => void | - | - |

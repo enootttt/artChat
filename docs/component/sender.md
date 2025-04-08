@@ -82,21 +82,30 @@ sender/focus
 | --- | --- | --- | --- | --- |
 | v-model | 双向绑定 | string | - | - | - |
 | classNames | 样式类名 | Partial<Record<SemanticType, string>> | - | - |
+| placeholder | 占位符 | string | - | - | - |
 | disabled | 是否禁用 | boolean | false | - |
 | loading | 是否加载中 | boolean | false | - |
 | readOnly | 是否让输入框只读 | boolean | false | - |
 | rootClassName | 根元素样式类 | string | - | - |
 | styles | 语义化定义样式 | Partial<Record<SemanticType, CSSProperties>> | - | - |
 | submitType | 提交模式 | SubmitType | `enter` \| `shiftEnter` | - |
-| onSubmit | submit回调 | (message: string) => void | - | - |
 | onChange | 输入框值改变的回调 | (value: string, event?: FormEvent \| ChangeEvent ) => void | - | - |
+| onKeyPress | 键盘按键按下的回调 | (event: KeyboardEvent) => void | - | - |
+
+#### SemanticType
+
+```typescripts | pure
+type SemanticType = 'actions' | 'input' | 'prefix';
+```
 
 ### Sender Slots
 
 | 插槽名 | 说明 |
 | --- | --- |
-| actions | 操作按钮 |
 | header | 头部面板 |
+| footer | 底部面板 |
+| components | 自定义组件,会覆盖内置input组件 |
+| actions | 操作按钮 |
 | prefix | 前缀内容 |
 
 ### SenderHeader

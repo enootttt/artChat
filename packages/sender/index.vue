@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { useSlots } from 'vue';
 import { ElInput } from 'element-plus';
 import type { SenderProps } from './interface';
 
@@ -20,7 +19,13 @@ const props = withDefaults(defineProps<SenderProps>(), {
 
 const emit = defineEmits(['update:modelValue', 'onSubmit']);
 
-const slots = useSlots();
+const slots = defineSlots<{
+  header?: () => void;
+  footer?: () => void;
+  components?: () => void;
+  prefix?: () => void;
+  actions?: () => void;
+}>();
 
 const ns = useNamespace('sender');
 
@@ -95,6 +100,9 @@ const onInternalKeyPress = (e: KeyboardEvent) => {
       <div :class="[ns.b('actions-list'), classNames?.actions]" v-if="slots.actions">
         <slot name="actions"></slot>
       </div>
+    </div>
+    <div :class="ns.b('footer')" v-if="slots.footer">
+      <slot name="footer"></slot>
     </div>
   </div>
 </template>

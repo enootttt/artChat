@@ -94,3 +94,10 @@ $prefix: "sender" !default;
     padding: 16px;
   }
 }
+@include b(#{$prefix}-footer) {
+  padding-inline-start: var(--padding);
+  padding-inline-end: var(--padding-sm);
+  padding-block-end: var(--padding-sm);
+  padding-block-start: var(--padding-xxs);
+  box-sizing: border-box;
+}

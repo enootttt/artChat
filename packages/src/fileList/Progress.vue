@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import type { ProgressProps } from './interface';
+import type { ProgressProps } from './interface'
 
-import { computed } from 'vue';
+import { ElProgress } from 'element-plus'
 
-import { ElProgress } from 'element-plus';
+import { computed } from 'vue'
 
-const props = withDefaults(defineProps<ProgressProps>(), {});
+const props = withDefaults(defineProps<ProgressProps>(), {})
 
 const size = computed(() => {
-  const wh = 30;
+  const wh = 30
   return {
     width: `${wh * 2}px`,
     height: `${wh * 2}px`,
-  };
-});
+  }
+})
 </script>
 
 <template>

@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useClipboard, useToggle } from "@vueuse/core";
-import SourceCode from "./demo/vp-source-code.vue";
-import "element-plus/dist/index.css";
-import { ElIcon, ElCollapseTransition } from "element-plus";
-import { ArrowDownBold } from "@element-plus/icons-vue";
+import { ArrowDownBold } from '@element-plus/icons-vue'
+import { useClipboard, useToggle } from '@vueuse/core'
+import { ElCollapseTransition, ElIcon } from 'element-plus'
+import { computed, ref } from 'vue'
+import SourceCode from './demo/vp-source-code.vue'
+import 'element-plus/dist/index.css'
 
 const props = defineProps<{
-  source: string;
-  path: string;
-  rawSource: string;
-  description: string;
-}>();
+  source: string
+  path: string
+  rawSource: string
+  description: string
+}>()
 
 useClipboard({
   source: decodeURIComponent(props.rawSource),
   read: false,
-});
+})
 
-const [sourceVisible, toggleSourceVisible] = useToggle();
+const [sourceVisible, toggleSourceVisible] = useToggle()
 
-const sourceCodeRef = ref<HTMLButtonElement>();
+const sourceCodeRef = ref<HTMLButtonElement>()
 
-const decodedDescription = computed(() => decodeURIComponent(props.description));
+const decodedDescription = computed(() => decodeURIComponent(props.description))
 
-const onSourceVisibleKeydown = (e: KeyboardEvent) => {
-  if (["Enter", "Space"].includes(e.code)) {
-    e.preventDefault();
-    toggleSourceVisible(false);
-    sourceCodeRef.value?.focus();
+function onSourceVisibleKeydown(e: KeyboardEvent) {
+  if (['Enter', 'Space'].includes(e.code)) {
+    e.preventDefault()
+    toggleSourceVisible(false)
+    sourceCodeRef.value?.focus()
   }
-};
+}
 </script>
 
 <template>
@@ -45,12 +45,18 @@ const onSourceVisibleKeydown = (e: KeyboardEvent) => {
         <SourceCode :visible="sourceVisible" :source="source" />
       </ElCollapseTransition>
 
-      <Transition name="fade-in-linear">
-        <div class="example-float-control" tabindex="0" role="button" @click="toggleSourceVisible(!sourceVisible)" @keydown="onSourceVisibleKeydown">
-          <ElIcon class="example-float-control-icon" :class="{ 'example-active': sourceVisible }"><ArrowDownBold /></ElIcon>
-          <span>{{ sourceVisible ? "隐藏源代码" : "查看源代码" }}</span>
-        </div>
-      </Transition>
+      <div
+        class="example-float-control"
+        tabindex="0"
+        role="button"
+        @click="toggleSourceVisible(!sourceVisible)"
+        @keydown="onSourceVisibleKeydown"
+      >
+        <ElIcon class="example-float-control-icon" :class="{ 'example-active': sourceVisible }">
+          <ArrowDownBold />
+        </ElIcon>
+        <span>{{ sourceVisible ? '隐藏源代码' : '查看源代码' }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -70,7 +76,7 @@ const onSourceVisibleKeydown = (e: KeyboardEvent) => {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   padding: 1rem;
-  
+
   .example-showcase {
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--vp-c-divider);

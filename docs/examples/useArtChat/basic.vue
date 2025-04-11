@@ -1,72 +1,72 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { ElSpace, ElButton, ElIcon, ElAvatar } from "element-plus";
-import { Promotion } from "@element-plus/icons-vue";
-import { BubbleList, Sender, useArtAgent, useArtChat } from "@artmate/chat";
-import type { BubbleListProps } from "@artmate/chat";
+import type { BubbleListProps } from '@artmate/chat'
+import { BubbleList, Sender, useArtAgent, useArtChat } from '@artmate/chat'
+import { Promotion } from '@element-plus/icons-vue'
+import { ElAvatar, ElButton, ElIcon, ElSpace } from 'element-plus'
+import { computed, ref } from 'vue'
 
-const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
+const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000))
 
-const roles: BubbleListProps["roles"] = {
+const roles: BubbleListProps['roles'] = {
   ai: {
-    placement: "start",
+    placement: 'start',
     typing: { step: 5, interval: 20 },
   },
   local: {
-    placement: "end",
+    placement: 'end',
   },
-};
+}
 
-const mockSuccess = ref(false);
-const content = ref("");
-const senderLoading = ref(false);
+const mockSuccess = ref(false)
+const content = ref('')
+const senderLoading = ref(false)
 
 // Agent for request
 const [agent] = useArtAgent({
   request: async ({ message }, { onSuccess, onError }) => {
-    senderLoading.value = true;
-    await sleep();
+    senderLoading.value = true
+    await sleep()
 
-    senderLoading.value = false;
+    senderLoading.value = false
 
-    mockSuccess.value = !mockSuccess.value;
+    mockSuccess.value = !mockSuccess.value
 
     if (mockSuccess.value) {
-      onSuccess(`Mock success return. You said: ${message}`);
+      onSuccess(`Mock success return. You said: ${message}`)
     }
 
-    onError(new Error("Mock request failed"));
+    onError(new Error('Mock request failed'))
   },
-});
+})
 
 // Chat messages
 const { onRequest, messages } = useArtChat({
   agent,
-  requestPlaceholder: "Waiting...",
-  requestFallback: "Mock failed return. Please try again later.",
-});
+  requestPlaceholder: 'Waiting...',
+  requestFallback: 'Mock failed return. Please try again later.',
+})
 
 const messageList = computed(() => {
   return messages.value.map(({ id, message, status }) => ({
     key: id,
-    loading: status === "loading",
-    role: status === "local" ? "local" : "ai",
+    loading: status === 'loading',
+    role: status === 'local' ? 'local' : 'ai',
     content: message,
-  }));
-});
+  }))
+})
 
-const submit = () => {
-  onRequest(content.value);
-  content.value = "";
+function submit() {
+  onRequest(content.value)
+  content.value = ''
 }
 </script>
 
 <template>
-  <ElSpace direction="vertical" style="width: 100%;" fill>
+  <ElSpace direction="vertical" style="width: 100%" fill>
     <BubbleList :roles="roles" :style="{ maxHeight: '300px' }" :items="messageList">
       <template #avatar="{ info }">
         <ElAvatar>
-          {{ info.role === "ai" ? "AI" : "You" }}
+          {{ info.role === 'ai' ? 'AI' : 'You' }}
         </ElAvatar>
       </template>
     </BubbleList>
@@ -81,4 +81,3 @@ const submit = () => {
     </Sender>
   </ElSpace>
 </template>
-

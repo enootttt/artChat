@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { WelcomeProps } from "./interface";
-import { useNamespace } from "../hooks/useNamespace";
-
-const ns = useNamespace("welcome");
+import type { WelcomeProps } from './interface'
+import { computed } from 'vue'
+import { useNamespace } from '../hooks/useNamespace'
 
 const props = withDefaults(defineProps<WelcomeProps>(), {
-  variant: "filled",
-});
+  variant: 'filled',
+})
+
+const ns = useNamespace('welcome')
 
 const mergedCls = computed(() => [
   props.rootClassName,
   {
-    [ns.b("filled")]: props.variant === "filled",
-    [ns.b("borderless")]: props.variant === "borderless",
+    [ns.b('filled')]: props.variant === 'filled',
+    [ns.b('borderless')]: props.variant === 'borderless',
   },
-]);
+])
 </script>
 
 <template>
@@ -25,20 +25,30 @@ const mergedCls = computed(() => [
     <div v-if="$slots.icon || icon" :class="[ns.b('icon'), classNames?.icon]" :style="styles?.icon">
       <slot name="icon">
         <img v-if="typeof icon === 'string'" :src="icon" alt="欢迎图标" />
-        <component v-else :is="icon"></component>
+        <component :is="icon" v-else />
       </slot>
     </div>
 
     <!-- 右侧内容区域 -->
     <div :class="ns.b('content-wrapper')">
       <!-- 标题区域 -->
-      <div v-if="$slots.title || title" :class="[ns.b('title'), classNames?.title, ($slots.extra || extra) && 'extra']" :style="styles?.title">
+      <div
+        v-if="$slots.title || title"
+        :class="[ns.b('title'), classNames?.title, ($slots.extra || extra) && 'extra']"
+        :style="styles?.title"
+      >
         <slot name="title">
           <h4>{{ title }}</h4>
         </slot>
         <!-- 右上角操作区域 -->
-        <div v-if="$slots.extra || extra" :class="[ns.b('extra'), classNames?.extra]" :style="styles?.extra">
-          <slot name="extra">{{ extra }}</slot>
+        <div
+          v-if="$slots.extra || extra"
+          :class="[ns.b('extra'), classNames?.extra]"
+          :style="styles?.extra"
+        >
+          <slot name="extra">
+            {{ extra }}
+          </slot>
         </div>
       </div>
 
@@ -53,5 +63,5 @@ const mergedCls = computed(() => [
 </template>
 
 <style lang="scss">
-@import "./index.scss";
+@import './index';
 </style>

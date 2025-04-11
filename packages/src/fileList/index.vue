@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { fileListProps } from './interface';
+import type { fileListProps } from './interface'
 
-import { onMounted, ref, watch } from 'vue';
+import { ArrowLeftBold, ArrowRightBold, UploadFilled } from '@element-plus/icons-vue'
 
-import { ElButton, ElIcon } from 'element-plus';
+import { ElButton, ElIcon } from 'element-plus'
 
-import { UploadFilled, ArrowLeftBold, ArrowRightBold } from "@element-plus/icons-vue";
+import { onMounted, ref, watch } from 'vue'
 
-import SilentUploader from '../attachment/silentUploader.vue';
-import { useNamespace } from '../hooks/useNamespace';
-import fileListCard from './fileListCard.vue';
+import SilentUploader from '../attachment/silentUploader.vue'
+import { useNamespace } from '../hooks/useNamespace'
+import fileListCard from './fileListCard.vue'
 
 const props = withDefaults(defineProps<fileListProps>(), {
   disabled: false,
@@ -18,57 +18,57 @@ const props = withDefaults(defineProps<fileListProps>(), {
   listStyle: undefined,
   itemClassName: '',
   itemStyle: undefined,
-});
+})
 
-const ns = useNamespace('attachment-list');
+const ns = useNamespace('attachment-list')
 
-const TOLERANCE = 1;
-const containerRef = ref<HTMLElement>();
-const pingStart = ref(false);
-const pingEnd = ref(false);
+const TOLERANCE = 1
+const containerRef = ref<HTMLElement>()
+const pingStart = ref(false)
+const pingEnd = ref(false)
 
-const checkPing = () => {
-  const containerEle = containerRef.value;
-  if (!containerEle) return;
+function checkPing() {
+  const containerEle = containerRef.value
+  if (!containerEle) return
   if (props.overflow === 'scrollX') {
-    pingStart.value = Math.abs(containerEle.scrollLeft) >= TOLERANCE;
-    pingEnd.value = containerEle.scrollWidth - containerEle.clientWidth - Math.abs(containerEle.scrollLeft) >= TOLERANCE;
-  } else if (props.overflow === 'scrollY') {
-    pingStart.value = containerEle.scrollTop !== 0;
+    pingStart.value = Math.abs(containerEle.scrollLeft) >= TOLERANCE
     pingEnd.value =
-      containerEle.scrollHeight - containerEle.clientHeight !==
-      containerEle.scrollTop;
+      containerEle.scrollWidth - containerEle.clientWidth - Math.abs(containerEle.scrollLeft) >=
+      TOLERANCE
+  } else if (props.overflow === 'scrollY') {
+    pingStart.value = containerEle.scrollTop !== 0
+    pingEnd.value = containerEle.scrollHeight - containerEle.clientHeight !== containerEle.scrollTop
   }
-};
+}
 
 watch(
   () => props.overflow,
   () => {
-    checkPing();
-  },
-);
+    checkPing()
+  }
+)
 
-const onScrollOffset = (offset: -1 | 1) => {
-  const containerEle = containerRef.value;
+function onScrollOffset(offset: -1 | 1) {
+  const containerEle = containerRef.value
   if (containerEle) {
     containerEle.scrollTo({
       left: containerEle.scrollLeft + offset * containerEle.clientWidth,
       behavior: 'smooth',
-    });
+    })
   }
-};
+}
 
-const onScrollLeft = () => {
-  onScrollOffset(-1);
-};
+function onScrollLeft() {
+  onScrollOffset(-1)
+}
 
-const onScrollRight = () => {
-  onScrollOffset(1);
-};
+function onScrollRight() {
+  onScrollOffset(1)
+}
 
 onMounted(() => {
-  checkPing();
-});
+  checkPing()
+})
 </script>
 
 <template>
@@ -86,12 +86,7 @@ onMounted(() => {
   >
     <transition-group :name="ns.b('card-motion')">
       <div v-for="item in props.items" :key="item.uid">
-        <fileListCard
-          :key="item.uid"
-          :item="item"
-          :on-remove="onRemove"
-          :style="props.itemStyle"
-        />
+        <fileListCard :key="item.uid" :item="item" :on-remove="onRemove" :style="props.itemStyle" />
       </div>
     </transition-group>
     <SilentUploader v-if="!props.disabled" :upload="props.upload">
@@ -104,23 +99,12 @@ onMounted(() => {
       </ElButton>
     </SilentUploader>
     <template v-if="props.overflow === 'scrollX'">
-      <ElButton
-        :class="[ns.b('prev-btn')]"
-        circle
-        size="small"
-        @click="onScrollLeft"
-      >
+      <ElButton :class="[ns.b('prev-btn')]" circle size="small" @click="onScrollLeft">
         <template #icon>
           <ArrowLeftBold />
         </template>
       </ElButton>
-      <ElButton
-        :class="[ns.b('next-btn')]"
-        circle
-        icon=""
-        size="small"
-        @click="onScrollRight"
-      >
+      <ElButton :class="[ns.b('next-btn')]" circle icon="" size="small" @click="onScrollRight">
         <template #icon>
           <ArrowRightBold />
         </template>
@@ -130,5 +114,5 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

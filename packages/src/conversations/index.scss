@@ -1,5 +1,5 @@
-@import '../theme/index.scss';
-@import '../theme/mixin.scss';
+@import '../theme/index';
+@import '../theme/mixin';
 
 $prefix: 'conversations' !default;
 
@@ -7,56 +7,62 @@ $prefix: 'conversations' !default;
   display: flex;
   gap: $padding-xs;
   align-items: center;
-  border-radius: $border-radius;
   padding: $padding-sm;
   cursor: pointer;
-  &:hover {
-    background-color: rgba(var(--light), 12%);
+  border-radius: $border-radius;
+
+  @include b(#{$prefix}-label) {
+    display: -webkit-box;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-text);
+    -webkit-box-orient: vertical;
   }
+
+  &:hover {
+    background-color: rgb(var(--light), 12%);
+  }
+
   &-active {
-    background-color: rgba(var(--light), 18%);
+    background-color: rgb(var(--light), 18%);
+
     &:hover {
-      background-color: rgba(var(--light), 18%);
+      background-color: rgb(var(--light), 18%);
     }
   }
+
   &-disabled {
     cursor: not-allowed;
     opacity: 0.6;
   }
-  &:hover, &-active {
+
+  &:hover,
+  &-active {
     @include b(#{$prefix}-menu-icon) {
       opacity: 1;
     }
   }
-  @include b(#{$prefix}-icon) {
-    
-  }
-  @include b(#{$prefix}-label) {
-    flex: 1;
-    color: var(--color-text);
-    display: -webkit-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-  }
 }
 
 @include b(#{$prefix}-item-active) {
-  background-color: rgba(var(--light), 18%);
+  background-color: rgb(var(--light), 18%);
 }
 
 @include b($prefix) {
   display: flex;
-  gap: $padding-xs;
   flex-direction: column;
-  overflow-y: auto;
-  margin: 0;
+  gap: $padding-xs;
   padding: 0;
+  margin: 0;
+  overflow-y: auto;
+
   &-list {
-    margin: 0;
     padding: 0;
+    margin: 0;
   }
 }
+
 @include b(#{$prefix}-rtl) {
   direction: rtl;
 }

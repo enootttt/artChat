@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { ElSpace, ElButton, ElIcon } from "element-plus";
-import { Loading, Discount } from "@element-plus/icons-vue";
-import { ArtRequest, ThoughtChain } from "@artmate/chat";
-import type { ThoughtChainItemProps } from "@artmate/chat";
+import type { ThoughtChainItemProps } from '@artmate/chat'
+import { ArtRequest, ThoughtChain } from '@artmate/chat'
+import { Discount, Loading } from '@element-plus/icons-vue'
+import { ElButton, ElIcon, ElSpace } from 'element-plus'
+import { computed, ref } from 'vue'
 /**
  * 🔔 Please replace the BASE_URL, PATH, MODEL, API_KEY with your own values.
  */
-const BASE_URL = "https://api.example.com";
-const PATH = "/chat";
-const MODEL = "gpt-3.5-turbo";
+const BASE_URL = 'https://api.example.com'
+const PATH = '/chat'
+const MODEL = 'gpt-3.5-turbo'
 // const API_KEY = '';
 
 const exampleRequest = ArtRequest({
@@ -18,55 +18,57 @@ const exampleRequest = ArtRequest({
 
   /** 🔥🔥 Its dangerously! */
   // dangerouslyApiKey: API_KEY
-});
+})
 
-const status = ref<ThoughtChainItemProps["status"]>();
-const lines = ref<Record<string, string>[]>([]);
+const status = ref<ThoughtChainItemProps['status']>()
+const lines = ref<Record<string, string>[]>([])
 
 async function request() {
-  status.value = "pending";
+  status.value = 'pending'
 
   await exampleRequest.create(
     {
-      messages: [{ role: "user", content: "hello, who are u?" }],
+      messages: [{ role: 'user', content: 'hello, who are u?' }],
       stream: true,
     },
     {
       onSuccess: (messages) => {
-        status.value = "success";
-        console.log("onSuccess", messages);
+        status.value = 'success'
+        console.log('onSuccess', messages)
       },
       onError: (error) => {
-        status.value = "error";
-        console.error("onError", error);
+        status.value = 'error'
+        console.error('onError', error)
       },
       onUpdate: (msg) => {
-        lines.value = [...lines.value, msg];
-        console.log("onUpdate", msg);
+        lines.value = [...lines.value, msg]
+        console.log('onUpdate', msg)
       },
     }
-  );
+  )
 }
 
 const description = computed(() => {
-  if (status.value === "error" && exampleRequest.baseURL === BASE_URL + PATH) {
-    return "Please replace the BASE_URL, PATH, MODEL, API_KEY with your own values.";
+  if (status.value === 'error' && exampleRequest.baseURL === BASE_URL + PATH) {
+    return 'Please replace the BASE_URL, PATH, MODEL, API_KEY with your own values.'
   }
-  return "";
-});
+  return ''
+})
 
 const items = computed<ThoughtChainItemProps[]>(() => [
   {
-    title: "Request Log",
+    title: 'Request Log',
     status: status.value,
     description: description.value,
   },
-]);
+])
 </script>
 
 <template>
   <div class="demo">
-    <ElButton type="primary" :disabled="status === 'pending'" @click="request">Agent Request</ElButton>
+    <ElButton type="primary" :disabled="status === 'pending'" @click="request">
+      Agent Request
+    </ElButton>
     <ThoughtChain :items="items">
       <template #icon="{ info }">
         <ElIcon size="20" :color="info.status ? 'white' : 'block'">
@@ -76,7 +78,7 @@ const items = computed<ThoughtChainItemProps[]>(() => [
       </template>
       <template #content="{ info }">
         <ElSpace direction="vertical" alignment="flex-start">
-          <div>Status：{{ info.status || "-" }}</div>
+          <div>Status：{{ info.status || '-' }}</div>
           <div>Update Times：{{ lines.length }}</div>
         </ElSpace>
       </template>

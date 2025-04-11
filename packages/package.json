@@ -1,64 +1,64 @@
 {
-	"name": "@artmate/chat",
-	"version": "1.2.7",
-	"description": "借鉴字节开源react库AntX，通过vue实现的版本",
-	"private": true,
-	"packageManager": "pnpm@9.12.3",
-	"keywords": [
-		"AI",
-		"Copilot",
-		"components",
-		"vite",
-		"vue3",
-		"element-plus",
-		"chat"
-	],
-	"bugs": {
-		"url": "https://gitee.com/asd1232rq3123/artmate-chat/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://gitee.com/asd1232rq3123/artmate-chat"
-	},
-	"license": "MIT",
-	"type": "module",
-	"scripts": {
-		"build": "vite build",
-		"prepublishOnly": "npm run build",
-		"docs:dev": "turbo run dev --filter=docs",
-		"docs:build": "vitepress build docs",
-		"docs:preview": "vitepress preview docs",
-		"clean": "node ./scripts/clean.mjs",
-		"typecheck": "vue-tsc --noEmit"
-	},
-	"files": [
-		"dist"
-	],
-	"sideEffects": [
-		"**/*.css"
-	],
-	"main": "./dist/cjs/index.js",
-	"module": "./dist/es/index.js",
-	"types": "./dist/typings/index.d.ts",
-	"exports": {
-		".": {
-			"types": "./dist/typings/index.d.ts",
-			"import": "./dist/es/index.js",
-			"require": "./dist/cjs/index.js"
-		},
-		"./dist/index.css": "./dist/es/index.css"
-	},
-	"devDependencies": {
-		"@vitejs/plugin-vue": "^5.2.1",
-		"rollup": "^4.34.8",
-		"vite": "^6.0.3",
-		"vite-plugin-dts": "^4.4.0"
-	},
-	"dependencies": {
-		"@element-plus/icons-vue": "catalog:",
-		"@vueuse/core": "catalog:",
-		"element-plus": "catalog:",
-		"sass": "catalog:",
-		"vue": "catalog:"
-	}
+  "name": "@artmate/chat",
+  "version": "1.2.7",
+  "description": "借鉴字节开源react库AntX，通过vue实现的版本",
+  "private": true,
+  "packageManager": "pnpm@9.12.3",
+  "keywords": [
+    "AI",
+    "Copilot",
+    "components",
+    "vite",
+    "vue3",
+    "element-plus",
+    "chat"
+  ],
+  "bugs": {
+    "url": "https://gitee.com/asd1232rq3123/artmate-chat/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/asd1232rq3123/artmate-chat"
+  },
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "prepublishOnly": "npm run build",
+    "docs:dev": "turbo run dev --filter=docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "clean": "node ./scripts/clean.mjs",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/typings/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/typings/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./dist/index.css": "./dist/es/index.css"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "rollup": "^4.34.8",
+    "vite": "^6.0.3",
+    "vite-plugin-dts": "^4.4.0"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "catalog:",
+    "@vueuse/core": "catalog:",
+    "element-plus": "catalog:",
+    "sass": "catalog:",
+    "vue": "catalog:"
+  }
 }

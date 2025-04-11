@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
-  Bubble
-} from '@artmate/chat';
+import { Bubble } from '@artmate/chat'
 </script>
 
 <template>

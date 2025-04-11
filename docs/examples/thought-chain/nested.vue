@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { shallowRef } from "vue";
-import { ElAvatar, ElIcon, ElCard, ElButton } from "element-plus";
-import { CircleCheck, MoreFilled } from "@element-plus/icons-vue";
-import { ThoughtChain } from "@artmate/chat";
-import type { ThoughtChainProps } from "@artmate/chat";
-const items: ThoughtChainProps["items"] = [
+import type { ThoughtChainProps } from '@artmate/chat'
+import { ThoughtChain } from '@artmate/chat'
+import { CircleCheck, MoreFilled } from '@element-plus/icons-vue'
+import { ElAvatar, ElButton, ElCard, ElIcon } from 'element-plus'
+import { shallowRef } from 'vue'
+
+const items: ThoughtChainProps['items'] = [
   {
-    key: "1",
-    title: "1 - Thought Chain Item",
-    description: "description",
+    key: '1',
+    title: '1 - Thought Chain Item',
+    description: 'description',
     icon: shallowRef(CircleCheck),
     content: [
       ` In the process of internal desktop applications development, many different design specs and
@@ -17,13 +18,13 @@ const items: ThoughtChainProps["items"] = [
       `After massive project practice and summaries, Ant Design, a design language for background
         applications, is refined by Ant UED Team, which aims to uniform the user interface specs for internal background projects, lower the unnecessary cost of
         design differences and implementation and liberate the resources of design and front-end
-        development`
+        development`,
     ],
   },
   {
-    key: "2",
-    title: "2 - Thought Chain Item",
-    description: "description",
+    key: '2',
+    title: '2 - Thought Chain Item',
+    description: 'description',
     icon: shallowRef(CircleCheck),
     content: [
       ` In the process of internal desktop applications development, many different design specs and
@@ -36,7 +37,7 @@ const items: ThoughtChainProps["items"] = [
         development`,
     ],
   },
-];
+]
 </script>
 
 <template>
@@ -54,7 +55,6 @@ const items: ThoughtChainProps["items"] = [
               {{ info.key }}
             </ElAvatar>
           </template>
-          <template #></template>
           <template #extra>
             <ElButton size="small">
               <template #icon>

@@ -1,4 +1,3 @@
-
 # useArtChat 数据管理
 
 配合 Agent hook 进行对话数据管理。
@@ -45,19 +44,19 @@ useArtChat/suggestions
 
 ```ts | pure
 type useArtChat<AgentMessage, ParsedMessage = AgentMessage> = (
-  config: ArtChatConfig<AgentMessage, ParsedMessage>,
-) => ArtChatConfigReturnType;
+  config: ArtChatConfig<AgentMessage, ParsedMessage>
+) => ArtChatConfigReturnType
 ```
 
 ### ArtChatConfig
 
-| 属性    | 说明        | 类型             | 默认值 | 版本 |
-| ------ | ----------- | ---------------- | ------ | ---- |
-| agent  | 通过 `useArtAgent` 生成的 `agent`，当使用 `onRequest` 方法时, `agent` 参数是必需的。 | ArtAgent | - |   |
-| defaultMessages | 默认展示信息   | { status, message }[]                                    | - |      |
-| parser | 将 AgentMessage 转换成消费使用的 ParsedMessage，不设置时则直接消费 AgentMessage。支持将一条 AgentMessage 转换成多条 ParsedMessage | (message: AgentMessage) => BubbleMessage \| BubbleMessage[] | - |      |
-| requestFallback |   请求失败的兜底信息，不提供则不会展示   | AgentMessage \| () => AgentMessage |   -   |      |
-| requestPlaceholder | 请求中的占位信息，不提供则不会展示 | AgentMessage \| () => AgentMessage   | -      |      |
+| 属性               | 说明                                                                                                                              | 类型                                                        | 默认值 | 版本 |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------ | ---- |
+| agent              | 通过 `useArtAgent` 生成的 `agent`，当使用 `onRequest` 方法时, `agent` 参数是必需的。                                              | ArtAgent                                                    | -      |      |
+| defaultMessages    | 默认展示信息                                                                                                                      | { status, message }[]                                       | -      |      |
+| parser             | 将 AgentMessage 转换成消费使用的 ParsedMessage，不设置时则直接消费 AgentMessage。支持将一条 AgentMessage 转换成多条 ParsedMessage | (message: AgentMessage) => BubbleMessage \| BubbleMessage[] | -      |      |
+| requestFallback    | 请求失败的兜底信息，不提供则不会展示                                                                                              | AgentMessage \| () => AgentMessage                          | -      |      |
+| requestPlaceholder | 请求中的占位信息，不提供则不会展示                                                                                                | AgentMessage \| () => AgentMessage                          | -      |      |
 
 ### ArtChatConfigReturnType
 

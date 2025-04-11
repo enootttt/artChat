@@ -30,22 +30,22 @@ welcome/variant
 
 ### WelcomeProps
 
-| 属性 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| classNames | 各部分的自定义类名 | Record<'icon' \| 'title' \| 'description' \| 'extra', string> | - | - |
-| description | 描述文本 | string \| number | - | - |
-| extra | 额外的操作区域内容 | string \| number | - | - |
-| icon | 图标内容 | string \| JSX.Element | - | - |
-| rootClassName | 根元素类名 | string | - | - |
-| styles | 各部分的自定义样式 | Record<'icon' \| 'title' \| 'description' \| 'extra', CSSProperties> | - | - |
-| title | 标题文本 | string \| number | - | - |
-| variant | 组件变体类型 | 'filled' \| 'borderless' | 'filled' | - |
+| 属性          | 说明               | 类型                                                                 | 默认值   | 版本 |
+| ------------- | ------------------ | -------------------------------------------------------------------- | -------- | ---- |
+| classNames    | 各部分的自定义类名 | Record<'icon' \| 'title' \| 'description' \| 'extra', string>        | -        | -    |
+| description   | 描述文本           | string \| number                                                     | -        | -    |
+| extra         | 额外的操作区域内容 | string \| number                                                     | -        | -    |
+| icon          | 图标内容           | string \| JSX.Element                                                | -        | -    |
+| rootClassName | 根元素类名         | string                                                               | -        | -    |
+| styles        | 各部分的自定义样式 | Record<'icon' \| 'title' \| 'description' \| 'extra', CSSProperties> | -        | -    |
+| title         | 标题文本           | string \| number                                                     | -        | -    |
+| variant       | 组件变体类型       | 'filled' \| 'borderless'                                             | 'filled' | -    |
 
 ### Welcome Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
-| icon | 自定义图标内容 |
-| title | 自定义标题内容 |
-| description | 自定义描述内容 |
-| extra | 自定义额外操作区域内容 |
+| 插槽名      | 说明                   |
+| ----------- | ---------------------- |
+| icon        | 自定义图标内容         |
+| title       | 自定义标题内容         |
+| description | 自定义描述内容         |
+| extra       | 自定义额外操作区域内容 |

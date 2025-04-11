@@ -1,28 +1,27 @@
-
 # ArtStream 流
 
 转换可读数据流。
 
 ## 何时使用
 
-* 将 SSE 协议的 `ReadableStream` 转换为 `Record`
-* 将任何协议的 `ReadableStream` 解码并读取
+- 将 SSE 协议的 `ReadableStream` 转换为 `Record`
+- 将任何协议的 `ReadableStream` 解码并读取
 
 ## 使用说明
 
 常见的 `ReadableStream` 实例，如 `await fetch(...).body` 使用示例:
 
 ```js
-import { ArtStream } from '@artmate/chat';
+import { ArtStream } from '@artmate/chat'
 
 async function request() {
-  const response = await fetch();
+  const response = await fetch()
   // .....
 
   for await (const chunk of ArtStream({
     readableStream: response.body,
   })) {
-    console.log(chunk);
+    console.log(chunk)
   }
 }
 ```

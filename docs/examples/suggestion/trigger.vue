@@ -1,31 +1,30 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { ElInputTag } from "element-plus";
-import type { CascaderOption } from "element-plus";
-import { Suggestion } from "@artmate/chat";
-import type { RenderChildrenProps } from "@artmate/chat";
+import type { RenderChildrenProps } from '@artmate/chat'
+import type { CascaderOption } from 'element-plus'
+import { Suggestion } from '@artmate/chat'
+import { ElInputTag } from 'element-plus'
+import { ref } from 'vue'
 
+const tags = ref<string[]>([])
 
-const tags = ref<string[]>([]);
-
-const uuid = ref(0);
+const uuid = ref(0)
 
 const suggestions: (info?: any) => CascaderOption[] = (info) => {
-  return [{ label: `Trigger by '${info}'`, value: String(info) }];
-};
+  return [{ label: `Trigger by '${info}'`, value: String(info) }]
+}
 
-const onSelect = () => {
-  uuid.value++;
-  tags.value = [...tags.value, `Cell_${uuid.value}`];
-};
+function onSelect() {
+  uuid.value++
+  tags.value = [...tags.value, `Cell_${uuid.value}`]
+}
 
-const senderChange = (e: KeyboardEvent, onTrigger: RenderChildrenProps<any>["onTrigger"]) => {
-  if (e.key === "/" || e.key === "#") {
-    onTrigger(e.key);
+function senderChange(e: KeyboardEvent, onTrigger: RenderChildrenProps<any>['onTrigger']) {
+  if (e.key === '/' || e.key === '#') {
+    onTrigger(e.key)
   } else {
-    onTrigger(false);
+    onTrigger(false)
   }
-};
+}
 </script>
 
 <template>

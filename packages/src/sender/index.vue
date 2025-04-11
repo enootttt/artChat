@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import type { SenderProps } from './interface'
+import { ElInput } from 'element-plus'
 
-import { ElInput } from 'element-plus';
-import type { SenderProps } from './interface';
-
-import ArtCollapseTransition from '../collapseTransition/index.vue';
-import { useNamespace } from '../hooks/useNamespace';
+import ArtCollapseTransition from '../collapseTransition/index.vue'
+import { useNamespace } from '../hooks/useNamespace'
 
 const props = withDefaults(defineProps<SenderProps>(), {
   disabled: false,
@@ -15,71 +14,71 @@ const props = withDefaults(defineProps<SenderProps>(), {
   placeholder: '',
   onChange: () => {},
   onKeyPress: () => {},
-});
+})
 
-const emit = defineEmits(['update:modelValue', 'onSubmit']);
+const emit = defineEmits(['update:modelValue', 'onSubmit'])
 
 const slots = defineSlots<{
-  header?: () => void;
-  footer?: () => void;
-  components?: () => void;
-  prefix?: () => void;
-  actions?: () => void;
-}>();
+  header?: () => void
+  footer?: () => void
+  components?: () => void
+  prefix?: () => void
+  actions?: () => void
+}>()
 
-const ns = useNamespace('sender');
+const ns = useNamespace('sender')
 
-const triggerValueChange = (nextValue: string) => {
+function triggerValueChange(nextValue: string) {
   if (props?.onChange) {
-    props.onChange(nextValue);
+    props.onChange(nextValue)
   }
-};
+}
 
-const InputChangeFn = (e: string) => {
-  triggerValueChange(e);
-};
+function InputChangeFn(e: string) {
+  triggerValueChange(e)
+}
 
-const triggerSend = () => {
+function triggerSend() {
   if (props.modelValue && !props.loading) {
-    emit('onSubmit');
+    emit('onSubmit')
   }
-};
+}
 
-const onInternalKeyPress = (e: KeyboardEvent) => {
-  const canSubmit = e.key === 'Enter';
+function onInternalKeyPress(e: KeyboardEvent) {
+  const canSubmit = e.key === 'Enter'
 
   switch (props.submitType) {
     case 'enter': {
       if (canSubmit && !e.shiftKey) {
-        e.preventDefault();
-        triggerSend();
+        e.preventDefault()
+        triggerSend()
       }
-      break;
+      break
     }
 
     case 'shiftEnter': {
       if (canSubmit && e.shiftKey) {
-        e.preventDefault();
-        triggerSend();
+        e.preventDefault()
+        triggerSend()
       }
-      break;
+      break
     }
   }
 
   if (props.onKeyPress) {
-    props.onKeyPress(e);
+    props.onKeyPress(e)
   }
-};
+}
 </script>
 
 <template>
   <div :class="[ns.b(), disabled && ns.b('disabled'), rootClassName]">
     <ArtCollapseTransition>
-      <slot name="header"></slot>
+      <slot name="header" />
     </ArtCollapseTransition>
     <div :class="ns.b('content')">
-      <div :class="[ns.b('prefix'), classNames?.prefix]" v-if="slots.prefix">
-        <slot name="prefix"></slot>
+      <div v-if="slots.prefix" :class="[ns.b('prefix'), classNames?.prefix]">
+        <slot name="prefix" />
       </div>
       <slot name="components">
         <ElInput
@@ -97,16 +96,16 @@ const onInternalKeyPress = (e: KeyboardEvent) => {
           @update:model-value="emit('update:modelValue', $event)"
         />
       </slot>
-      <div :class="[ns.b('actions-list'), classNames?.actions]" v-if="slots.actions">
-        <slot name="actions"></slot>
+      <div v-if="slots.actions" :class="[ns.b('actions-list'), classNames?.actions]">
+        <slot name="actions" />
       </div>
     </div>
-    <div :class="ns.b('footer')" v-if="slots.footer">
-      <slot name="footer"></slot>
+    <div v-if="slots.footer" :class="ns.b('footer')">
+      <slot name="footer" />
     </div>
   </div>
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

@@ -1,12 +1,15 @@
 # 🚀 ArtChat
-  **开箱即用的AI组件库（基于 Vue3 + ElementPlus）**
+
+**开箱即用的AI组件库（基于 Vue3 + ElementPlus）**
 
 ## 核心特性
+
 - ✨ **AI 组件**：内置聊天机器人、思维链等场景化组件
 - 🚀 **零配置集成**：基于 Element-Plus，开箱即用
 - 📦 **按需加载**：提供 Tree Shaking 优化
 
 ## 📦 安装
+
 ```bash
 # npm
 npm install @artmate/chat
@@ -25,13 +28,13 @@ yarn install @artmate/chat
 
 ```html
 <script>
-import { BubbleList, Sender } from '@artmate/chat';
-const list = [
-  {
-    content: 'Hello, ArtChat!',
-    role: 'user',
-  },
-];
+  import { BubbleList, Sender } from '@artmate/chat'
+  const list = [
+    {
+      content: 'Hello, ArtChat!',
+      role: 'user',
+    },
+  ]
 </script>
 
 <template>
@@ -46,13 +49,13 @@ const list = [
 
 ```ts
 // main.ts
-import { createApp } from 'vue';
-import ArtChat from '@artmate/chat';
-import App from './App.vue';
+import { createApp } from 'vue'
+import ArtChat from '@artmate/chat'
+import App from './App.vue'
 
-const app = createApp(App);
-app.use(ArtChat);
-app.mount('#app');
+const app = createApp(App)
+app.use(ArtChat)
+app.mount('#app')
 ```
 
 ## 🤝 参与贡献

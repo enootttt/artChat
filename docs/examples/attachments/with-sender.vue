@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { ElSpace, ElButton, ElIcon, ElMessage } from "element-plus";
-import { Promotion, Link, UploadFilled } from "@element-plus/icons-vue";
-import { Sender, SenderHeader, Attachment } from "@artmate/chat";
+import { Attachment, Sender, SenderHeader } from '@artmate/chat'
+import { Link, Promotion, UploadFilled } from '@element-plus/icons-vue'
+import { ElButton, ElIcon, ElMessage, ElSpace } from 'element-plus'
+import { ref } from 'vue'
 
-const value = ref("");
-const open = ref(true);
+const value = ref('')
+const open = ref(true)
 
-const submit = () => {
-  ElMessage.success("Send message successfully!");
-};
+function submit() {
+  ElMessage.success('Send message successfully!')
+}
 </script>
 
 <template>
@@ -20,10 +20,12 @@ const submit = () => {
           <template #default>
             <Attachment title="Upload files">
               <template #icon>
-                <ElIcon size="50"><UploadFilled /></ElIcon>
+                <ElIcon size="50">
+                  <UploadFilled />
+                </ElIcon>
               </template>
               <template #title>Upload Sample</template>
-              <template #description> Click or drag files to this area to upload </template>
+              <template #description>Click or drag files to this area to upload</template>
             </Attachment>
           </template>
         </SenderHeader>

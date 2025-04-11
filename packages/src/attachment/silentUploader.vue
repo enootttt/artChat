@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import type { SilentUploaderProps } from './interface';
+import type { SilentUploaderProps } from './interface'
 
-import { ref } from 'vue';
+import { ElUpload } from 'element-plus'
 
-import { ElUpload } from 'element-plus';
+import { ref } from 'vue'
 
-const props = withDefaults(defineProps<SilentUploaderProps>(), {});
-const uploadRef = ref<InstanceType<typeof ElUpload>>();
+const props = withDefaults(defineProps<SilentUploaderProps>(), {})
+const uploadRef = ref<InstanceType<typeof ElUpload>>()
 
 defineExpose({
   uploadRef,
-});
+})
 </script>
 
 <template>
   <ElUpload
+    v-bind="props.upload"
+    ref="uploadRef"
     :auto-upload="false"
     :show-file-list="false"
     action="#"
-    v-bind="props.upload"
-    ref="uploadRef"
     :class="props.rootClassName"
   >
-    <slot></slot>
+    <slot />
   </ElUpload>
 </template>
 

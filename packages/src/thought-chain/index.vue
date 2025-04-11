@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { useNamespace } from "../hooks/useNamespace";
-import type { ThoughtChainItemProps, ThoughtChainProps } from "./interface";
-import useCollapsible from "./hooks/useCollapsible";
-import ThoughtChainNode from "./item.vue";
-
-const ns = useNamespace("thought-chain");
+import type { ThoughtChainItemProps, ThoughtChainProps } from './interface'
+import { computed } from 'vue'
+import { useNamespace } from '../hooks/useNamespace'
+import useCollapsible from './hooks/useCollapsible'
+import ThoughtChainNode from './item.vue'
 
 const props = withDefaults(defineProps<ThoughtChainProps>(), {
-  prefixCls: "",
-  rootClassName: "",
+  prefixCls: '',
+  rootClassName: '',
   items: () => [],
   collapsible: false,
   styles: () => ({}),
   classNames: () => ({}),
-  size: "middle",
-});
+  size: 'middle',
+})
 
 const slots = defineSlots<{
-  icon?(slotProps: { info: ThoughtChainItemProps }): void;
-  content?(slotProps: { info: ThoughtChainItemProps }): void;
-  extra?(slotProps: { info: ThoughtChainItemProps }): void;
-  footer?(slotProps: { info: ThoughtChainItemProps }): void;
-}>();
+  icon?: (slotProps: { info: ThoughtChainItemProps }) => void
+  content?: (slotProps: { info: ThoughtChainItemProps }) => void
+  extra?: (slotProps: { info: ThoughtChainItemProps }) => void
+  footer?: (slotProps: { info: ThoughtChainItemProps }) => void
+}>()
 
-const [enableCollapse, expandedKeys, onItemExpand] = useCollapsible(props.collapsible);
+const ns = useNamespace('thought-chain')
+
+const [enableCollapse, expandedKeys, onItemExpand] = useCollapsible(props.collapsible)
 
 const mergedCls = computed(() => {
-  return [ns.b(), props.rootClassName, props.prefixCls, ns.b(props.size)];
-});
+  return [ns.b(), props.rootClassName, props.prefixCls, ns.b(props.size)]
+})
 </script>
 
 <template>
@@ -45,7 +45,7 @@ const mergedCls = computed(() => {
         :expanded-keys="expandedKeys"
       >
         <template v-for="(_slot, slotName) in slots" :key="slotName" #[slotName]="slotProps">
-          <slot :name="slotName" v-bind="{ ...slotProps }"></slot>
+          <slot :name="slotName" v-bind="{ ...slotProps }" />
         </template>
       </ThoughtChainNode>
     </template>
@@ -53,5 +53,5 @@ const mergedCls = computed(() => {
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

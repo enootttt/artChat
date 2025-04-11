@@ -1,7 +1,7 @@
-import { resolve } from "node:path";
+import { resolve } from 'node:path'
 
-export const projRoot = resolve(__dirname, "..", "..", "..");
+export const projRoot = resolve(__dirname, '..', '..', '..')
 
 // Docs
-export const docsDirName = "docs";
-export const docRoot = resolve(projRoot, docsDirName);
+export const docsDirName = 'docs'
+export const docRoot = resolve(projRoot, docsDirName)

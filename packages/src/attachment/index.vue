@@ -1,63 +1,67 @@
 <script setup lang="ts">
-import type { UploadFile, UploadProps } from 'element-plus';
+import type { UploadFile, UploadProps } from 'element-plus'
 
-import type { Attachment, AttachmentProps } from './interface';
+import type { Attachment, AttachmentProps } from './interface'
 
-import { computed, ref, useSlots, watch } from 'vue';
+import { computed, ref, useSlots, watch } from 'vue'
 
-import FileList from '../fileList/index.vue';
-import { useNamespace } from '../hooks/useNamespace';
-import DropArea from './DropArea.vue';
-import PlaceholderUploader from './PlaceholderUploader.vue';
-import SilentUploader from './silentUploader.vue';
-
-const props = withDefaults(defineProps<AttachmentProps>(), {
-  items: () => [],
-});
+import FileList from '../fileList/index.vue'
+import { useNamespace } from '../hooks/useNamespace'
+import DropArea from './DropArea.vue'
+import PlaceholderUploader from './PlaceholderUploader.vue'
+import SilentUploader from './silentUploader.vue'
 
 defineOptions({
   name: 'Attachment',
 })
 
-const ns = useNamespace('attachment');
-
-const slots = useSlots();
-
-const CurrentRef = ref<InstanceType<typeof PlaceholderUploader>>();
-const uploadRef = ref<InstanceType<typeof SilentUploader>>();
-const containerRef = ref<HTMLElement>();
-
-const fileList = ref(props.items);
-
-watch(() => props.items, (value) => {
-  fileList.value = value;
+const props = withDefaults(defineProps<AttachmentProps>(), {
+  items: () => [],
 })
 
-const triggerChange = (uploadFile: Partial<UploadFile>, uploadFiles: Partial<UploadFile>[]) => {
+const ns = useNamespace('attachment')
+
+const slots = useSlots()
+
+const CurrentRef = ref<InstanceType<typeof PlaceholderUploader>>()
+const uploadRef = ref<InstanceType<typeof SilentUploader>>()
+const containerRef = ref<HTMLElement>()
+
+const fileList = ref(props.items)
+
+watch(
+  () => props.items,
+  (value) => {
+    fileList.value = value
+  }
+)
+
+function triggerChange(uploadFile: Partial<UploadFile>, uploadFiles: Partial<UploadFile>[]) {
   const info = {
     file: uploadFile,
     fileList: uploadFiles,
-  };
-  fileList.value = uploadFiles;
-  props.onChange?.(info);
-};
+  }
+  fileList.value = uploadFiles
+  props.onChange?.(info)
+}
 
-const mergedUploadProps = computed(() => ({
-  ...props.uploadProps,
-  fileList: fileList.value,
-  onChange: triggerChange,
-}) as UploadProps);
+const mergedUploadProps = computed(
+  () =>
+    ({
+      ...props.uploadProps,
+      fileList: fileList.value,
+      onChange: triggerChange,
+    }) as UploadProps
+)
 
-const onItemRemove = (item: Attachment) => {
-  const newFileList = fileList.value.filter(
-    (fileItem) => fileItem.uid !== item.uid,
-  );
-  triggerChange(item, newFileList);
-};
+function onItemRemove(item: Attachment) {
+  const newFileList = fileList.value.filter((fileItem) => fileItem.uid !== item.uid)
+  triggerChange(item, newFileList)
+}
 
 const hasFileList = computed(() => {
-  return fileList.value.length > 0;
-});
+  return fileList.value.length > 0
+})
 
 defineExpose({
   ref: CurrentRef.value,
@@ -65,15 +69,15 @@ defineExpose({
   upload: (file: UploadFile) => {
     const fileInput: HTMLInputElement = (
       uploadRef.value?.$el as HTMLElement
-    ).querySelector<HTMLInputElement>('input[type="file"]') as HTMLInputElement;
+    ).querySelector<HTMLInputElement>('input[type="file"]') as HTMLInputElement
     if (fileInput) {
-      const dataTransfer = new DataTransfer();
-      dataTransfer.items.add(file as any);
-      fileInput.files = dataTransfer.files;
-      fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+      const dataTransfer = new DataTransfer()
+      dataTransfer.items.add(file as any)
+      fileInput.files = dataTransfer.files
+      fileInput.dispatchEvent(new Event('change', { bubbles: true }))
     }
   },
-});
+})
 </script>
 
 <template>
@@ -84,7 +88,7 @@ defineExpose({
       :root-class-name="props.rootClassName"
       :upload="mergedUploadProps"
     >
-      <slot></slot>
+      <slot />
     </SilentUploader>
     <DropArea
       :class-name="props.rootClassName"
@@ -135,13 +139,13 @@ defineExpose({
       type="inline"
     >
       <template #icon>
-        <slot name="icon"></slot>
+        <slot name="icon" />
       </template>
       <template #title>
-        <slot name="title"></slot>
+        <slot name="title" />
       </template>
       <template #description>
-        <slot name="description"></slot>
+        <slot name="description" />
       </template>
     </PlaceholderUploader>
     <DropArea
@@ -156,13 +160,13 @@ defineExpose({
         type="drop"
       >
         <template #icon>
-          <slot></slot>
+          <slot />
         </template>
         <template #title>
-          <slot name="title"></slot>
+          <slot name="title" />
         </template>
         <template #description>
-          <slot name="description"></slot>
+          <slot name="description" />
         </template>
       </PlaceholderUploader>
     </DropArea>
@@ -170,5 +174,5 @@ defineExpose({
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "ArtChat"
-  text: "AI 体验新秩序"
+  name: 'ArtChat'
+  text: 'AI 体验新秩序'
   tagline: Ant Design X For Vue (Element Plus)。Ant Design 团队匠心呈现 RICH 设计范式，打造卓越 AI 界面解决方案，引领智能新体验。
   actions:
     - theme: brand
@@ -13,7 +13,7 @@ hero:
     - theme: alt
       text: 设计语言
       link: https://x.ant.design/docs/spec/introduce-cn
-  image: 
+  image:
     src: https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*k0oYSZQMoBwAAAAAAAAAAAAADgCCAQ/original
     alt: ArtChat
 
@@ -25,4 +25,3 @@ features:
   - title: 组件丰富，选用自如
     details: Ant Design X Vue (Element Plus) 全新 AI 组件 , 大量实用组件满足你的需求 , 灵活定制与拓展
 ---
-

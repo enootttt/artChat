@@ -1,9 +1,9 @@
 // 导入 Vue 插件，用于处理 .vue 文件
-import vue from '@vitejs/plugin-vue';
+import vue from '@vitejs/plugin-vue'
 // 导入 Vite 配置函数
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
 // 导入 TypeScript 声明文件生成插件
-import dts from 'vite-plugin-dts';
+import dts from 'vite-plugin-dts'
 // 导入 Rollup 输出配置类型
 import type { OutputOptions } from 'rollup'
 
@@ -13,9 +13,9 @@ const rollupOutputBase: OutputOptions = {
   assetFileNames: (assetInfo) => {
     // CSS 文件统一命名为 index.css
     if (assetInfo.name?.endsWith('.css')) {
-      return 'index.css';
+      return 'index.css'
     }
-    return assetInfo.name as string;
+    return assetInfo.name as string
   },
   // 入口文件命名格式
   entryFileNames: '[name].js',
@@ -28,7 +28,7 @@ const rollupOutputBase: OutputOptions = {
   // 设置模块根目录为 packages
   preserveModulesRoot: 'packages',
   // 使用命名导出
-  exports: 'named'
+  exports: 'named',
 }
 
 // 导出 Vite 配置
@@ -79,10 +79,10 @@ export default defineConfig(() => {
       // 生成 TypeScript 声明文件
       dts({
         // TypeScript 声明的根目录
-        entryRoot: "./src",
+        entryRoot: './src',
         // TypeScript 声明文件输出目录
         outDir: ['dist/typings'],
       }),
     ],
-  };
-});
+  }
+})

@@ -1,21 +1,31 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { ElSpace, ElButton, ElSwitch, ElIcon, ElMessage } from "element-plus";
-import { Promotion, TopLeft } from "@element-plus/icons-vue";
-import { Sender, SenderHeader } from "@artmate/chat";
+import { Sender, SenderHeader } from '@artmate/chat'
+import { Promotion, TopLeft } from '@element-plus/icons-vue'
+import { ElButton, ElIcon, ElMessage, ElSpace, ElSwitch } from 'element-plus'
+import { ref } from 'vue'
 
-const value = ref("123");
-const hasRef = ref(true);
+const value = ref('123')
+const hasRef = ref(true)
 
-const submit = () => {
-  ElMessage.success("Send message successfully!");
-};
+function submit() {
+  ElMessage.success('Send message successfully!')
+}
 </script>
 
 <template>
   <ElSpace style="width: 100%" direction="vertical" alignment="align-start" fill>
-    <ElSwitch v-model="hasRef" inline-prompt active-text="With Reference" inactive-text="With Reference" />
-    <Sender v-model="value" submitType="shiftEnter" placeholder="Press Shift + Enter to send message" @on-submit="submit">
+    <ElSwitch
+      v-model="hasRef"
+      inline-prompt
+      active-text="With Reference"
+      inactive-text="With Reference"
+    />
+    <Sender
+      v-model="value"
+      submit-type="shiftEnter"
+      placeholder="Press Shift + Enter to send message"
+      @on-submit="submit"
+    >
       <template #header>
         <SenderHeader :open="hasRef">
           <template #title>

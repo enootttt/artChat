@@ -1,7 +1,7 @@
-import mdContainer from "markdown-it-container";
-import createDemoContainer from "../plugins/demo";
-import type MarkdownIt from "markdown-it";
+import type MarkdownIt from 'markdown-it'
+import mdContainer from 'markdown-it-container'
+import createDemoContainer from '../plugins/demo'
 
-export const mdPlugin = (md: MarkdownIt) => {
-  md.use(mdContainer, "demo", createDemoContainer(md));
-};
+export function mdPlugin(md: MarkdownIt) {
+  md.use(mdContainer, 'demo', createDemoContainer(md))
+}

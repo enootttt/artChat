@@ -1,23 +1,24 @@
-@import "../theme/index.scss";
-@import "../theme/mixin.scss";
+@import '../theme/index';
+@import '../theme/mixin';
 
-$prefix-root: "attachment" !default;
-$prefix: "attachment-list" !default;
-$prefix-card: "attachment-list-card" !default;
+$prefix-root: 'attachment' !default;
+$prefix: 'attachment-list' !default;
+$prefix-card: 'attachment-list-card' !default;
 
 @include b($prefix) {
   display: flex;
   flex-wrap: wrap;
   gap: $padding-xs;
+  width: 100%;
+  padding-block: $padding-sm;
+  padding-inline: $padding;
   font-size: $font-size;
   line-height: $line-height;
   color: var(--color-text);
-  padding-block: $padding-sm;
-  padding-inline: $padding;
-  width: 100%;
-  background: var(--color-bg-container);
   scrollbar-width: none;
+  background: var(--color-bg-container);
   -ms-overflow-style: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -26,69 +27,80 @@ $prefix-card: "attachment-list-card" !default;
   &-overflow-scrollY {
     &::before,
     &::after {
-      content: "";
       position: absolute;
+      z-index: 1;
+      content: '';
       opacity: 0;
       transition: opacity $motion-duration-slow;
-      z-index: 1;
     }
   }
+
   &-overflow-ping-start::before {
     opacity: 1;
   }
+
   &-overflow-ping-end::before {
     opacity: 1;
   }
+
   &-overflow-scrollX {
-    overflow-x: auto;
-    overflow-y: hidden;
     flex-wrap: nowrap;
+    overflow: auto hidden;
+
     &::before,
     &::after {
       inset-block: 0;
       width: 8px;
     }
+
     &::before {
       inset-inline-start: 0;
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
+      background: linear-gradient(to right, rgb(0 0 0 / 6%), rgb(0 0 0 / 0%));
     }
+
     &::after {
       inset-inline-end: 0;
-      background: linear-gradient(to left, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
+      background: linear-gradient(to left, rgb(0 0 0 / 6%), rgb(0 0 0 / 0%));
     }
+
     &:dir(rtl) {
       &::before {
-        background: linear-gradient(to left, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
+        background: linear-gradient(to left, rgb(0 0 0 / 6%), rgb(0 0 0 / 0%));
       }
+
       &::after {
-        background: linear-gradient(to right, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
+        background: linear-gradient(to right, rgb(0 0 0 / 6%), rgb(0 0 0 / 0%));
       }
     }
   }
+
   &-overflow-scrollY {
-    overflow-x: hidden;
-    overflow-y: auto;
     max-height: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm * 3);
+    overflow: hidden auto;
+
     &::before,
     &::after {
       inset-inline: 0;
       height: 8px;
     }
+
     &::before {
       inset-block-start: 0;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
+      background: linear-gradient(to bottom, rgb(0 0 0 / 6%), rgb(0 0 0 / 0%));
     }
+
     &::after {
       inset-block-end: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0));
+      background: linear-gradient(to top, rgb(0 0 0 / 6%), rgb(0 0 0 / 0%));
     }
   }
   .el-button#{&}-upload-btn {
     width: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm);
     height: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm);
     font-size: $font-size-heading-2;
+
     &-icon {
-      color: #ffffff;
+      color: #fff;
     }
   }
 
@@ -97,101 +109,112 @@ $prefix-card: "attachment-list-card" !default;
   &-next-btn {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    pointer-events: none;
     box-shadow: var(--box-shadow-tertiary);
     opacity: 0;
-    pointer-events: none;
+    transform: translateY(-50%);
   }
+
   &-prev-btn {
     left: $padding;
   }
+
   &-next-btn {
     right: $padding;
   }
 }
 
-[class*="#{$prefix-root}"] {
+[class*='#{$prefix-root}'] {
   &:dir(ltr) {
     @include b(#{$prefix}-overflow-ping-start) {
       @include b(#{$prefix}-prev-btn) {
-        opacity: 1;
         pointer-events: auto;
+        opacity: 1;
       }
     }
+
     @include b(#{$prefix}-overflow-ping-end) {
       @include b(#{$prefix}-next-btn) {
-        opacity: 1;
         pointer-events: auto;
+        opacity: 1;
       }
     }
   }
+
   &:dir(rtl) {
     #{$prefix}-overflow-ping-end #{$prefix}-prev-btn {
-      opacity: 1;
       pointer-events: auto;
+      opacity: 1;
     }
     #{$prefix}-overflow-ping-start #{$prefix}-next-btn {
-      opacity: 1;
       pointer-events: auto;
+      opacity: 1;
     }
   }
 }
 
 @include b($prefix-card) {
   $component-prefix: &;
-  border-radius: $border-radius;
+
   position: relative;
-  background: var(--color-fill-content);
-  border-width: $line-width;
-  border-style: $line-type;
-  border-color: transparent;
   flex: none;
   font-size: $font-size;
+  background: var(--color-fill-content);
+  border-color: transparent;
+  border-style: $line-type;
+  border-width: $line-width;
+  border-radius: $border-radius;
+
   .el-progress-circle {
     width: 100% !important;
     height: 100% !important;
   }
+
   &-name,
   &-desc {
     display: flex;
     flex-wrap: nowrap;
     max-width: 100%;
   }
+
   &-ellipsis-prefix {
     flex: 0 1 auto;
-    min-width: 0px;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
   &-ellipsis-suffix {
     flex: none;
   }
+
   &-type-overview {
-    padding: calc($padding-sm - $line-width);
-    padding-inline-start: calc($padding + $line-width);
     display: flex;
     flex-wrap: nowrap;
     gap: $padding-xs;
     align-items: flex-start;
     width: 236px;
+    padding: calc($padding-sm - $line-width);
+    padding-inline-start: calc($padding + $line-width);
     #{$component-prefix}-icon {
+      flex: none;
+      padding-top: calc($padding-xxs * 1.5);
       font-size: calc($font-size-lg * 2);
       line-height: 1;
-      padding-top: calc($padding-xxs * 1.5);
-      flex: none;
     }
     #{$component-prefix}-content {
-      flex: auto;
-      min-width: 0px;
       display: flex;
+      flex: auto;
       flex-direction: column;
       align-items: stretch;
+      min-width: 0;
     }
     #{$component-prefix}-desc {
       color: var(--color-text-tertiary);
     }
   }
+
   &-type-preview {
     width: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm);
     height: calc($font-size * $line-height * 2 + $padding-sm + $padding-sm);
@@ -199,6 +222,7 @@ $prefix-card: "attachment-list-card" !default;
     &:not(#{$component-prefix}-status-fail) {
       border: 0;
     }
+
     img {
       width: 100%;
       height: 100%;
@@ -210,9 +234,9 @@ $prefix-card: "attachment-list-card" !default;
       position: absolute;
       inset: 0;
       display: flex;
-      justify-content: center;
       align-items: center;
-      background: rgba(0, 0, 0, 0.65);
+      justify-content: center;
+      background: rgb(0 0 0 / 65%);
       border-radius: inherit;
     }
     #{$component-prefix}-status-fail {
@@ -225,33 +249,39 @@ $prefix-card: "attachment-list-card" !default;
       }
     }
   }
+
   &-remove {
     position: absolute;
-    top: 0;
     inset-inline-end: 0;
-    border: 0;
-    padding: $padding-xxs;
-    background: transparent;
-    line-height: 1;
-    transform: translate(40%, -40%);
-    font-size: $font-size;
-    cursor: pointer;
-    opacity: 0.65;
+    top: 0;
     display: none;
+    padding: $padding-xxs;
+    font-size: $font-size;
+    line-height: 1;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    opacity: 0.65;
+    transform: translate(40%, -40%);
     transition: all $motion-duration-slow;
+
     &:dir(rtl) {
       transform: translate(-50%, -50%);
     }
+
     &:hover {
       opacity: 1;
     }
+
     &:active {
       opacity: 0.65;
     }
   }
+
   &:hover &-remove {
     display: block;
   }
+
   &-status-fail {
     #{$component-prefix}-desc {
       color: var(--color-error);
@@ -261,20 +291,26 @@ $prefix-card: "attachment-list-card" !default;
   // ========================== Motion ==================================
   &-motion {
     overflow: hidden;
-    transition: opacity $motion-duration-slow, width $motion-duration-slow, margin $motion-duration-slow, padding $motion-duration-slow;
+    transition:
+      opacity $motion-duration-slow,
+      width $motion-duration-slow,
+      margin $motion-duration-slow,
+      padding $motion-duration-slow;
     #{$component-prefix}-remove {
       display: none !important;
     }
+
     &-appear-start {
-      width: 0px;
+      width: 0;
       transition: none;
     }
+
     &-leave-active {
-      opacity: 0;
-      width: 0px;
+      width: 0;
       padding-inline: 0;
-      border-inline-width: 0;
       margin-inline-end: calc($padding-sm * -1);
+      opacity: 0;
+      border-inline-width: 0;
     }
   }
 }

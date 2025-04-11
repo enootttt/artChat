@@ -1,20 +1,20 @@
-import type { AnyObject } from "../_util/type";
-import type { ArtStreamOptions, SSEOutput } from "../artStream";
-import type { ArtFetchOptions } from "./artFetch";
+import type { AnyObject } from '../_util/type'
+import type { ArtStreamOptions, SSEOutput } from '../artStream'
+import type { ArtFetchOptions } from './artFetch'
 
-import ArtStream from "../artStream";
-import ArtFetch from "./artFetch";
+import ArtStream from '../artStream'
+import ArtFetch from './artFetch'
 
 export interface ArtRequestBaseOptions {
   /**
    * @description Base URL, e.g., 'https://api.example.com/v1/chat'
    */
-  baseURL: string;
+  baseURL: string
 
   /**
    * @description Model name, e.g., 'gpt-3.5-turbo'
    */
-  model?: string;
+  model?: string
 
   /**
    * @warning 🔥🔥 Its dangerously!
@@ -26,23 +26,23 @@ export interface ArtRequestBaseOptions {
    * unauthorized access using your credentials and potentially compromise sensitive
    * data or functionality.
    */
-  dangerouslyApiKey?: string;
+  dangerouslyApiKey?: string
 }
 
 interface ArtRequestCustomOptions {
   /**
    * @description Custom fetch
    */
-  fetch?: ArtFetchOptions["fetch"];
+  fetch?: ArtFetchOptions['fetch']
 }
 
-export type ArtRequestOptions = ArtRequestBaseOptions & ArtRequestCustomOptions;
+export type ArtRequestOptions = ArtRequestBaseOptions & ArtRequestCustomOptions
 
-type ArtRequestMessageContent = AnyObject | string;
+type ArtRequestMessageContent = AnyObject | string
 
 interface ArtRequestMessage extends AnyObject {
-  role?: string;
-  content?: ArtRequestMessageContent;
+  role?: string
+  content?: ArtRequestMessageContent
 }
 
 /**
@@ -54,167 +54,173 @@ export interface ArtRequestParams {
    * @description Model name, e.g., 'gpt-3.5-turbo'
    * @default ArtRequestOptions.model
    */
-  model?: string;
+  model?: string
 
   /**
    * @description Indicates whether to use streaming for the response
    */
-  stream?: boolean;
+  stream?: boolean
 
   /**
    * @description The messages to be sent to the model
    */
-  messages?: ArtRequestMessage[];
+  messages?: ArtRequestMessage[]
 }
 
 export interface ArtRequestCallbacks<Output> {
   /**
    * @description Callback when the request is successful
    */
-  onSuccess: (chunks: Output[]) => void;
+  onSuccess: (chunks: Output[]) => void
 
   /**
    * @description Callback when the request fails
    */
-  onError: (error: Error) => void;
+  onError: (error: Error) => void
 
   /**
    * @description Callback when the request is updated
    */
-  onUpdate: (chunk: Output) => void;
+  onUpdate: (chunk: Output) => void
 }
 
 export type ArtRequestFunction<Input = AnyObject, Output = SSEOutput> = (
   params: ArtRequestParams & Input,
   callbacks: ArtRequestCallbacks<Output>,
-  transformStream?: ArtStreamOptions<Output>["transformStream"]
-) => Promise<void>;
+  transformStream?: ArtStreamOptions<Output>['transformStream']
+) => Promise<void>
 
 class ArtRequestClass {
-  // eslint-disable-next-line no-use-before-define
-  private static instanceBuffer: Map<string | typeof fetch, ArtRequestClass> = new Map();
-  private customOptions: ArtRequestCustomOptions;
+  private static instanceBuffer: Map<string | typeof fetch, ArtRequestClass> = new Map()
+  private customOptions: ArtRequestCustomOptions
 
-  private defaultHeaders: RequestInit["headers"];
-  readonly baseURL: string;
+  private defaultHeaders: RequestInit['headers']
+  readonly baseURL: string
 
   public create = async <Input = AnyObject, Output = SSEOutput>(
     params: ArtRequestParams & Input,
     callbacks?: ArtRequestCallbacks<Output>,
-    transformStream?: ArtStreamOptions<Output>["transformStream"]
+    transformStream?: ArtStreamOptions<Output>['transformStream'],
   ) => {
     const requestInit = {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         model: this.model,
         ...params,
       }),
       headers: this.defaultHeaders,
-    };
+    }
 
     try {
       const response = await ArtFetch(this.baseURL, {
         fetch: this.customOptions.fetch,
         ...requestInit,
-      });
+      })
 
-      const contentType = response.headers.get("content-type") || "";
+      const contentType = response.headers.get('content-type') || ''
 
       if (transformStream) {
-        await this.customResponseHandler<Output>(response, callbacks, transformStream);
-        return;
+        await this.customResponseHandler<Output>(response, callbacks, transformStream)
+        return
       }
 
       switch (contentType) {
         case 'text/event-stream':
-          await this.sseResponseHandler<Output>(response, callbacks);
-          break;
+          await this.sseResponseHandler<Output>(response, callbacks)
+          break
         case 'application/json':
-          await this.jsonResponseHandler<Output>(response, callbacks);
-          break;
+          await this.jsonResponseHandler<Output>(response, callbacks)
+          break
         default:
-          throw new Error(`Unsupported content type: ${contentType}`);
+          throw new Error(`Unsupported content type: ${contentType}`)
       }
-
-    } catch (error) {
-      const err = error instanceof Error ? error : new Error("Unknown error!");
-
-      callbacks?.onError?.(err);
-
-      throw err;
     }
-  };
+    catch (error) {
+      const err = error instanceof Error ? error : new Error('Unknown error!')
 
-  readonly model: string;
+      callbacks?.onError?.(err)
+
+      throw err
+    }
+  }
+
+  readonly model: string
 
   private constructor(options: ArtRequestOptions) {
-    const { /* baseURL, model, dangerouslyApiKey, */ ...customOptions } = options;
+    const { /* baseURL, model, dangerouslyApiKey, */ ...customOptions } = options
 
-    this.baseURL = options.baseURL;
-    this.model = options.model as string;
+    this.baseURL = options.baseURL
+    this.model = options.model as string
     this.defaultHeaders = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...(options.dangerouslyApiKey && {
         Authorization: options.dangerouslyApiKey,
       }),
-    };
-    this.customOptions = customOptions;
+    }
+    this.customOptions = customOptions
   }
 
   public static init(options: ArtRequestOptions): ArtRequestClass {
-    if (!options.baseURL || typeof options.baseURL !== "string") throw new Error("The baseURL is not valid!");
+    if (!options.baseURL || typeof options.baseURL !== 'string')
+      throw new Error('The baseURL is not valid!')
 
-    const id = options.fetch || options.baseURL;
+    const id = options.fetch || options.baseURL
 
     if (!ArtRequestClass.instanceBuffer.has(id)) {
-      ArtRequestClass.instanceBuffer.set(id, new ArtRequestClass(options));
+      ArtRequestClass.instanceBuffer.set(id, new ArtRequestClass(options))
     }
 
-    return ArtRequestClass.instanceBuffer.get(id) as ArtRequestClass;
+    return ArtRequestClass.instanceBuffer.get(id) as ArtRequestClass
   }
 
   private customResponseHandler = async <Output = SSEOutput>(
     response: Response,
     callbacks?: ArtRequestCallbacks<Output>,
-    transformStream?: ArtStreamOptions<Output>["transformStream"]
+    transformStream?: ArtStreamOptions<Output>['transformStream'],
   ) => {
-    const chunks: Output[] = [];
+    const chunks: Output[] = []
 
     for await (const chunk of ArtStream({
       readableStream: response.body!,
       transformStream,
     })) {
-      chunks.push(chunk);
+      chunks.push(chunk)
 
-      callbacks?.onUpdate?.(chunk);
+      callbacks?.onUpdate?.(chunk)
     }
 
-    callbacks?.onSuccess?.(chunks);
-  };
+    callbacks?.onSuccess?.(chunks)
+  }
 
-  private sseResponseHandler = async <Output = SSEOutput>(response: Response, callbacks?: ArtRequestCallbacks<Output>) => {
-    const chunks: Output[] = [];
+  private sseResponseHandler = async <Output = SSEOutput>(
+    response: Response,
+    callbacks?: ArtRequestCallbacks<Output>,
+  ) => {
+    const chunks: Output[] = []
 
     for await (const chunk of ArtStream<Output>({
       readableStream: response.body!,
     })) {
-      chunks.push(chunk);
+      chunks.push(chunk)
 
-      callbacks?.onUpdate?.(chunk);
+      callbacks?.onUpdate?.(chunk)
     }
 
-    callbacks?.onSuccess?.(chunks);
-  };
+    callbacks?.onSuccess?.(chunks)
+  }
 
-  private jsonResponseHandler = async <Output = SSEOutput>(response: Response, callbacks?: ArtRequestCallbacks<Output>) => {
-    const chunk: Output = await response.json();
+  private jsonResponseHandler = async <Output = SSEOutput>(
+    response: Response,
+    callbacks?: ArtRequestCallbacks<Output>,
+  ) => {
+    const chunk: Output = await response.json()
 
-    callbacks?.onUpdate?.(chunk);
+    callbacks?.onUpdate?.(chunk)
 
-    callbacks?.onSuccess?.([chunk]);
-  };
+    callbacks?.onSuccess?.([chunk])
+  }
 }
 
-const ArtRequest = ArtRequestClass.init;
+const ArtRequest = ArtRequestClass.init
 
-export default ArtRequest;
+export default ArtRequest

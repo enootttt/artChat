@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { ElSpace, ElButton } from "element-plus";
-import { Bubble } from "@artmate/chat";
+import { Bubble } from '@artmate/chat'
+import { ElButton, ElSpace } from 'element-plus'
+import { ref } from 'vue'
 
 const text = `
 **GPT-Vis**, Components for GPTs, generative AI, and LLM projects. Not only UI Components. [more...](https://github.com/antvis/GPT-Vis) \n\n
@@ -16,15 +16,15 @@ Here’s a visualization of Haidilao's food delivery revenue from 2013 to 2022. 
   "axisYTitle": "sale"
 }
 \`\`\`
-`;
+`
 
-const RenderMarkdown = (content: string) => {
+function RenderMarkdown(content: string) {
   // The @antv/gpt-vis is only support React
   // return h(GPTVis, null, content);
-  return content;
-};
+  return content
+}
 
-const rerenderKey = ref(0);
+const rerenderKey = ref(0)
 </script>
 
 <template>
@@ -33,10 +33,10 @@ const rerenderKey = ref(0);
       <ElButton type="primary" @click="rerenderKey += 1">Re-Render</ElButton>
     </div>
     <Bubble
+      :key="rerenderKey"
       :typing="{ step: 20, interval: 150 }"
       :content="text"
-      :messageRender="RenderMarkdown"
-      :key="rerenderKey"
+      :message-render="RenderMarkdown"
       avatar="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
       variant="outlined"
     />

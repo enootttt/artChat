@@ -78,19 +78,19 @@ sender/focus
 
 ### SenderProps
 
-| 属性 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| v-model | 双向绑定 | string | - | - | - |
-| classNames | 样式类名 | Partial<Record<SemanticType, string>> | - | - |
-| placeholder | 占位符 | string | - | - | - |
-| disabled | 是否禁用 | boolean | false | - |
-| loading | 是否加载中 | boolean | false | - |
-| readOnly | 是否让输入框只读 | boolean | false | - |
-| rootClassName | 根元素样式类 | string | - | - |
-| styles | 语义化定义样式 | Partial<Record<SemanticType, CSSProperties>> | - | - |
-| submitType | 提交模式 | SubmitType | `enter` \| `shiftEnter` | - |
-| onChange | 输入框值改变的回调 | (value: string, event?: FormEvent \| ChangeEvent ) => void | - | - |
-| onKeyPress | 键盘按键按下的回调 | (event: KeyboardEvent) => void | - | - |
+| 属性          | 说明               | 类型                                                       | 默认值                  | 版本 |
+| ------------- | ------------------ | ---------------------------------------------------------- | ----------------------- | ---- | --- |
+| v-model       | 双向绑定           | string                                                     | -                       | -    | -   |
+| classNames    | 样式类名           | Partial<Record<SemanticType, string>>                      | -                       | -    |
+| placeholder   | 占位符             | string                                                     | -                       | -    | -   |
+| disabled      | 是否禁用           | boolean                                                    | false                   | -    |
+| loading       | 是否加载中         | boolean                                                    | false                   | -    |
+| readOnly      | 是否让输入框只读   | boolean                                                    | false                   | -    |
+| rootClassName | 根元素样式类       | string                                                     | -                       | -    |
+| styles        | 语义化定义样式     | Partial<Record<SemanticType, CSSProperties>>               | -                       | -    |
+| submitType    | 提交模式           | SubmitType                                                 | `enter` \| `shiftEnter` | -    |
+| onChange      | 输入框值改变的回调 | (value: string, event?: FormEvent \| ChangeEvent ) => void | -                       | -    |
+| onKeyPress    | 键盘按键按下的回调 | (event: KeyboardEvent) => void                             | -                       | -    |
 
 #### SemanticType
 
@@ -100,26 +100,26 @@ type SemanticType = 'actions' | 'input' | 'prefix';
 
 ### Sender Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
-| header | 头部面板 |
-| footer | 底部面板 |
+| 插槽名     | 说明                           |
+| ---------- | ------------------------------ |
+| header     | 头部面板                       |
+| footer     | 底部面板                       |
 | components | 自定义组件,会覆盖内置input组件 |
-| actions | 操作按钮 |
-| prefix | 前缀内容 |
+| actions    | 操作按钮                       |
+| prefix     | 前缀内容                       |
 
 ### SenderHeader
 
-| 属性 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| closable | 是否可关闭 | boolean | true | - |
-| open | 是否展开 | boolean | - | - |
-| title | 标题 | string | - | - |
-| onOpenChange | 展开状态改变的回调 | (open: boolean) => void | - | - |
+| 属性         | 说明               | 类型                    | 默认值 | 版本 |
+| ------------ | ------------------ | ----------------------- | ------ | ---- |
+| closable     | 是否可关闭         | boolean                 | true   | -    |
+| open         | 是否展开           | boolean                 | -      | -    |
+| title        | 标题               | string                  | -      | -    |
+| onOpenChange | 展开状态改变的回调 | (open: boolean) => void | -      | -    |
 
 ### SenderHeader Slots
 
-| 插槽名 | 说明 |
-| --- | --- |
+| 插槽名  | 说明     |
+| ------- | -------- |
 | default | 内容区域 |
-| title | 标题区域 |
+| title   | 标题区域 |

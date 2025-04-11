@@ -1,18 +1,23 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { ElButton, ElIcon, ElMessage } from "element-plus";
-import { Promotion } from "@element-plus/icons-vue";
-import { Sender } from "@artmate/chat";
+import { Sender } from '@artmate/chat'
+import { Promotion } from '@element-plus/icons-vue'
+import { ElButton, ElIcon, ElMessage } from 'element-plus'
+import { ref } from 'vue'
 
-const value = ref("");
+const value = ref('')
 
-const submit = () => {
-  ElMessage.success("Send message successfully!");
-};
+function submit() {
+  ElMessage.success('Send message successfully!')
+}
 </script>
 
 <template>
-  <Sender v-model="value" submitType="shiftEnter" placeholder="Press Shift + Enter to send message" @on-submit="submit">
+  <Sender
+    v-model="value"
+    submit-type="shiftEnter"
+    placeholder="Press Shift + Enter to send message"
+    @on-submit="submit"
+  >
     <template #actions>
       <ElButton circle type="primary" @click="submit">
         <ElIcon color="white">

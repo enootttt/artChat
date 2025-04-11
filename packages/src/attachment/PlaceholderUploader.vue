@@ -1,71 +1,65 @@
 <script setup lang="ts">
-import type { PlaceholderUploaderProps } from './interface';
+import type { PlaceholderUploaderProps } from './interface'
 
-import { ref } from 'vue';
+import { ElUpload } from 'element-plus'
 
-import { ElUpload } from 'element-plus';
+import { ref } from 'vue'
 
-import { useNamespace } from '../hooks/useNamespace';
+import { useNamespace } from '../hooks/useNamespace'
 
 const props = withDefaults(defineProps<PlaceholderUploaderProps>(), {
   disabled: false,
-});
+})
 
-const ns = useNamespace('attachment-placeholder');
+const ns = useNamespace('attachment-placeholder')
 
-const dragIn = ref(false);
-const uploadRef = ref<InstanceType<typeof ElUpload>>();
+const dragIn = ref(false)
+const uploadRef = ref<InstanceType<typeof ElUpload>>()
 
-const onDragEnter = () => {
-  dragIn.value = true;
-};
-const onDragLeave = (e: DragEvent) => {
-  if (
-    !(e.currentTarget as HTMLElement).contains(e.relatedTarget as HTMLElement)
-  ) {
-    dragIn.value = false;
+function onDragEnter() {
+  dragIn.value = true
+}
+function onDragLeave(e: DragEvent) {
+  if (!(e.currentTarget as HTMLElement).contains(e.relatedTarget as HTMLElement)) {
+    dragIn.value = false
   }
-};
-const onDrop = () => {
-  dragIn.value = false;
-};
+}
+function onDrop() {
+  dragIn.value = false
+}
 
 defineExpose({
   uploadRef,
-});
+})
 </script>
 
 <template>
   <div
     :aria-hidden="disabled"
-    :class="[
-      ns.b(),
-      { [ns.b('drag-in')]: dragIn, [ns.b('disabled')]: disabled },
-      className,
-    ]"
+    :class="[ns.b(), { [ns.b('drag-in')]: dragIn, [ns.b('disabled')]: disabled }, className]"
     :style="style"
     @drag="onDrop"
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
   >
     <ElUpload
+      v-bind="props.upload"
+      ref="uploadRef"
       :auto-upload="false"
       :class="[ns.b('upload-wrapper')]"
       :show-file-list="false"
       action="#"
       drag
-      v-bind="props.upload"
-      ref="uploadRef"
     >
       <div :class="[ns.b('inner')]">
         <div :class="[ns.b('icon')]">
-          <slot name="icon"></slot>
+          <slot name="icon" />
         </div>
         <div :class="[ns.b('title')]">
-          <slot name="title"></slot>
+          <slot name="title" />
         </div>
         <div :class="[ns.b('description')]">
-          <slot name="description"></slot>
+          <slot name="description" />
         </div>
       </div>
     </ElUpload>
@@ -73,5 +67,5 @@ defineExpose({
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

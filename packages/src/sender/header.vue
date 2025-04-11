@@ -1,37 +1,34 @@
 <script setup lang="ts">
-import type { HeaderProps } from './interface';
+import type { HeaderProps } from './interface'
 
-import { useSlots, watch } from 'vue';
+import { ElButton } from 'element-plus'
 
-import { ElButton } from 'element-plus';
+import { useSlots, watch } from 'vue'
 
-import { useNamespace } from '../hooks/useNamespace';
+import { useNamespace } from '../hooks/useNamespace'
 
 const props = withDefaults(defineProps<HeaderProps>(), {
   open: false,
   closable: true,
   title: '',
   className: '',
-});
-const emit = defineEmits(['update:open', 'onOpenChange']);
-const ns = useNamespace('sender-header');
+})
+const emit = defineEmits(['update:open', 'onOpenChange'])
+const ns = useNamespace('sender-header')
 
-const slot = useSlots();
+const slot = useSlots()
 
 watch(
   () => props.open,
   (newVal) => {
-    emit('onOpenChange', newVal);
-  },
-);
+    emit('onOpenChange', newVal)
+  }
+)
 </script>
 
 <template>
   <div v-show="open" :class="[ns.b(), className]">
-    <div
-      v-if="closable !== false || title || slot.title"
-      :class="ns.b('header')"
-    >
+    <div v-if="closable !== false || title || slot.title" :class="ns.b('header')">
       <div :class="ns.b('title')">
         <slot name="title">
           {{ title }}
@@ -48,12 +45,12 @@ watch(
         />
       </div>
     </div>
-    <div :class="ns.b('content')" v-if="slot.default">
-      <slot></slot>
+    <div v-if="slot.default" :class="ns.b('content')">
+      <slot />
     </div>
   </div>
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

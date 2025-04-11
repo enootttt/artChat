@@ -1,7 +1,7 @@
-import Welcome from './index.vue';
+import Welcome from './index.vue'
 
-export type * from './interface';
+export type * from './interface'
 
-type WelcomeType = typeof Welcome;
+type WelcomeType = typeof Welcome
 
-export default Welcome as WelcomeType;
+export default Welcome as WelcomeType

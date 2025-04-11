@@ -16,6 +16,7 @@ dist
 docs/.vitepress/cache
 docs/.vitepress/.temp
 .vitepress/cache
+.eslintcache
 
 # Turbo
 .turbo

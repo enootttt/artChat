@@ -1,25 +1,21 @@
 <script setup lang="ts">
-import type { DropDownProps } from './interface';
+import type { DropDownProps } from './interface'
 
-import { ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus';
+import { ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus'
 
 const props = withDefaults(defineProps<DropDownProps>(), {
   menu: () => [],
   disabled: false,
-});
-const emit = defineEmits(['onOpenChange']);
+})
+const emit = defineEmits(['onOpenChange'])
 </script>
 
 <template>
   <ElDropdown @visible-change="emit('onOpenChange', $event)">
-    <slot></slot>
+    <slot />
     <template #dropdown>
       <ElDropdownMenu>
-        <ElDropdownItem
-          v-for="(item, index) in props.menu"
-          :key="index"
-          v-bind="item"
-        >
+        <ElDropdownItem v-for="(item, index) in props.menu" :key="index" v-bind="item">
           {{ item.label }}
         </ElDropdownItem>
       </ElDropdownMenu>

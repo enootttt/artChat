@@ -73,25 +73,25 @@ prompts/nest
 #### SemanticType
 
 ```typescript | pure
-type SemanticType = 'list' | 'item' | 'content' | 'title' | 'subList' | 'subItem';
+type SemanticType = 'list' | 'item' | 'content' | 'title' | 'subList' | 'subItem'
 ```
 
 ### Prompts Slots
 
-| 插槽名 | 说明                     |
-| ------ | ------------------------ |
-| title  | 显示在提示列表顶部的标题 |
-| icon   | 左侧显示的icon |
-| label  | 自定义label |
-| description  | 自定义description |
+| 插槽名      | 说明                     |
+| ----------- | ------------------------ |
+| title       | 显示在提示列表顶部的标题 |
+| icon        | 左侧显示的icon           |
+| label       | 自定义label              |
+| description | 自定义description        |
 
 ### PromptProps
 
-| 属性        | 说明                         | 类型            | 默认值  | 版本 |
-| ----------- | ---------------------------- | --------------- | ------- | ---- |
-| children    | 嵌套的子提示项               | PromptProps[]   | -       | -    |
-| description | 提示描述提供额外的信息       | string | -       | -    |
-| disabled    | 设置为 `true` 时禁用点击事件 | boolean         | `false` | -    |
-| icon        | 提示图标显示在提示项的左侧   | string           | -       | -    |
-| key         | 唯一标识用于区分每个提示项   | string          | -       | -    |
-| label       | 提示标签显示提示的主要内容   | string | -       | -    |
+| 属性        | 说明                         | 类型          | 默认值  | 版本 |
+| ----------- | ---------------------------- | ------------- | ------- | ---- |
+| children    | 嵌套的子提示项               | PromptProps[] | -       | -    |
+| description | 提示描述提供额外的信息       | string        | -       | -    |
+| disabled    | 设置为 `true` 时禁用点击事件 | boolean       | `false` | -    |
+| icon        | 提示图标显示在提示项的左侧   | string        | -       | -    |
+| key         | 唯一标识用于区分每个提示项   | string        | -       | -    |
+| label       | 提示标签显示提示的主要内容   | string        | -       | -    |

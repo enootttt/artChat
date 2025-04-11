@@ -1,54 +1,54 @@
 <script setup lang="ts">
-import { ref, watch, onWatcherCleanup } from "vue";
-import { ElSpace, ElButton, ElIcon, ElMessage } from "element-plus";
-import { Promotion } from "@element-plus/icons-vue";
-import { Sender } from "@artmate/chat";
-import StopLoading from "./loading.vue";
+import { Sender } from '@artmate/chat'
+import { Promotion } from '@element-plus/icons-vue'
+import { ElButton, ElIcon, ElMessage, ElSpace } from 'element-plus'
+import { onWatcherCleanup, ref, watch } from 'vue'
+import StopLoading from './loading.vue'
 
-const loading = ref(false);
-const value = ref("");
+const loading = ref(false)
+const value = ref('')
 
 // Mock send message
 watch(loading, () => {
   if (loading.value) {
     const timer = setTimeout(() => {
-      loading.value = false;
-      ElMessage.success("Send message successfully!");
-    }, 3000);
+      loading.value = false
+      ElMessage.success('Send message successfully!')
+    }, 3000)
     onWatcherCleanup(() => {
-      clearTimeout(timer);
-    });
+      clearTimeout(timer)
+    })
   }
-});
+})
 
-const submit = () => {
+function submit() {
   if (!loading.value) {
-    value.value = "";
+    value.value = ''
     loading.value = true
-    ElMessage.info('Send message!');
+    ElMessage.info('Send message!')
   } else {
     loading.value = false
-    ElMessage.error('Cancel sending!');
+    ElMessage.error('Cancel sending!')
   }
 }
 </script>
 
 <template>
-  <ElSpace style="width: 100%;" direction="vertical" fill>
+  <ElSpace style="width: 100%" direction="vertical" fill>
     <Sender v-model="value">
       <template #actions>
         <ElButton circle type="primary" :disabled="!value && !loading" @click="submit">
-          <ElIcon color="white" v-if="!loading">
+          <ElIcon v-if="!loading" color="white">
             <Promotion />
           </ElIcon>
-          <ElIcon color="white" size="32" v-else>
+          <ElIcon v-else color="white" size="32">
             <StopLoading />
           </ElIcon>
         </ElButton>
       </template>
     </Sender>
-  
-    <Sender model-value="Force as loading" readOnly>
+
+    <Sender model-value="Force as loading" read-only>
       <template #actions>
         <ElButton circle type="primary">
           <ElIcon color="white" size="32">

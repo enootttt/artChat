@@ -1,30 +1,30 @@
-const _bem = (
+function _bem(
   namespace: string,
   block: string,
   blockSuffix: string,
   element: string,
   modifier: string,
-) => {
-  let cls = `${namespace}-${block}`;
+) {
+  let cls = `${namespace}-${block}`
   if (blockSuffix) {
-    cls += `-${blockSuffix}`;
+    cls += `-${blockSuffix}`
   }
   if (element) {
-    cls += `__${element}`;
+    cls += `__${element}`
   }
   if (modifier) {
-    cls += `--${modifier}`;
+    cls += `--${modifier}`
   }
-  return cls;
-};
+  return cls
+}
 
-export const useNamespace = (block: string) => {
-  const namespace = 'art';
+export function useNamespace(block: string) {
+  const namespace = 'art'
 
-  const b = (blockSuffix = '') => _bem(namespace, block, blockSuffix, '', '');
+  const b = (blockSuffix = '') => _bem(namespace, block, blockSuffix, '', '')
 
   return {
     namespace,
     b,
-  };
-};
+  }
+}

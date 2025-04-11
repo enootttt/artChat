@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { isVNode, shallowRef } from "vue";
-import { ElCard, ElIcon, ElButton } from "element-plus";
-import { CircleCheck, MoreFilled } from "@element-plus/icons-vue";
-import { ThoughtChain } from "@artmate/chat";
-import type { ThoughtChainItemProps, ThoughtChainProps } from "@artmate/chat";
+import type { ThoughtChainItemProps, ThoughtChainProps } from '@artmate/chat'
+import { ThoughtChain } from '@artmate/chat'
+import { CircleCheck, MoreFilled } from '@element-plus/icons-vue'
+import { ElButton, ElCard, ElIcon } from 'element-plus'
+import { isVNode, shallowRef } from 'vue'
+
 const customizationProps: ThoughtChainItemProps = {
-  title: "Thought Chain Item Title",
-  description: "description",
+  title: 'Thought Chain Item Title',
+  description: 'description',
   icon: CircleCheck,
   content: [
     ` In the process of internal desktop applications development, many different design specs and
@@ -18,29 +19,29 @@ const customizationProps: ThoughtChainItemProps = {
         development`,
     ``,
   ],
-};
-const CustomizationPropsFn = (op: ThoughtChainItemProps) => {
+}
+function CustomizationPropsFn(op: ThoughtChainItemProps) {
   return Object.fromEntries(
     Object.entries(op).map(([k, v]) => {
-      return [k, isVNode(v) ? shallowRef(v) : v];
+      return [k, isVNode(v) ? shallowRef(v) : v]
     })
-  );
-};
+  )
+}
 
-const items: ThoughtChainProps["items"] = [
+const items: ThoughtChainProps['items'] = [
   {
     ...CustomizationPropsFn(customizationProps),
-    status: "success",
+    status: 'success',
   },
   {
     ...CustomizationPropsFn(customizationProps),
-    status: "error",
+    status: 'error',
   },
   {
     ...CustomizationPropsFn(customizationProps),
-    status: "pending",
+    status: 'pending',
   },
-];
+]
 </script>
 
 <template>
@@ -48,7 +49,7 @@ const items: ThoughtChainProps["items"] = [
     <ThoughtChain :items="items">
       <template #icon="{ info }">
         <ElIcon size="20" color="white">
-          <component :is="info.icon"></component>
+          <component :is="info.icon" />
         </ElIcon>
       </template>
       <template #content="{ info }">
@@ -64,7 +65,7 @@ const items: ThoughtChainProps["items"] = [
         </ElButton>
       </template>
       <template #footer>
-        <ElButton style="width: 100%;">Thought Chain Item Footer</ElButton>
+        <ElButton style="width: 100%">Thought Chain Item Footer</ElButton>
       </template>
     </ThoughtChain>
   </ElCard>

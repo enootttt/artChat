@@ -1,4 +1,3 @@
-
 # useArtAgent 模型调度
 
 用于模型调度的 Agent 钩子。
@@ -29,8 +28,8 @@ useArtAgent/custom
 
 ```ts | pure
 type useArtAgent<AgentMessage> = (
-  config: ArtAgentConfigPreset | ArtAgentConfigCustom<AgentMessage>,
-) => [Agent];
+  config: ArtAgentConfigPreset | ArtAgentConfigCustom<AgentMessage>
+) => [Agent]
 ```
 
 ### ArtAgentConfigPreset
@@ -38,11 +37,12 @@ type useArtAgent<AgentMessage> = (
 使用预设协议进行请求，尚未实现协议。
 
 <!-- todo: add dangerouslyApiKey desc link -->
-| 属性              | 说明                                                                   | 类型   | 默认值 | 版本 |
-| ----------------- | ---------------------------------------------------------------------- | ------ | ------ | ---- |
-| baseURL           | 请求服务端地址                                                         | string | -      |      |
-| key               | 请求秘钥                                                               | string | -      |      |
-| model             | 协议模型                                                               | string | -      |      |
+
+| 属性              | 说明                                                                    | 类型   | 默认值 | 版本 |
+| ----------------- | ----------------------------------------------------------------------- | ------ | ------ | ---- |
+| baseURL           | 请求服务端地址                                                          | string | -      |      |
+| key               | 请求秘钥                                                                | string | -      |      |
+| model             | 协议模型                                                                | string | -      |      |
 | dangerouslyApiKey | **注意: 🔥 `dangerouslyApiKey` 存在安全风险，对此有详细的[说明](/#)。** | string | -      | -    |
 
 ### ArtAgentConfigCustom
@@ -57,23 +57,23 @@ type useArtAgent<AgentMessage> = (
 
 ```ts | pure
 interface RequestFnInfo<Message> extends Partial<ArtAgentConfigPreset>, AnyObject {
-  messages?: Message[];
-  message?: Message;
+  messages?: Message[]
+  message?: Message
 }
 
 export type RequestFn<Message> = (
   info: RequestFnInfo<Message>,
   callbacks: {
-    onUpdate: (message: Message) => void;
-    onSuccess: (message: Message) => void;
-    onError: (error: Error) => void;
-  },
-) => void;
+    onUpdate: (message: Message) => void
+    onSuccess: (message: Message) => void
+    onError: (error: Error) => void
+  }
+) => void
 ```
 
 ### Agent
 
-| 属性         | 说明                        | 类型          | 版本 |
-| ------------ | --------------------------- | ------------- | ---- |
+| 属性         | 说明                          | 类型          | 版本 |
+| ------------ | ----------------------------- | ------------- | ---- |
 | request      | 调用 `useArtAgent` 配置的请求 | RequestFn     |      |
-| isRequesting | 是否正在请求                | () => boolean |      |
+| isRequesting | 是否正在请求                  | () => boolean |      |

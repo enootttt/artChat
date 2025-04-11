@@ -1,11 +1,8 @@
-import ThoughtChain from "./index.vue";
-import ThoughtChainItem from "./item.vue";
+import ThoughtChain from './index.vue'
+import ThoughtChainItem from './item.vue'
 
-export type * from "./interface";
+export type * from './interface'
 
-export default ThoughtChain;
+export default ThoughtChain
 
-export {
-  ThoughtChain,
-  ThoughtChainItem
-}
+export { ThoughtChain, ThoughtChainItem }

@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { ElIcon, ElCard } from "element-plus";
-import { AddLocation } from "@element-plus/icons-vue";
-import { ThoughtChain } from "@artmate/chat";
-import type { ThoughtChainProps } from "@artmate/chat";
+import type { ThoughtChainProps } from '@artmate/chat'
+import { ThoughtChain } from '@artmate/chat'
+import { AddLocation } from '@element-plus/icons-vue'
+import { ElCard, ElIcon } from 'element-plus'
 
-const items: ThoughtChainProps["items"] = [
+const items: ThoughtChainProps['items'] = [
   {
-    title: "Thought Chain Item Title",
-    description: "description",
+    title: 'Thought Chain Item Title',
+    description: 'description',
   },
   {
-    title: "Thought Chain Item Title",
-    description: "description",
+    title: 'Thought Chain Item Title',
+    description: 'description',
   },
   {
-    title: "Thought Chain Item Title",
-    description: "description",
+    title: 'Thought Chain Item Title',
+    description: 'description',
   },
 
   {
-    title: "Thought Chain Item Title",
-    description: "description",
+    title: 'Thought Chain Item Title',
+    description: 'description',
   },
-];
+]
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ElSpace, ElButton } from 'element-plus';
-import { Share, More } from '@element-plus/icons-vue';
-import { Welcome } from "@artmate/chat";
+import { Welcome } from '@artmate/chat'
+import { More, Share } from '@element-plus/icons-vue'
+import { ElButton, ElSpace } from 'element-plus'
 </script>
 
 <template>

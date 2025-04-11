@@ -1,42 +1,42 @@
 <script setup lang="ts">
-import type { FileListCardProps } from './interface';
+import type { Component } from 'vue'
 
-import { computed, ref, toRaw, watch } from 'vue';
-import type { Component } from 'vue';
+import type { FileListCardProps } from './interface'
+import { CircleCloseFilled } from '@element-plus/icons-vue'
 
-import { ElIcon } from 'element-plus';
-import { CircleCloseFilled } from "@element-plus/icons-vue";
+import { ElIcon } from 'element-plus'
+import { computed, ref, toRaw, watch } from 'vue'
 
-import { previewImage } from '../attachment/util';
-import { useNamespace } from '../hooks/useNamespace';
-import AudioIcon from './AudioIcon.vue';
-import ExcelIcon from './ExcelIcon.vue';
-import ImageIcon from './ImageIcon.vue';
-import MarkdownIcon from './MarkdownIcon.vue';
-import PdfIcon from './PdfIcon.vue';
-import PptIcon from './PptIcon.vue';
-import Progress from './Progress.vue';
-import TxtIcon from './TxtIcon.vue';
-import VideoIcon from './VideoIcon.vue';
-import WordIcon from './WordIcon.vue';
-import ZipIcon from './ZipIcon.vue';
+import { previewImage } from '../attachment/util'
+import { useNamespace } from '../hooks/useNamespace'
+import AudioIcon from './AudioIcon.vue'
+import ExcelIcon from './ExcelIcon.vue'
+import ImageIcon from './ImageIcon.vue'
+import MarkdownIcon from './MarkdownIcon.vue'
+import PdfIcon from './PdfIcon.vue'
+import PptIcon from './PptIcon.vue'
+import Progress from './Progress.vue'
+import TxtIcon from './TxtIcon.vue'
+import VideoIcon from './VideoIcon.vue'
+import WordIcon from './WordIcon.vue'
+import ZipIcon from './ZipIcon.vue'
 
 const props = withDefaults(defineProps<FileListCardProps>(), {
   disabled: false,
   onRemove: () => {},
   className: '',
   style: undefined,
-});
+})
 
-const ns = useNamespace('attachment-list-card');
+const ns = useNamespace('attachment-list-card')
 
-const EMPTY = '\u00A0';
-const DEFAULT_ICON_COLOR = '#8c8c8c';
-const IMG_EXTS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg'];
+const EMPTY = '\u00A0'
+const DEFAULT_ICON_COLOR = '#8c8c8c'
+const IMG_EXTS = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg']
 const PRESET_FILE_ICONS: {
-  color: string;
-  ext: string[];
-  icon: Component;
+  color: string
+  ext: string[]
+  icon: Component
 }[] = [
   {
     icon: toRaw(ExcelIcon),
@@ -83,85 +83,82 @@ const PRESET_FILE_ICONS: {
     color: '#8c8c8c',
     ext: ['mp3', 'wav', 'flac', 'ape', 'aac', 'ogg'],
   },
-];
+]
 
-const previewImg = ref<string | undefined>();
+const previewImg = ref<string | undefined>()
 
-const previewUrl = ref('');
+const previewUrl = ref('')
 watch(
   () => props.item,
   async (newVal) => {
     if (newVal?.raw) {
-      let synced = true;
-      const url = await previewImage(newVal.raw);
+      let synced = true
+      const url = await previewImage(newVal.raw)
       if (synced) {
-        previewImg.value = url;
+        previewImg.value = url
       }
-      synced = false;
+      synced = false
     } else {
-      previewImg.value = undefined;
+      previewImg.value = undefined
     }
-    previewUrl.value =
-      props.item?.thumbUrl || props.item?.url || (previewImg.value as string);
+    previewUrl.value = props.item?.thumbUrl || props.item?.url || (previewImg.value as string)
   },
   {
     immediate: true,
-  },
-);
+  }
+)
 
 const fileName = computed(() => {
-  const nameStr = props.item?.name || '';
-  const match = nameStr.match(/^(.*)\.[^.]+$/);
-  return match ? [match[1], nameStr.slice(match[1]!.length)] : [nameStr, ''];
-});
+  const nameStr = props.item?.name || ''
+  const match = nameStr.match(/^(.*)\.[^.]+$/)
+  return match ? [match[1], nameStr.slice(match[1]!.length)] : [nameStr, '']
+})
 
 function matchExt(suffix: string, ext: string[]) {
-  return ext.some((e) => suffix.toLowerCase() === `.${e}`);
+  return ext.some((e) => suffix.toLowerCase() === `.${e}`)
 }
 
 function getSize(size: number) {
-  let retSize = size;
-  const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
-  let unitIndex = 0;
+  let retSize = size
+  const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB']
+  let unitIndex = 0
 
   while (retSize >= 1024 && unitIndex < units.length - 1) {
-    retSize /= 1024;
-    unitIndex++;
+    retSize /= 1024
+    unitIndex++
   }
 
-  return `${retSize.toFixed(0)} ${units[unitIndex]}`;
+  return `${retSize.toFixed(0)} ${units[unitIndex]}`
 }
 
 const desc = computed(() => {
   if (props.item?.description) {
-    return props.item?.description;
+    return props.item?.description
   }
 
   if (props.item?.status === 'uploading') {
-    return `${props.item?.percent || 0}%`;
+    return `${props.item?.percent || 0}%`
   }
 
   if (props.item?.status === 'fail') {
-    return props.item?.response || EMPTY;
+    return props.item?.response || EMPTY
   }
 
-  return props.item?.size ? getSize(props.item?.size) : EMPTY;
-});
+  return props.item?.size ? getSize(props.item?.size) : EMPTY
+})
 
 const ICON = computed<[Component, string]>(() => {
   for (const { ext, icon, color } of PRESET_FILE_ICONS) {
     if (matchExt(fileName.value[1] as string, ext)) {
-      return [icon, color];
+      return [icon, color]
     }
   }
-  return [toRaw(TxtIcon), DEFAULT_ICON_COLOR];
-});
+  return [toRaw(TxtIcon), DEFAULT_ICON_COLOR]
+})
 
-const isImg = computed(() => matchExt(fileName.value[1] as string, IMG_EXTS));
+const isImg = computed(() => matchExt(fileName.value[1] as string, IMG_EXTS))
 
-const isImgPreview = computed(
-  () => isImg.value && (props.item?.file || previewUrl),
-);
+const isImgPreview = computed(() => isImg.value && (props.item?.file || previewUrl))
 </script>
 
 <template>
@@ -181,12 +178,11 @@ const isImgPreview = computed(
         v-if="props.item?.status && props.item?.status !== 'ready'"
         :class="[`${ns.b('img-mask')}`]"
       >
-        <Progress
-          v-if="props.item?.status === 'uploading'"
-          :percent="props?.item?.percent || 0"
-        />
+        <Progress v-if="props.item?.status === 'uploading'" :percent="props?.item?.percent || 0" />
         <div v-else-if="props.item?.status === 'fail'" :class="[ns.b('desc')]">
-          <div :class="[ns.b('ellipsis-prefix')]">{{ desc }}</div>
+          <div :class="[ns.b('ellipsis-prefix')]">
+            {{ desc }}
+          </div>
         </div>
       </div>
     </template>
@@ -206,18 +202,22 @@ const isImgPreview = computed(
           </div>
         </div>
         <div :class="[ns.b('desc')]">
-          <div :class="[ns.b('ellipsis-prefix')]">{{ desc }}</div>
+          <div :class="[ns.b('ellipsis-prefix')]">
+            {{ desc }}
+          </div>
         </div>
       </div>
     </template>
     <template v-if="!props.disabled && props.onRemove">
       <button :class="[ns.b('remove')]" type="button" @click="onRemove(item)">
-        <ElIcon size="20"><CircleCloseFilled /></ElIcon>
+        <ElIcon size="20">
+          <CircleCloseFilled />
+        </ElIcon>
       </button>
     </template>
   </div>
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

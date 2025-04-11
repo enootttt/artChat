@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import type { PromptsProps } from './interface';
+import type { Slots } from 'vue'
 
-import { computed, Slots, useSlots } from 'vue';
+import type { PromptsProps } from './interface'
+import { ElIcon } from 'element-plus'
 
-import { ElIcon } from 'element-plus';
+import { computed, useSlots } from 'vue'
 
-import { useNamespace } from '../hooks/useNamespace';
+import { useNamespace } from '../hooks/useNamespace'
 
 defineOptions({
   name: 'Prompts',
-});
+})
 
-const props = withDefaults(defineProps<PromptsProps>(), {});
+const props = withDefaults(defineProps<PromptsProps>(), {})
 
-const ns = useNamespace('prompts');
+const ns = useNamespace('prompts')
 
-const slots: Slots = useSlots();
+const slots: Slots = useSlots()
 
 const mergedCls = computed(() => [
   props.className,
@@ -23,14 +24,14 @@ const mergedCls = computed(() => [
   {
     [ns.b('rtl')]: props.direction === 'rtl',
   },
-]);
+])
 
 const mergedListCls = computed(() => [
   ns.b('list'),
   props.classNames?.list,
   { [ns.b('list-wrap')]: props.wrap },
   { [ns.b('list-vertical')]: props.vertical },
-]);
+])
 </script>
 
 <template>
@@ -58,11 +59,8 @@ const mergedListCls = computed(() => [
         :style="{ ...props.styles?.item }"
         @click="
           () => {
-            if (
-              !(info.children && info.children.length > 0) &&
-              props.onItemClick
-            ) {
-              props.onItemClick({ data: info });
+            if (!(info.children && info.children.length > 0) && props.onItemClick) {
+              props.onItemClick({ data: info })
             }
           }
         "
@@ -77,10 +75,14 @@ const mergedListCls = computed(() => [
           :style="{ ...props.styles?.itemContent }"
         >
           <h6 v-if="slots.label || info.label" :class="[ns.b('label')]">
-            <slot :info="info" name="label">{{ info.label }}</slot>
+            <slot :info="info" name="label">
+              {{ info.label }}
+            </slot>
           </h6>
           <p :class="[ns.b('desc')]">
-            <slot :info="info" name="description">{{ info.description }}</slot>
+            <slot :info="info" name="description">
+              {{ info.description }}
+            </slot>
           </p>
           <Prompts
             v-if="info.children && info.children.length > 0"
@@ -104,5 +106,5 @@ const mergedListCls = computed(() => [
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

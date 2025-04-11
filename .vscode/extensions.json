@@ -1,7 +1,7 @@
 {
-	"recommendations": [
-		"Vue.volar",
-		// 在 package.json 中显示 PNPM catalog 的版本
-		"antfu.pnpm-catalog-lens"
-	],
+  "recommendations": [
+    "Vue.volar",
+    // 在 package.json 中显示 PNPM catalog 的版本
+    "antfu.pnpm-catalog-lens"
+  ]
 }

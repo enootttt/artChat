@@ -1,5 +1,5 @@
-@import '../theme/index.scss';
-@import '../theme/mixin.scss';
+@import '../theme/index';
+@import '../theme/mixin';
 
 $prefix: 'bubble' !default;
 
@@ -8,11 +8,13 @@ $prefix: 'bubble' !default;
     display: flex;
     column-gap: $padding-sm;
     max-width: 100%;
+
     @include b(#{$prefix}-avatar) {
       display: inline-flex;
-      justify-content: center;
       align-self: flex-start;
+      justify-content: center;
     }
+
     @include b(#{$prefix}-content-wrapper) {
       // flex: auto;
       display: flex;
@@ -20,62 +22,78 @@ $prefix: 'bubble' !default;
       align-items: flex-start;
       max-width: 100%;
     }
+
+    @include b(#{$prefix}-header) {
+      margin-bottom: $padding-xxs;
+    }
+
+    @include b(#{$prefix}-footer) {
+      margin-top: $padding-sm;
+    }
+
+    @include b(#{$prefix}-content) {
+      position: relative;
+      box-sizing: border-box;
+      min-height: calc($padding-sm * 2 + $line-height * $font-size);
+      font-size: $font-size;
+      line-height: $line-height;
+      overflow-wrap: break-word;
+    }
+
+    @include b(#{$prefix}-content-filled) {
+      background-color: rgb(var(--light), 12%);
+    }
+
+    @include b(#{$prefix}-content-outlined) {
+      border: 1px solid var(--border-secondary);
+    }
+
+    @include b(#{$prefix}-content-shadow) {
+      box-shadow:
+        0 1px 2px 0 rgb(var(--light), 3%),
+        0 1px 6px -1px rgb(var(--light), 2%),
+        0 2px 4px 0 rgb(var(--light), 2%);
+    }
+
     &-header,
     &-footer {
       font-size: $font-size;
       line-height: $line-height;
       color: var(--color-text);
     }
-    @include b(#{$prefix}-header) {
-      margin-bottom: $padding-xxs;
-    }
-    @include b(#{$prefix}-footer) {
-      margin-top: $padding-sm;
-    }
-    @include b(#{$prefix}-content) {
-      line-height: $line-height;
-      min-height: calc($padding-sm * 2 + $line-height * $font-size);
-      word-break: break-word;
-      box-sizing: border-box;
-      font-size: $font-size;
-      position: relative;
-    }
+
     &-content-filled,
     &-content-shadow,
     &-content-outlined {
       padding: $padding-sm $padding;
       border-radius: $border-radius-lg;
     }
-    @include b(#{$prefix}-content-filled) {
-      background-color: rgba(var(--light), 12%);
-    }
-    @include b(#{$prefix}-content-outlined) {
-      border: 1px solid var(--border-secondary);
-    }
-    @include b(#{$prefix}-content-shadow) {
-      box-shadow: 0 1px 2px 0 rgba(var(--light), 3%), 0 1px 6px -1px rgba(var(--light), 2%), 0 2px 4px 0 rgba(var(--light), 2%);
-    }
   }
 
-  .round {
-    border-radius: calc($font-size * $line-height / 2 + $padding-sm);
-    padding-inline: calc($padding * 1.25);
-  }
   @include b(#{$prefix}-content-start-round) {
     @extend .round;
   }
+
   @include b(#{$prefix}-content-end-round) {
     @extend .round;
   }
+
   @include b(#{$prefix}-content-start-corner) {
     border-start-start-radius: $border-radius-xs;
   }
+
   @include b(#{$prefix}-content-end-corner) {
     border-start-end-radius: $border-radius-xs;
   }
+
   @include b(#{$prefix}-end) {
-    justify-content: end;
     flex-direction: row-reverse;
+    justify-content: end;
+  }
+
+  .round {
+    padding-inline: calc($padding * 1.25);
+    border-radius: calc($font-size * $line-height / 2 + $padding-sm);
   }
 }
 
@@ -83,15 +101,19 @@ $prefix: 'bubble' !default;
   0% {
     transform: translateY(0);
   }
+
   10% {
     transform: translateY(4px);
   }
+
   20% {
     transform: translateY(0);
   }
+
   30% {
     transform: translateY(-4px);
   }
+
   40% {
     transform: translateY(0);
   }
@@ -101,9 +123,11 @@ $prefix: 'bubble' !default;
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -111,26 +135,30 @@ $prefix: 'bubble' !default;
 
 [class$='-dot'] {
   position: relative;
-  height: 100%;
   display: flex;
-  align-items: center;
   column-gap: $margin-xs;
+  align-items: center;
+  height: 100%;
   padding: 0 $padding-xxs;
+
   [class$='-dot-item'] {
-    background-color: var(--color-primary);
-    border-radius: 100%;
     width: 4px;
     height: 4px;
+    background-color: var(--color-primary);
+    border-radius: 100%;
     animation-name: loadingMove;
     animation-duration: 2s;
-    animation-iteration-count: infinite;
     animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
     &:nth-child(1) {
       animation-delay: 0s;
     }
+
     &:nth-child(2) {
       animation-delay: 0.2s;
     }
+
     &:nth-child(3) {
       animation-delay: 0.4s;
     }

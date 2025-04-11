@@ -1,18 +1,44 @@
 {
-	"type": "module",
-	"private": true,
-	"packageManager": "pnpm@9.12.3",
-	"scripts": {
-		"dev:docs": "turbo run dev --filter=docs",
-		"build:docs": "turbo run build --filter=docs",
-		"build:packages": "turbo run build --filter=@artmate/chat",
-		"postinstall": "pnpm -r run stub --if-present",
-		"clean": "node ./scripts/clean.mjs",
-		"lint": "turbo run lint"
-	},
-	"devDependencies": {
-		"@types/node": "22.10.2",
-		"turbo": "^2.5.0",
-		"unbuild": "^3.5.0"
-	}
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.12.3",
+  "scripts": {
+    "dev:docs": "turbo run dev --filter=docs",
+    "build:docs": "turbo run build --filter=docs",
+    "build:packages": "turbo run build --filter=@artmate/chat",
+    "postinstall": "pnpm -r run stub --if-present",
+    "clean": "node ./scripts/clean.mjs",
+    "lint": "turbo run lint",
+    "lint:lint-staged": "lint-staged",
+    "prepare": "husky",
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.12.0",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@stylistic/stylelint-plugin": "^3.1.2",
+    "@types/node": "22.10.2",
+    "cz-git": "^1.11.1",
+    "eslint": "^9.24.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-packagejson": "^2.5.10",
+    "stylelint": "^16.18.0",
+    "stylelint-config-recess-order": "^6.0.0",
+    "stylelint-config-recommended-scss": "^14.1.0",
+    "stylelint-config-standard": "^38.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-prettier": "^5.0.3",
+    "stylelint-scss": "^6.11.1",
+    "turbo": "^2.5.0",
+    "unbuild": "^3.5.0"
+  }
 }

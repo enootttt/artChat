@@ -1,7 +1,7 @@
-import Prompts from './index.vue';
+import Prompts from './index.vue'
 
-export type * from './interface';
+export type * from './interface'
 
-type PromptsType = typeof Prompts;
+type PromptsType = typeof Prompts
 
-export default Prompts as PromptsType;
+export default Prompts as PromptsType

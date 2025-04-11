@@ -1,89 +1,92 @@
 <script setup lang="ts" generic="T = any">
-import { ref, computed } from "vue";
-import { ElTooltip, ElCascaderPanel } from "element-plus";
-import { useNamespace } from "../hooks/useNamespace";
-import useActive from "./useActive";
-import type { RenderChildrenProps, SuggestionProps } from "./interface";
-import { onClickOutside } from "@vueuse/core";
+import type { RenderChildrenProps, SuggestionProps } from './interface'
+import { onClickOutside } from '@vueuse/core'
+import { ElCascaderPanel, ElTooltip } from 'element-plus'
+import { computed, ref } from 'vue'
+import { useNamespace } from '../hooks/useNamespace'
+import useActive from './useActive'
 
 const props = withDefaults(defineProps<SuggestionProps<T>>(), {
-  rootClassName: "",
-});
+  rootClassName: '',
+})
 
-const emit = defineEmits(["select"]);
+const emit = defineEmits(['select'])
 
-const slots = defineSlots<{
-  default: (options: { onTrigger: RenderChildrenProps<T>["onTrigger"]; onKeyDown: (e: KeyboardEvent) => void }) => RenderChildrenProps<T>;
-}>();
+defineSlots<{
+  default: (options: {
+    onTrigger: RenderChildrenProps<T>['onTrigger']
+    onKeyDown: (e: KeyboardEvent) => void
+  }) => RenderChildrenProps<T>
+}>()
 
-const ns = useNamespace("suggestion");
+const ns = useNamespace('suggestion')
 
-const CascaderPanelRef = ref<InstanceType<typeof ElCascaderPanel>>();
+const CascaderPanelRef = ref<InstanceType<typeof ElCascaderPanel>>()
 
-const info = ref<T | undefined>();
+const info = ref<T | undefined>()
 
-const isRTL = computed(() => props.direction === "rtl");
+const isRTL = computed(() => props.direction === 'rtl')
 
-const defaultContainer = ref<HTMLElement>();
+const defaultContainer = ref<HTMLElement>()
 // popperRef
-const popperRef = ref<InstanceType<typeof ElTooltip>>();
+const popperRef = ref<InstanceType<typeof ElTooltip>>()
 
 // =========================== Trigger ============================
-const mergedOpen = ref(props.open);
+const mergedOpen = ref(props.open)
 
 // ============================ Items =============================
 const itemList = computed(() => {
-  return typeof props.items === "function" ? props.items(info.value) : props.items;
-});
+  return typeof props.items === 'function' ? props.items(info.value) : props.items
+})
 
-const triggerOpen = (nextOpen: boolean) => {
-  mergedOpen.value = nextOpen;
-  props.onOpenChange?.(nextOpen);
+function triggerOpen(nextOpen: boolean) {
+  mergedOpen.value = nextOpen
+  props.onOpenChange?.(nextOpen)
   if (!nextOpen) {
-    CascaderPanelRef.value?.clearCheckedNodes();
+    CascaderPanelRef.value?.clearCheckedNodes()
   }
-};
+}
 
-const onInternalChange = (valuePath: string[]) => {
-  emit("select", valuePath[valuePath.length - 1]);
-  triggerOpen(false);
-};
+function onInternalChange(valuePath: string[]) {
+  emit('select', valuePath[valuePath.length - 1])
+  triggerOpen(false)
+}
 
-const onClose = () => {
-  triggerOpen(false);
-};
+function onClose() {
+  triggerOpen(false)
+}
 
-const onTrigger: RenderChildrenProps<T>["onTrigger"] = (nextInfo) => {
+const onTrigger: RenderChildrenProps<T>['onTrigger'] = (nextInfo) => {
   if (nextInfo === false) {
-    triggerOpen(false);
+    triggerOpen(false)
   } else {
-    info.value = nextInfo;
-    triggerOpen(true);
+    info.value = nextInfo
+    triggerOpen(true)
   }
-};
+}
 
-const [activePath, onKeyDown] = useActive(itemList, mergedOpen, isRTL, onInternalChange, onClose);
+const [activePath, onKeyDown] = useActive(itemList, mergedOpen, isRTL, onInternalChange, onClose)
 
-const onDropdownVisibleChange = (nextOpen: boolean) => {
+function onDropdownVisibleChange(nextOpen: boolean) {
   if (!nextOpen) {
-    onClose();
+    onClose()
   } else {
-    onInternalChange(activePath.value);
+    onInternalChange(activePath.value)
   }
-};
+}
 
 const popoverWidth = computed(() => {
   if (props.block && defaultContainer.value) {
-    return defaultContainer.value.offsetWidth + "px";
+    return `${defaultContainer.value.offsetWidth}px`
   }
-  return "max-content";
-});
+  return 'max-content'
+})
 
 // ============================ Document Click =============================
 onClickOutside(defaultContainer, () => {
-  if (popperRef.value?.isFocusInsideContent()) return;
-  mergedOpen.value && onClose();
-});
+  if (popperRef.value?.isFocusInsideContent()) return
+  mergedOpen.value && onClose()
+})
 </script>
 
 <template>
@@ -101,15 +104,27 @@ onClickOutside(defaultContainer, () => {
     role="listbox"
     @hide="onDropdownVisibleChange"
   >
-    <div ref="defaultContainer" :class="[ns.b(), props.rootClassName, props.className, ns.b('wrapper')]" :style="props.style">
-      <slot :onTrigger="onTrigger" :onKeyDown="onKeyDown" />
+    <div
+      ref="defaultContainer"
+      :class="[ns.b(), props.rootClassName, props.className, ns.b('wrapper')]"
+      :style="props.style"
+    >
+      <slot :on-trigger="onTrigger" :on-key-down="onKeyDown" />
     </div>
     <template #content>
-      <ElCascaderPanel ref="CascaderPanelRef" :style="{ width: popoverWidth }" :class="ns.b('cascader-panel')" :options="itemList" :border="false" :model-value="activePath" @close="onDropdownVisibleChange(true)" />
+      <ElCascaderPanel
+        ref="CascaderPanelRef"
+        :style="{ width: popoverWidth }"
+        :class="ns.b('cascader-panel')"
+        :options="itemList"
+        :border="false"
+        :model-value="activePath"
+        @close="onDropdownVisibleChange(true)"
+      />
     </template>
   </ElTooltip>
 </template>
 
 <style lang="scss" scoped>
-@import "./index.scss";
+@import './index';
 </style>

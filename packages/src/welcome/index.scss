@@ -1,17 +1,18 @@
-@import "../theme/index.scss";
-@import "../theme/mixin.scss";
+@import '../theme/index';
+@import '../theme/mixin';
 
-$prefix: "welcome" !default;
+$prefix: 'welcome' !default;
 
 @include b($prefix) {
   $component-prefix: &;
+
+  box-sizing: border-box;
   display: flex;
   gap: 16px;
-  box-sizing: border-box;
 
   &-icon {
-    height: 58px;
     display: flex;
+    height: 58px;
 
     img {
       max-width: 100%;
@@ -20,28 +21,28 @@ $prefix: "welcome" !default;
   }
 
   &-content-wrapper {
-    flex: auto;
-    gap: var(--padding-xs);
-    width: 0;
     display: flex;
-    align-items: stretch;
+    flex: auto;
     flex-direction: column;
+    gap: var(--padding-xs);
+    align-items: stretch;
+    width: 0;
 
     #{$component-prefix}-title {
-      color: var(--color-text-heading);
-      word-break: break-word;
       font-size: var(--font-size-heading-4);
       line-height: var(--line-height-heading-4);
+      color: var(--color-text-heading);
+      overflow-wrap: break-word;
 
       h4 {
-        margin: 0;
         padding: 0;
+        margin: 0;
       }
 
       &.extra {
         display: flex;
-        align-items: flex-start;
         gap: var(--padding-xs);
+        align-items: flex-start;
       }
 
       #{$component-prefix}-extra {
@@ -50,21 +51,21 @@ $prefix: "welcome" !default;
     }
 
     &-description {
-      font-size: var(--font-size);
-      color: var(--color-text);
-      line-height: var(--line-height);
-      word-break: break-word;
       box-sizing: border-box;
+      font-size: var(--font-size);
+      line-height: var(--line-height);
+      color: var(--color-text);
+      overflow-wrap: break-word;
     }
   }
 
   &#{&}-filled {
-    padding-inline: 16px;
     padding-block: 12px;
-    border-radius: 8px;
-    background: rgba(var(--light), 0.12);
-    padding-inline: var(--padding);
     padding-block: var(--padding-sm);
+    padding-inline: 16px;
+    padding-inline: var(--padding);
+    background: rgb(var(--light), 0.12);
+    border-radius: 8px;
     border-radius: var(--border-radius-lg);
   }
 

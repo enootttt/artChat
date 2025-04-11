@@ -1,25 +1,25 @@
-export type SubmitType = 'enter' | 'shiftEnter' | false;
+export type SubmitType = 'enter' | 'shiftEnter' | false
 
 export interface HeaderProps {
-  open?: boolean;
-  title?: string;
-  closable?: boolean;
-  className?: string;
+  open?: boolean
+  title?: string
+  closable?: boolean
+  className?: string
 }
 
 export interface SenderProps {
-  modelValue: string;
+  modelValue: string
   classNames?: {
-    actions?: string;
-    input?: string;
-    prefix?: string;
-  };
-  placeholder?: string;
-  disabled?: boolean;
-  loading?: boolean;
-  readOnly?: boolean;
-  rootClassName?: string;
-  submitType?: SubmitType;
-  onChange?: (value: string) => void;
-  onKeyPress?: (e: KeyboardEvent) => void;
+    actions?: string
+    input?: string
+    prefix?: string
+  }
+  placeholder?: string
+  disabled?: boolean
+  loading?: boolean
+  readOnly?: boolean
+  rootClassName?: string
+  submitType?: SubmitType
+  onChange?: (value: string) => void
+  onKeyPress?: (e: KeyboardEvent) => void
 }

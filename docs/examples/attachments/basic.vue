@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { ElSpace, ElButton, ElIcon, ElMessage, ElSwitch } from "element-plus";
-import { Promotion, Link } from "@element-plus/icons-vue";
-import { Sender, Attachment } from "@artmate/chat";
-import type { AttachmentProps } from "@artmate/chat";
-const fullScreenDrop = ref(false);
-const divRef = ref<HTMLElement>();
+import type { AttachmentProps } from '@artmate/chat'
+import { Attachment, Sender } from '@artmate/chat'
+import { Link, Promotion } from '@element-plus/icons-vue'
+import { ElButton, ElIcon, ElMessage, ElSpace, ElSwitch } from 'element-plus'
+import { computed, ref } from 'vue'
+
+const fullScreenDrop = ref(false)
+const divRef = ref<HTMLElement>()
 
 const getDropContainer = computed<() => HTMLElement | null>(() => {
-  const el = fullScreenDrop.value ? document.body : (divRef.value as HTMLElement);
-  return () => el;
-});
+  const el = fullScreenDrop.value ? document.body : (divRef.value as HTMLElement)
+  return () => el
+})
 
-const value = ref("");
+const value = ref('')
 
-const FileChange: AttachmentProps["onChange"] = ({ file }) => {
-  ElMessage.success(`Mock upload: ${file.name}`);
-};
+const FileChange: AttachmentProps['onChange'] = ({ file }) => {
+  ElMessage.success(`Mock upload: ${file.name}`)
+}
 </script>
 
 <template>
@@ -41,7 +42,12 @@ const FileChange: AttachmentProps["onChange"] = ({ file }) => {
           </ElButton>
         </template>
       </Sender>
-      <ElSwitch v-model="fullScreenDrop" inline-prompt active-text="Full screen drop" inactive-text="Full screen drop" />
+      <ElSwitch
+        v-model="fullScreenDrop"
+        inline-prompt
+        active-text="Full screen drop"
+        inactive-text="Full screen drop"
+      />
     </ElSpace>
   </div>
 </template>

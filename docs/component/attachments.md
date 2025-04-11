@@ -1,4 +1,3 @@
-
 # Attachments 输入附件
 
 用于展示一组附件信息集合。
@@ -53,31 +52,31 @@ attachments/files
 
 继承 element-plus [ElUpload](https://element-plus.org/zh-CN/component/upload.html) 属性。
 
-| 属性             | 说明                                  | 类型                  | 默认值 | 版本 |
-| ---------------- | ------------------------------------- | -------------------- | ------ | ---- |
-| classNames       | 自定义样式类名                         | Record<string, string> | -      | -    |
-| disabled         | 是否禁用                              | boolean               | false  | -    |
-| getDropContainer | 设置拖拽时，可以释放文件的区域         | () => HTMLElement       | -      | -    |
-| items            | 附件列表，同 Upload `fileList`        | Attachment[]           | -      | -    |
-| overflow         | 文件列表超出时样式                    | 'wrap' \| 'scrollX' \| 'scrollY' | -      | -    |
-| placeholder | 没有文件时的占位信息 | PlaceholderType \| ((type: 'inline' \| 'drop') => PlaceholderType) | - | - |
-| rootClassName    | 根节点的样式类名                      | string                 | -      | -    |
-| rootStyle        | 根节点的样式对象                      | CSSProperties          | -      | -    |
-| styles           | 自定义样式对象                        | Record<string, CSSProperties> | -      | -    |
+| 属性             | 说明                           | 类型                                                               | 默认值 | 版本 |
+| ---------------- | ------------------------------ | ------------------------------------------------------------------ | ------ | ---- |
+| classNames       | 自定义样式类名                 | Record<string, string>                                             | -      | -    |
+| disabled         | 是否禁用                       | boolean                                                            | false  | -    |
+| getDropContainer | 设置拖拽时，可以释放文件的区域 | () => HTMLElement                                                  | -      | -    |
+| items            | 附件列表，同 Upload `fileList` | Attachment[]                                                       | -      | -    |
+| overflow         | 文件列表超出时样式             | 'wrap' \| 'scrollX' \| 'scrollY'                                   | -      | -    |
+| placeholder      | 没有文件时的占位信息           | PlaceholderType \| ((type: 'inline' \| 'drop') => PlaceholderType) | -      | -    |
+| rootClassName    | 根节点的样式类名               | string                                                             | -      | -    |
+| rootStyle        | 根节点的样式对象               | CSSProperties                                                      | -      | -    |
+| styles           | 自定义样式对象                 | Record<string, CSSProperties>                                      | -      | -    |
 
 ### Attachments Slots
 
-| 插槽名      | 说明                 | 类型                           |
-| ----------- | -------------------- | ------------------------------ |
-| icon        | icon区域内容        | - |
-| title       | 标题区域内容        | - |
-| placeholder | 没有文件时的占位信息 | - |
+| 插槽名      | 说明                 | 类型 |
+| ----------- | -------------------- | ---- |
+| icon        | icon区域内容         | -    |
+| title       | 标题区域内容         | -    |
+| placeholder | 没有文件时的占位信息 | -    |
 
 ### Attachments Expose
 
-| 属性          | 说明             | 类型                 | 版本 |
-| ------------- | ---------------- | -------------------- | ---- |
-| nativeElement | 获取原生节点     | HTMLElement          | -    |
+| 属性          | 说明             | 类型                       | 版本 |
+| ------------- | ---------------- | -------------------------- | ---- |
+| nativeElement | 获取原生节点     | HTMLElement                | -    |
 | upload        | 手工调用上传文件 | (file: UploadFile) => void | -    |
 
 ### Attachments.FileCard Props

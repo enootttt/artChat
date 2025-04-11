@@ -1,21 +1,14 @@
 {
-	"$schema": "https://turbo.build/schema.json",
-	"ui": "tui",
-	"tasks": {
-		"build": {
-			"dependsOn": [
-				"^build"
-			],
-			"outputs": ["build/**", "build.zip"]
-		},
-		"lint": {
-			"dependsOn": [
-				"^lint"
-			]
-		},
-		"dev": {
-			"cache": false,
-			"persistent": true
-		}
-	}
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["build/**", "build.zip"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
 }

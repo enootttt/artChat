@@ -1,59 +1,59 @@
 <script setup lang="ts">
-import type { ItemProps } from './interface';
+import type { ItemProps } from './interface'
 
-import { computed, ref } from 'vue';
+import { MoreFilled } from '@element-plus/icons-vue'
 
-import { ElButton, ElIcon, ElTooltip } from 'element-plus';
-import { MoreFilled } from '@element-plus/icons-vue';
+import { ElButton, ElIcon, ElTooltip } from 'element-plus'
+import { computed, ref } from 'vue'
 
-import DropDown from '../dropdown/index.vue';
-import { useNamespace } from '../hooks/useNamespace';
+import DropDown from '../dropdown/index.vue'
+import { useNamespace } from '../hooks/useNamespace'
 
 const props = withDefaults(defineProps<ItemProps>(), {
   inEllipsis: true,
   line: 1,
-});
+})
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click'])
 
-const opened = ref(false);
+const opened = ref(false)
 
-const ns = useNamespace('conversations');
+const ns = useNamespace('conversations')
 
 const mergedCls = computed(() => [
   props.className,
   ns.b('item'),
   { [ns.b('item-active')]: props.active && !props.info?.disabled },
   { [ns.b('item-disabled')]: props.info?.disabled },
-]);
+])
 
-const stopPropagation = (e: Event) => {
-  e.stopPropagation();
-};
+function stopPropagation(e: Event) {
+  e.stopPropagation()
+}
 
-const textRef = ref<HTMLElement>();
-const textRefMouseenter = () => {
+const textRef = ref<HTMLElement>()
+function textRefMouseenter() {
   if (props.info?.disabled) {
-    opened.value = false;
-    return;
+    opened.value = false
+    return
   }
-  if (!textRef.value) return;
+  if (!textRef.value) return
   opened.value = !!(
     textRef.value?.scrollWidth > textRef.value?.offsetWidth ||
     textRef.value?.scrollHeight > textRef.value?.offsetHeight
-  );
-};
+  )
+}
 
-const onInternalClick = () => {
+function onInternalClick() {
   if (!props.info?.disabled) {
-    emit('click', props.info);
+    emit('click', props.info)
   }
-};
+}
 
-const handleCommand = (e: any) => {
-  if (Array.isArray(props.menu)) return;
-  if (!props.info) return;
-  props.menu?.onClick?.({ ...props.info, key: e });
+function handleCommand(e: any) {
+  if (Array.isArray(props.menu)) return
+  if (!props.info) return
+  props.menu?.onClick?.({ ...props.info, key: e })
 }
 </script>
 
@@ -92,7 +92,9 @@ const handleCommand = (e: any) => {
         @command="handleCommand"
       >
         <ElButton :disabled="info?.disabled" link @click="stopPropagation">
-          <ElIcon :class="ns.b('menu-icon')"><MoreFilled /></ElIcon>
+          <ElIcon :class="ns.b('menu-icon')">
+            <MoreFilled />
+          </ElIcon>
         </ElButton>
       </DropDown>
     </li>
@@ -100,5 +102,5 @@ const handleCommand = (e: any) => {
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

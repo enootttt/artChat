@@ -1,4 +1,3 @@
-
 # Suggestion 快捷指令
 
 用于给予用户快捷提示的组件。
@@ -33,7 +32,6 @@ suggestion/trigger
 
 :::
 
-
 ### SuggestionsProps
 
 | 属性          | 说明                 | 类型                                                | 默认值 | 版本 |
@@ -48,7 +46,7 @@ suggestion/trigger
 #### onTrigger
 
 ```ts | pure
-type onTrigger<T> = (info: T | false) => void;
+type onTrigger<T> = (info: T | false) => void
 ```
 
 Suggestion 接受泛型以自定义传递给 `items` renderProps 的参数类型，当传递 `false` 时，则关闭建议面板。
@@ -60,10 +58,11 @@ Suggestion 接受泛型以自定义传递给 `items` renderProps 的参数类型
 | default | 用于自定义输入框 | \{ onTrigger, onKeyDown \} |
 
 ### CascaderOption
+
 继承自 `CascaderPanel` 的 `options` 属性，用于自定义 `Suggestion` 的 `items`。
 
 | 属性     | 说明           | 类型             | 默认值 | 版本 |
 | -------- | -------------- | ---------------- | ------ | ---- |
 | children | 子项目         | CascaderOption[] | -      | -    |
-| label    | 建议项显示内容  | string           | -      | -    |
+| label    | 建议项显示内容 | string           | -      | -    |
 | value    | 建议项值       | string           | -      | -    |

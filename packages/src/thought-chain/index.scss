@@ -1,9 +1,10 @@
-@use "sass:map";
-@import "../theme/index.scss";
-@import "../theme/mixin.scss";
+@use 'sass:map';
 
-$prefix: "thought-chain" !default;
-$prefix-item: "thought-chain-item" !default;
+@import '../theme/index';
+@import '../theme/mixin';
+
+$prefix: 'thought-chain' !default;
+$prefix-item: 'thought-chain-item' !default;
 
 $colors: (
   pending: var(--color-primary),
@@ -13,20 +14,23 @@ $colors: (
 
 @mixin getArg($size, $font-size) {
   &-icon {
-    height: $size;
     width: $size;
+    height: $size;
     font-size: $font-size;
   }
+
   &-extra {
     height: $size;
     max-height: $size;
   }
+
   &-title {
     height: $size;
-    line-height: $size;
     max-height: $size;
     font-size: $font-size;
+    line-height: $size;
   }
+
   &-desc {
     font-size: $font-size;
   }
@@ -36,30 +40,38 @@ $colors: (
   display: flex;
   flex-direction: column;
   &#{&}-small {
-    padding-inline-start: 20px;
     gap: 12px;
+    padding-inline-start: 20px;
+
     @include b($prefix-item) {
       $component-prefix: &;
+
+      @include getArg(20px, var(--font-size-sm));
+
       &-header {
+        gap: 12px;
         margin-inline-start: -20px;
         margin-bottom: 12px;
-        gap: 12px;
+
         &::before {
+          inset-inline-start: 9px;
           top: 20px;
           bottom: -24px;
-          inset-inline-start: 9px;
         }
       }
-      @include getArg(20px, var(--font-size-sm));
+
       &-content {
         margin-inline-start: -20px;
+
         &::before {
           inset-inline-start: 9px;
           bottom: -12px;
         }
       }
+
       &-footer {
         margin-top: 12px;
+
         &::before {
           inset-inline-start: -11px;
           bottom: -12px;
@@ -68,30 +80,38 @@ $colors: (
     }
   }
   &#{&}-middle {
-    padding-inline-start: 28px;
     gap: 16px;
+    padding-inline-start: 28px;
+
     @include b($prefix-item) {
       $component-prefix: &;
+
+      @include getArg(28px, var(--font-size));
+
       &-header {
+        gap: 16px;
         margin-inline-start: -28px;
         margin-bottom: 16px;
-        gap: 16px;
+
         &::before {
+          inset-inline-start: 13px;
           top: 28px;
           bottom: -32px;
-          inset-inline-start: 13px;
         }
       }
-      @include getArg(28px, var(--font-size));
+
       &-content {
         margin-inline-start: -28px;
+
         &::before {
           inset-inline-start: 13px;
           bottom: -16px;
         }
       }
+
       &-footer {
         margin-top: 16px;
+
         &::before {
           inset-inline-start: -15px;
           bottom: -16px;
@@ -100,30 +120,38 @@ $colors: (
     }
   }
   &#{&}-large {
-    padding-inline-start: 36px;
     gap: 24px;
+    padding-inline-start: 36px;
+
     @include b($prefix-item) {
       $component-prefix: &;
+
+      @include getArg(36px, var(--font-size-lg));
+
       &-header {
+        gap: 24px;
         margin-inline-start: -36px;
         margin-bottom: 24px;
-        gap: 24px;
+
         &::before {
+          inset-inline-start: 17px;
           top: 36px;
           bottom: -48px;
-          inset-inline-start: 17px;
         }
       }
-      @include getArg(36px, var(--font-size-lg));
+
       &-content {
         margin-inline-start: -36px;
+
         &::before {
           inset-inline-start: 17px;
           bottom: -24px;
         }
       }
+
       &-footer {
         margin-top: 24px;
+
         &::before {
           inset-inline-start: -19px;
           bottom: -24px;
@@ -134,10 +162,35 @@ $colors: (
 }
 
 @include b($prefix-item) {
+  $component-prefix: &;
+
+  @at-root {
+    @each $key, $value in $colors {
+      $statusColor: map-get($colors, $key);
+
+      @each $nextStatus in map-keys($colors) {
+        @include b(#{$prefix-item}-#{$key}-#{$nextStatus}) {
+          #{$component-prefix}-icon,
+          & > *::before {
+            background-color: $statusColor;
+          }
+
+          & > :last-child::before {
+            @if $key == $nextStatus {
+              /** 无样式更改 */
+            } @else {
+              background: linear-gradient($statusColor, map-get($colors, $nextStatus));
+              background-color: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  $component-prefix: &;
   // 判断是否是最后一个元素
   &:last-child &-header:last-child {
     &::before {
@@ -149,6 +202,7 @@ $colors: (
     cursor: pointer;
     user-select: none;
   }
+
   :has(&-content) {
     &:last-child {
       &-header {
@@ -158,45 +212,50 @@ $colors: (
       }
     }
   }
+
   &-header {
     position: relative;
-    width: 100%;
     display: flex;
     align-items: flex-start;
+    width: 100%;
+
     &::before {
-      content: "";
-      width: 2px;
-      display: block;
       position: absolute;
       inset-inline-end: none;
-      background-color: rgba(var(--light), 0.25);
-      box-sizing: border-box;
       z-index: 0;
+      box-sizing: border-box;
+      display: block;
+      width: 2px;
+      content: '';
+      background-color: rgb(var(--light), 0.25);
     }
 
     #{$component-prefix}-icon {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       border-radius: 50%;
     }
+
     &-box {
-      flex: 1;
       display: flex;
+      flex: 1;
       flex-direction: column;
       overflow: hidden;
       #{$component-prefix}-title {
-        color: rgba(var(--light), 0.88);
+        box-sizing: border-box;
         display: inline-block;
         max-width: 100%;
+        color: rgb(var(--light), 0.88);
+        overflow-wrap: break-word;
         white-space: normal;
-        word-break: break-word;
-        box-sizing: border-box;
+
         strong {
-          font-weight: 600;
           display: flex;
+          font-weight: 600;
           #{$component-prefix}-collapse-icon {
             margin-inline-end: 8px;
+
             &.rotate {
               transform: rotate(90deg);
             }
@@ -204,70 +263,56 @@ $colors: (
         }
       }
       #{$component-prefix}-desc {
-        color: rgba(var(--light), 0.45);
+        box-sizing: border-box;
         display: inline-block;
         max-width: 100%;
+        color: rgb(var(--light), 0.45);
+        overflow-wrap: break-word;
         white-space: normal;
-        word-break: break-word;
-        box-sizing: border-box;
       }
     }
   }
+
   &-content {
-    width: 100%;
     position: relative;
+    width: 100%;
     margin-inline-start: -28px;
+
     &::before {
-      content: "";
-      width: 2px;
-      display: block;
       position: absolute;
       inset-inline-end: none;
-      background-color: rgba(var(--light), 0.25);
       top: 100%;
       box-sizing: border-box;
+      display: block;
+      width: 2px;
+      content: '';
+      background-color: rgb(var(--light), 0.25);
     }
+
     &-box {
-      padding: 16px;
-      display: inline-block;
       box-sizing: border-box;
-      border-radius: 8px;
+      display: inline-block;
+      width: 100%;
+      padding: 16px;
       background-color: var(--color-bg-container);
       border: 1px solid var(--border-secondary);
+      border-radius: 8px;
     }
   }
+
   &-footer {
     position: relative;
-    width: calc(100% - 28px);
     display: inline-flex;
+    width: calc(100% - 28px);
+
     &::before {
-      content: "";
       position: absolute;
-      width: 2px;
-      display: block;
       inset-inline-end: none;
-      background-color: rgba(var(--light), 0.25);
       top: 0;
-    }
-  }
-  @at-root {
-    @each $key, $value in $colors {
-      $statusColor: map-get($colors, $key);
-      @each $nextStatus in map-keys($colors) {
-        @include b(#{$prefix-item}-#{$key}-#{$nextStatus}) {
-          #{$component-prefix}-icon,
-          & > *::before {
-            background-color: $statusColor;
-          }
-          & > :last-child::before {
-            @if $key == $nextStatus {
-            } @else {
-              background-color: none !important;
-              background: linear-gradient($statusColor, map-get($colors, $nextStatus));
-            }
-          }
-        }
-      }
+      display: block;
+      width: 2px;
+      content: '';
+      background-color: rgb(var(--light), 0.25);
     }
   }
 }

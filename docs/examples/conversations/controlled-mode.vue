@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { ElButton, ElSpace } from "element-plus";
-import { Conversations } from "@artmate/chat";
-import type { ConversationsProps } from "@artmate/chat";
-const items: ConversationsProps["items"] = Array.from({ length: 3 }).map((_, index) => ({
+import type { ConversationsProps } from '@artmate/chat'
+import { Conversations } from '@artmate/chat'
+import { ElButton, ElSpace } from 'element-plus'
+import { ref } from 'vue'
+
+const items: ConversationsProps['items'] = Array.from({ length: 3 }).map((_, index) => ({
   key: `item${index + 1}`,
   label: `Conversation Item ${index + 1}`,
-}));
+}))
 
-const activeKey = ref("item1");
-const updateActiveKey = (v: string) => (activeKey.value = v);
+const activeKey = ref('item1')
+const updateActiveKey = (v: string) => (activeKey.value = v)
 </script>
 
 <template>

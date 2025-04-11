@@ -1,32 +1,21 @@
 {
-	"compilerOptions": {
-		"declaration": true,
-		"strict": true,
-		"strictNullChecks": true,
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"noImplicitAny": true,
-		"target": "ESNext",
-		"lib": [
-			"DOM",
-			"WebWorker",
-			"ESNext"
-		],
-		"skipLibCheck": true,
-		"stripInternal": true,
-		"paths": {
-			"@artmate/chat": [
-				"../packages/src"
-			]
-		}
-	},
-	"include": [
-		"**/*",
-		".vitepress/**/*"
-	],
-	"exclude": [
-		"node_modules",
-	]
+  "compilerOptions": {
+    "declaration": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "target": "ESNext",
+    "lib": ["DOM", "WebWorker", "ESNext"],
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "paths": {
+      "@artmate/chat": ["../packages/src"]
+    }
+  },
+  "include": ["**/*", ".vitepress/**/*"],
+  "exclude": ["node_modules"]
 }

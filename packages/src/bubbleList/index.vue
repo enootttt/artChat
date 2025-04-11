@@ -1,56 +1,58 @@
 <script setup lang="ts">
-import type { BubbleDataType, BubbleListProps, scrollTopParameters } from "./interface";
+import type { Component } from 'vue'
 
-import { nextTick, onMounted, ref, watch } from "vue";
-import type { Component } from "vue";
+import type { ListItemType } from './hooks/useListData'
+import type { BubbleDataType, BubbleListProps, scrollTopParameters } from './interface'
 
-import Bubble from "../bubble/index.vue";
-import { useNamespace } from "../hooks/useNamespace";
-import useDisplayData from "./hooks/useDisplayData";
-import useListData, { type ListItemType } from "./hooks/useListData";
+import { nextTick, onMounted, ref, watch } from 'vue'
+import Bubble from '../bubble/index.vue'
+import { useNamespace } from '../hooks/useNamespace'
+import useDisplayData from './hooks/useDisplayData'
+import useListData from './hooks/useListData'
 
 const props = withDefaults(defineProps<BubbleListProps>(), {
   autoScroll: true,
   items: () => [],
-});
-
-const ns = useNamespace("bubble-list");
+})
 
 const slots = defineSlots<{
-  avatar?(slotProps: { info: BubbleDataType }): void;
-  header?(slotProps: { info: BubbleDataType }): void;
-  loading?(slotProps: { info: BubbleDataType }): void;
-  footer?(slotProps: { info: BubbleDataType }): void;
-}>();
+  avatar?: (slotProps: { info: BubbleDataType }) => void
+  header?: (slotProps: { info: BubbleDataType }) => void
+  loading?: (slotProps: { info: BubbleDataType }) => void
+  footer?: (slotProps: { info: BubbleDataType }) => void
+}>()
 
-const TOLERANCE = 1;
-const initialized = ref(true);
-const scrollReachEnd = ref(false);
-const updateCount = ref(0);
-const listRef = ref<HTMLElement>();
-const bubbleRefs = ref<Record<string, InstanceType<typeof Bubble>>>({});
-const { ListData, setListData } = useListData(props.items, props.roles);
-const [displayData, onTypingComplete, ItemsWatch] = useDisplayData(ListData);
+const ns = useNamespace('bubble-list')
+
+const TOLERANCE = 1
+const initialized = ref(true)
+const scrollReachEnd = ref(false)
+const updateCount = ref(0)
+const listRef = ref<HTMLElement>()
+const bubbleRefs = ref<Record<string, InstanceType<typeof Bubble>>>({})
+const { ListData, setListData } = useListData(props.items, props.roles)
+const [displayData, onTypingComplete, ItemsWatch] = useDisplayData(ListData)
 
 watch(
   () => props.items,
   () => {
-    setListData(props.items);
+    setListData(props.items)
   }
-);
+)
 
 watch(
   () => ListData.value,
   () => {
-    ItemsWatch();
+    ItemsWatch()
   }
-);
+)
 
-const onInternalScroll = (e: Event) => {
-  const target = e.target as HTMLElement;
+function onInternalScroll(e: Event) {
+  const target = e.target as HTMLElement
   // 兼容 1px 以内的误差
-  scrollReachEnd.value = target.scrollHeight - Math.abs(target.scrollTop) - target.clientHeight <= TOLERANCE;
-};
+  scrollReachEnd.value =
+    target.scrollHeight - Math.abs(target.scrollTop) - target.clientHeight <= TOLERANCE
+}
 
 watch(
   () => updateCount.value,
@@ -58,93 +60,100 @@ watch(
     if (props.autoScroll && listRef.value && scrollReachEnd.value) {
       listRef.value!.scrollTo({
         top: listRef.value!.scrollHeight,
-      });
+      })
     }
   }
-);
+)
 
 watch(
   () => displayData.value.length,
   () => {
     nextTick(() => {
       if (props.autoScroll) {
-        const lastItemKey = displayData.value[displayData.value.length - 2]?.key;
-        const bubbleInst = bubbleRefs.value[lastItemKey!];
+        const lastItemKey = displayData.value[displayData.value.length - 2]?.key
+        const bubbleInst = bubbleRefs.value[lastItemKey!]
         if (bubbleInst) {
-          const { nativeElement } = bubbleInst;
-          const { top = 0, bottom = 0 } = nativeElement?.getBoundingClientRect() ?? {};
-          const { top: listTop, bottom: listBottom } = listRef.value!.getBoundingClientRect();
-          const isVisible = top < listBottom && bottom > listTop;
+          const { nativeElement } = bubbleInst
+          const { top = 0, bottom = 0 } = nativeElement?.getBoundingClientRect() ?? {}
+          const { top: listTop, bottom: listBottom } = listRef.value!.getBoundingClientRect()
+          const isVisible = top < listBottom && bottom > listTop
           if (isVisible) {
-            updateCount.value += 1;
-            scrollReachEnd.value = true;
+            updateCount.value += 1
+            scrollReachEnd.value = true
           }
         }
       }
-    });
+    })
   }
-);
+)
 
-const onBubbleUpdate = () => {
+function onBubbleUpdate() {
   if (props.autoScroll) {
-    updateCount.value = updateCount.value + 1;
+    updateCount.value = updateCount.value + 1
   }
-};
+}
 
-const onTypingCompleteFn = (bubble: ListItemType) => {
-  if (!bubble?.key) return;
-  bubble?.onTypingComplete?.();
-  onTypingComplete(bubble.key);
-};
+function onTypingCompleteFn(bubble: ListItemType) {
+  if (!bubble?.key) return
+  bubble?.onTypingComplete?.()
+  onTypingComplete(bubble.key)
+}
 
-const scrollTo = ({ key, offset, behavior = "smooth", block }: scrollTopParameters) => {
-  if (typeof offset === "number") {
+function scrollTo({ key, offset, behavior = 'smooth', block }: scrollTopParameters) {
+  if (typeof offset === 'number') {
     // Offset scroll
     listRef.value!.scrollTo({
       top: offset,
       behavior,
-    });
+    })
   } else if (key !== undefined) {
     // Key scroll
-    const bubbleInst = bubbleRefs.value![key as number];
+    const bubbleInst = bubbleRefs.value![key as number]
 
     if (bubbleInst) {
       // Block current auto scrolling
-      const index = displayData.value.findIndex((dataItem) => dataItem.key === key);
-      scrollReachEnd.value = index === displayData.value.length - 1;
+      const index = displayData.value.findIndex((dataItem) => dataItem.key === key)
+      scrollReachEnd.value = index === displayData.value.length - 1
 
       // Do native scroll
       bubbleInst.$el.scrollIntoView({
         behavior,
         block,
-      });
+      })
     }
   }
-};
+}
 
-const getBubbleRefs = (node: Component<InstanceType<typeof Bubble>> | null, key: number | string | undefined) => {
-  if (key === null || key === undefined) return;
+function getBubbleRefs(
+  node: Component<InstanceType<typeof Bubble>> | null,
+  key: number | string | undefined
+) {
+  if (key === null || key === undefined) return
   if (node) {
-    Reflect.set(bubbleRefs.value, key, node);
+    Reflect.set(bubbleRefs.value, key, node)
   } else {
-    Reflect.deleteProperty(bubbleRefs.value, key);
+    Reflect.deleteProperty(bubbleRefs.value, key)
   }
-};
+}
 
 onMounted(() => {
   nextTick(() => {
-    scrollTo({ offset: listRef.value!.scrollHeight, behavior: "auto" });
-  });
-});
+    scrollTo({ offset: listRef.value!.scrollHeight, behavior: 'auto' })
+  })
+})
 
 defineExpose({
   nativeElement: listRef.value,
   scrollTo,
-});
+})
 </script>
 
 <template>
-  <div ref="listRef" :class="[ns.b(), rootClassName, className, scrollReachEnd && ns.b('reach-end')]" @scroll="onInternalScroll">
+  <div
+    ref="listRef"
+    :class="[ns.b(), rootClassName, className, scrollReachEnd && ns.b('reach-end')]"
+    @scroll="onInternalScroll"
+  >
     <Bubble
       v-for="bubble in displayData"
       :key="bubble.key"
@@ -155,12 +164,12 @@ defineExpose({
       :typing="initialized ? (bubble.typing as boolean) : false"
     >
       <template v-for="(_slot, slotName) in slots" :key="slotName" #[slotName]="slotProps">
-        <slot :name="slotName" :info="{ ...slotProps, ...bubble }"></slot>
+        <slot :name="slotName" :info="{ ...slotProps, ...bubble }" />
       </template>
     </Bubble>
   </div>
 </template>
 
 <style lang="scss">
-@import "./index.scss";
+@import './index';
 </style>

@@ -1,34 +1,39 @@
-@import '../theme/index.scss';
-@import '../theme/mixin.scss';
+@import '../theme/index';
+@import '../theme/mixin';
 
 $prefix: 'prompts' !default;
 
 @include b($prefix) {
   $component-prefix: &;
-  max-width: 100%;
+
   box-sizing: border-box;
+  max-width: 100%;
+
   * {
     box-sizing: border-box;
   }
+
   &-title {
     margin-block-start: 0;
-    font-weight: normal;
-    color: var(--color-text-tertiary);
     margin-bottom: 0.5em;
     font-size: $font-size-lg;
+    font-weight: normal;
     line-height: $line-height-lg;
+    color: var(--color-text-tertiary);
   }
+
   &-list {
     display: flex;
     gap: $padding-sm;
+    align-items: stretch;
+    padding-inline-start: 0;
+    margin-block: 0;
     overflow-x: scroll;
+    list-style: none;
+
     &::-webkit-scrollbar {
       display: none;
     }
-    list-style: none;
-    padding-inline-start: 0;
-    margin-block: 0;
-    align-items: stretch;
     &#{&}-wrap {
       flex-wrap: wrap;
     }
@@ -36,57 +41,65 @@ $prefix: 'prompts' !default;
       flex-direction: column;
       align-items: flex-start;
       #{$component-prefix}-item {
-        align-items:  center;
+        align-items: center;
       }
     }
   }
 
   &-item {
-    flex: none;
     display: flex;
+    flex: none;
     gap: $padding-xs;
+    align-items: flex-start;
+    justify-content: flex-start;
     height: auto;
     padding-block: $padding-sm;
     padding-inline: $padding;
-    align-items: flex-start;
-    justify-content: flex-start;
-    border-radius: $border-radius-lg;
     background: $border-radius-lg;
-    transition: border $motion-duration-slow, background $motion-duration-slow;
     border: $line-width $line-type var(--border-secondary);
+    border-radius: $border-radius-lg;
+    transition:
+      border $motion-duration-slow,
+      background $motion-duration-slow;
   }
   &-item:not(#{$component-prefix}-item-has-nest) {
     &:hover {
       cursor: pointer;
       background: var(--color-fill-tertiary);
     }
+
     &:active {
       background: var(--color-fill);
     }
   }
+
   &-content {
-    flex: auto;
-    min-width: 0;
     display: flex;
-    gap: $padding-xxs;
+    flex: auto;
     flex-direction: column;
+    gap: $padding-xxs;
+    min-width: 0;
   }
+
   &-icon,
   &-label,
   & &-desc {
-    margin: 0;
     padding: 0;
+    margin: 0;
     font-size: $font-size;
     line-height: $line-height;
     text-align: start;
     white-space: normal;
   }
+
   &-label {
     font-weight: 500;
   }
+
   &-label + &-desc {
     color: var(--color-text-tertiary);
   }
+
   &-item-disabled {
     pointer-events: none;
     background: var(--color-fill);
@@ -97,8 +110,8 @@ $prefix: 'prompts' !default;
   }
 
   &-item-has-nest {
-    &>#{$component-prefix}-content {
-      &>#{$component-prefix}-label {
+    & > #{$component-prefix}-content {
+      & > #{$component-prefix}-label {
         font-size: $font-size-lg;
         line-height: $line-height-lg;
       }
@@ -106,19 +119,20 @@ $prefix: 'prompts' !default;
   }
 
   &-nested {
-    margin-top: $padding-xs;
     align-self: stretch;
+    margin-top: $padding-xs;
 
     @include b(#{$prefix}-list) {
       align-items: stretch;
     }
 
     @include b(#{$prefix}-item) {
-      border: 0;
       background: var(--color-fill-quaternary);
+      border: 0;
     }
   }
 }
+
 @include b(#{$prefix}-rtl) {
   direction: rtl;
 }

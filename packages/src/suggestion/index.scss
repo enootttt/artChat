@@ -1,7 +1,7 @@
-@import "../theme/index.scss";
-@import "../theme/mixin.scss";
+@import '../theme/index';
+@import '../theme/mixin';
 
-$prefix: "suggestion" !default;
+$prefix: 'suggestion' !default;
 
 @include b($prefix) {
   .el-cascader-menus .el-cascader-menu {

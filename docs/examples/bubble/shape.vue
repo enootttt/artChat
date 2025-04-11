@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ElSpace } from "element-plus";
-import { Bubble } from "@artmate/chat";
-import type { BubbleDataType } from '@artmate/chat';
+import type { BubbleDataType } from '@artmate/chat'
+import { Bubble } from '@artmate/chat'
+import { ElSpace } from 'element-plus'
 
 const sharedLongTextProps: BubbleDataType = {
   placement: 'end',
   content:
     'This is a long text message to show the multiline view of the bubble component. '.repeat(3),
   styles: { content: { maxWidth: 500 } },
-};
+}
 </script>
 
 <template>

@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import type { Conversation, ConversationsProps } from './interface';
+import type { Conversation, ConversationsProps } from './interface'
 
-import { computed } from 'vue';
+import { computed } from 'vue'
 
-import { useNamespace } from '../hooks/useNamespace';
-import GroupTitle from './GroupTitle.vue';
-import useGroupable from './hooks/useGroupable';
-import ConversationItem from './item.vue';
+import { useNamespace } from '../hooks/useNamespace'
+import GroupTitle from './GroupTitle.vue'
+import useGroupable from './hooks/useGroupable'
+import ConversationItem from './item.vue'
 
-const props = defineProps<ConversationsProps>();
+const props = defineProps<ConversationsProps>()
 
-const emit = defineEmits(['update:activeKey']);
+const emit = defineEmits(['update:activeKey'])
 
-const ns = useNamespace('conversations');
+const ns = useNamespace('conversations')
 
-const mergedActiveKey = computed(
-  () => props.activeKey || props.defaultActiveKey || '',
-);
+const mergedActiveKey = computed(() => props.activeKey || props.defaultActiveKey || '')
 
-const [groupList, enableGroup] = useGroupable(props.groupable, props.items);
+const [groupList, enableGroup] = useGroupable(props.groupable, props.items)
 
 const mergedCls = computed(() => [
   ns.b(),
@@ -26,15 +24,15 @@ const mergedCls = computed(() => [
   {
     [ns.b('rtl')]: props.direction === 'rtl',
   },
-]);
+])
 
-const onConversationItemClick = (info: Conversation) => {
+function onConversationItemClick(info: Conversation) {
   if (props.onActiveChange) {
-    const next = props.onActiveChange(info.key);
-    if (next === false) return;
+    const next = props.onActiveChange(info.key)
+    if (next === false) return
   }
-  emit('update:activeKey', info.key);
-};
+  emit('update:activeKey', info.key)
+}
 </script>
 
 <template>
@@ -63,19 +61,15 @@ const onConversationItemClick = (info: Conversation) => {
             :class-name="props.classNames?.item"
             :direction="props.direction"
             :info="convInfo"
-            :menu="
-              typeof props.menu === 'function'
-                ? props.menu(convInfo)
-                : props.menu
-            "
+            :menu="typeof props.menu === 'function' ? props.menu(convInfo) : props.menu"
             :style="props.styles?.item"
             @click="onConversationItemClick"
           >
             <template #label="{ item }">
-              <slot :item="item" name="item"></slot>
+              <slot :item="item" name="item" />
             </template>
             <template #icon>
-              <slot name="icon"></slot>
+              <slot name="icon" />
             </template>
           </ConversationItem>
         </ul>
@@ -88,17 +82,15 @@ const onConversationItemClick = (info: Conversation) => {
           :class-name="props.classNames?.item"
           :direction="props.direction"
           :info="convInfo"
-          :menu="
-            typeof props.menu === 'function' ? props.menu(convInfo) : props.menu
-          "
+          :menu="typeof props.menu === 'function' ? props.menu(convInfo) : props.menu"
           :style="props.styles?.item"
           @click="onConversationItemClick"
         >
           <template #label="{ item }">
-            <slot :item="item" name="item"></slot>
+            <slot :item="item" name="item" />
           </template>
           <template #icon>
-            <slot name="icon"></slot>
+            <slot name="icon" />
           </template>
         </ConversationItem>
       </template>
@@ -107,5 +99,5 @@ const onConversationItemClick = (info: Conversation) => {
 </template>
 
 <style lang="scss">
-@import './index.scss';
+@import './index';
 </style>

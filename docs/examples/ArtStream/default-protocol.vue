@@ -1,53 +1,54 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { ElSpace, ElButton, ElIcon } from "element-plus";
-import { Discount } from "@element-plus/icons-vue";
-import { ArtStream, Bubble, ThoughtChain } from "@artmate/chat";
-import type { ThoughtChainItemProps } from "@artmate/chat";
-const contentChunks = ["He", "llo", ", w", "or", "ld!"];
+import type { ThoughtChainItemProps } from '@artmate/chat'
+import { ArtStream, Bubble, ThoughtChain } from '@artmate/chat'
+import { Discount } from '@element-plus/icons-vue'
+import { ElButton, ElIcon, ElSpace } from 'element-plus'
+import { computed, ref } from 'vue'
+
+const contentChunks = ['He', 'llo', ', w', 'or', 'ld!']
 
 function mockReadableStream() {
-  const sseChunks: string[] = [];
+  const sseChunks: string[] = []
 
   for (let i = 0; i < contentChunks.length; i++) {
-    const sseEventPart = `event: message\ndata: {"id":"${i}","content":"${contentChunks[i]}"}\n\n`;
-    sseChunks.push(sseEventPart);
+    const sseEventPart = `event: message\ndata: {"id":"${i}","content":"${contentChunks[i]}"}\n\n`
+    sseChunks.push(sseEventPart)
   }
 
   return new ReadableStream({
     async start(controller) {
       for (const chunk of sseChunks) {
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        controller.enqueue(new TextEncoder().encode(chunk));
+        await new Promise((resolve) => setTimeout(resolve, 100))
+        controller.enqueue(new TextEncoder().encode(chunk))
       }
-      controller.close();
+      controller.close()
     },
-  });
+  })
 }
 
-const lines = ref<Record<string, string>[]>([]);
-const content = computed(() => lines.value.map((line) => JSON.parse(line.data).content).join(""));
+const lines = ref<Record<string, string>[]>([])
+const content = computed(() => lines.value.map((line) => JSON.parse(line.data).content).join(''))
 
 async function readStream() {
   // 🌟 Read the stream
   for await (const chunk of ArtStream({
     readableStream: mockReadableStream(),
   })) {
-    console.log(chunk);
-    lines.value = [...lines.value, chunk];
+    console.log(chunk)
+    lines.value = [...lines.value, chunk]
   }
 }
 
 const items = computed<ThoughtChainItemProps[]>(() => {
-  if (!content.value) return [];
+  if (!content.value) return []
   return [
     {
-      title: "Mock Default Protocol - Log",
-      status: "success",
+      title: 'Mock Default Protocol - Log',
+      status: 'success',
       content: lines.value,
     },
-  ];
-});
+  ]
+})
 </script>
 
 <template>

@@ -1,21 +1,16 @@
-import Bubble from '../bubble/index.vue';
-import BubbleLoading from '../bubble/loading.vue';
-import BubbleList from './index.vue';
+import Bubble from '../bubble/index.vue'
+import BubbleLoading from '../bubble/loading.vue'
+import BubbleList from './index.vue'
 
-export type * from './interface';
+export type * from './interface'
 
 type BubbleListType = {
-  Bubble: typeof Bubble;
-  Loading: typeof BubbleLoading;
-} & typeof BubbleList;
+  Bubble: typeof Bubble
+  Loading: typeof BubbleLoading
+} & typeof BubbleList
+;(BubbleList as BubbleListType).Bubble = Bubble
+;(BubbleList as BubbleListType).Loading = BubbleLoading
 
-(BubbleList as BubbleListType).Bubble = Bubble;
-(BubbleList as BubbleListType).Loading = BubbleLoading;
+export default BubbleList as BubbleListType
 
-export default BubbleList as BubbleListType;
-
-export {
-  BubbleList,
-  Bubble,
-  BubbleLoading,
-}
+export { Bubble, BubbleList, BubbleLoading }

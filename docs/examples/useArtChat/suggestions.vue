@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { ref, computed, h, shallowRef } from "vue";
-import { ElSpace, ElButton, ElIcon, ElAvatar } from "element-plus";
-import { Promotion, Service } from "@element-plus/icons-vue";
-import { BubbleList, Sender, Prompts, useArtAgent, useArtChat } from "@artmate/chat";
-import type { BubbleListProps } from "@artmate/chat";
-import SenderLoading from "./loading.vue";
+import type { BubbleListProps } from '@artmate/chat'
+import { BubbleList, Prompts, Sender, useArtAgent, useArtChat } from '@artmate/chat'
+import { Promotion, Service } from '@element-plus/icons-vue'
+import { ElAvatar, ElButton, ElIcon, ElSpace } from 'element-plus'
+import { computed, h, ref, shallowRef } from 'vue'
+import SenderLoading from './loading.vue'
 
-const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
+const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000))
 
-const roles: BubbleListProps["roles"] = {
+const roles: BubbleListProps['roles'] = {
   user: {
-    placement: "end",
+    placement: 'end',
   },
   text: {
-    placement: "start",
+    placement: 'start',
     typing: true,
   },
   suggestion: {
-    placement: "start",
-    variant: "borderless",
+    placement: 'start',
+    variant: 'borderless',
     messageRender: (content) => {
       return h(Prompts, {
         vertical: true,
@@ -27,111 +27,111 @@ const roles: BubbleListProps["roles"] = {
           key: text,
           description: text,
         })),
-      });
+      })
     },
   },
-};
+}
 
-type AgentUserMessage = {
-  type: "user";
-  content: string;
-};
+interface AgentUserMessage {
+  type: 'user'
+  content: string
+}
 
-type AgentAIMessage = {
-  type: "ai";
-  content?: string;
+interface AgentAIMessage {
+  type: 'ai'
+  content?: string
   list?: (
     | {
-        type: "text";
-        content: string;
+        type: 'text'
+        content: string
       }
     | {
-        type: "suggestion";
-        content: string[];
+        type: 'suggestion'
+        content: string[]
       }
-  )[];
-};
+  )[]
+}
 
-type AgentMessage = AgentUserMessage | AgentAIMessage;
+type AgentMessage = AgentUserMessage | AgentAIMessage
 
-type BubbleMessage = {
-  role: string;
-};
+interface BubbleMessage {
+  role: string
+}
 
-const content = ref("");
-const senderLoading = ref(false);
+const content = ref('')
+const senderLoading = ref(false)
 
 // Agent for request
 const [agent] = useArtAgent<AgentMessage>({
   request: async ({ message }, { onSuccess }) => {
-    senderLoading.value = true;
-    await sleep();
+    senderLoading.value = true
+    await sleep()
 
-    const { content } = message || {};
+    const { content } = message || {}
 
-    senderLoading.value = false;
+    senderLoading.value = false
     onSuccess({
-      type: "ai",
+      type: 'ai',
       list: [
         {
-          type: "text",
+          type: 'text',
           content: `Do you want?`,
         },
         {
-          type: "suggestion",
+          type: 'suggestion',
           content: [`Look at: ${content}`, `Search: ${content}`, `Try: ${content}`],
         },
       ],
-    });
+    })
   },
-});
+})
 
 // Chat messages
 const { onRequest, parsedMessages } = useArtChat<AgentMessage, BubbleMessage>({
   agent,
   defaultMessages: [
     {
-      id: "init",
+      id: 'init',
       message: {
-        type: "ai",
-        content: "Hello, what can I do for you?",
+        type: 'ai',
+        content: 'Hello, what can I do for you?',
       },
-      status: "success",
+      status: 'success',
     },
   ],
 
   requestPlaceholder: {
-    type: "ai",
-    content: "Waiting...",
+    type: 'ai',
+    content: 'Waiting...',
   },
 
   // Convert AgentMessage to BubbleMessage
   parser: (agentMessages) => {
-    const list = agentMessages.content ? [agentMessages] : (agentMessages as AgentAIMessage).list;
+    const list = agentMessages.content ? [agentMessages] : (agentMessages as AgentAIMessage).list
 
     return (list || []).map((msg) => ({
       role: msg.type,
       content: msg.content,
-    }));
+    }))
   },
-});
+})
 
 const messageList = computed(() => {
   return parsedMessages.value.map(({ id, message, status }) => ({
     key: id,
-    loading: status === "loading",
+    loading: status === 'loading',
     ...message,
-  }));
-});
+  }))
+})
 
-const submit = () => {
-  if (!content.value) return;
+function submit() {
+  if (!content.value) return
   onRequest({
-    type: "user",
+    type: 'user',
     content: content.value,
-  });
-  content.value = "";
-};
+  })
+  content.value = ''
+}
 </script>
 
 <template>
@@ -148,10 +148,10 @@ const submit = () => {
     <Sender v-model="content" :loading="senderLoading">
       <template #actions>
         <ElButton circle type="primary" @click="submit">
-          <ElIcon color="white" v-if="!senderLoading">
+          <ElIcon v-if="!senderLoading" color="white">
             <Promotion />
           </ElIcon>
-          <ElIcon color="white" size="32" v-else>
+          <ElIcon v-else color="white" size="32">
             <SenderLoading />
           </ElIcon>
         </ElButton>

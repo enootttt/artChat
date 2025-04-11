@@ -1,7 +1,7 @@
-import Suggestion from "./index.vue";
+import Suggestion from './index.vue'
 
-export type * from "./interface";
+export type * from './interface'
 
-export default Suggestion;
+export default Suggestion
 
-export { Suggestion };
+export { Suggestion }

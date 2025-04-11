@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { docRoot } from "../../../internal/build-utils/src";
+import { docRoot } from "@artmate/build-utils";
 import type MarkdownIt from "markdown-it";
 import type Token from "markdown-it/lib/token.mjs";
 import type Renderer from "markdown-it/lib/renderer.mjs";

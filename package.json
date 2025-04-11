@@ -1,66 +1,18 @@
 {
-  "name": "@artmate/chat",
-  "version": "1.2.7",
-  "description": "借鉴字节开源react库AntX，通过vue实现的版本",
-  "keywords": [
-    "AI",
-    "Copilot",
-    "components",
-    "vite",
-    "vue3",
-    "element-plus",
-    "chat"
-  ],
-  "bugs": {
-    "url": "https://gitee.com/asd1232rq3123/artmate-chat/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitee.com/asd1232rq3123/artmate-chat"
-  },
-  "license": "MIT",
-  "type": "module",
-  "scripts": {
-    "build": "vite build",
-    "prepublishOnly": "npm run build",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
-  },
-  "files": [
-    "dist"
-  ],
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/es/index.js",
-  "types": "./dist/typings/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/typings/index.d.ts",
-      "import": "./dist/es/index.js",
-      "require": "./dist/cjs/index.js"
-    },
-    "./dist/index.css": "./dist/es/index.css"
-  },
-  "devDependencies": {
-    "@types/node": "22.10.2",
-    "@vitejs/plugin-vue": "^5.2.1",
-    "@vue/shared": "^3.5.13",
-    "fast-glob": "^3.3.3",
-    "markdown-it": "^14.1.0",
-    "markdown-it-container": "^4.0.0",
-    "rollup": "^4.34.8",
-    "vite": "^6.0.3",
-    "vite-plugin-dts": "^4.4.0",
-    "vitepress": "^1.6.3"
-  },
-  "dependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
-    "@vueuse/core": "^13.0.0",
-    "element-plus": "^2.9.7",
-    "sass": "~1.56.1",
-    "vue": "^3.5.13"
-  }
+	"type": "module",
+	"private": true,
+	"packageManager": "pnpm@9.12.3",
+	"scripts": {
+		"dev:docs": "turbo run dev --filter=docs",
+		"build:docs": "turbo run build --filter=docs",
+		"build:packages": "turbo run build --filter=@artmate/chat",
+		"postinstall": "pnpm -r run stub --if-present",
+		"clean": "node ./scripts/clean.mjs",
+		"lint": "turbo run lint"
+	},
+	"devDependencies": {
+		"@types/node": "22.10.2",
+		"turbo": "^2.5.0",
+		"unbuild": "^3.5.0"
+	}
 }

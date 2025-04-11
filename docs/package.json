@@ -1,0 +1,24 @@
+{
+	"name": "docs",
+	"version": "1.0.0",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "vitepress dev",
+		"build": "vitepress build",
+		"preview": "vitepress preview"
+	},
+	"devDependencies": {
+		"@artmate/build-utils": "workspace:^",
+		"@vue/shared": "^3.5.13",
+		"fast-glob": "^3.3.3",
+		"markdown-it": "^14.1.0",
+		"markdown-it-container": "^4.0.0",
+		"vitepress": "^1.6.3",
+		"@element-plus/icons-vue": "catalog:",
+		"@vueuse/core": "catalog:",
+		"element-plus": "catalog:",
+		"sass": "catalog:",
+		"vue": "catalog:"
+	}
+}

@@ -1,7 +1,21 @@
+# Dependencies
 node_modules
-/dist
+
+# Build Outputs
+out/
+build
+dist
+
+# Vercel
+.vercel
+
+# Misc
 .DS_Store
+
+# cache
 docs/.vitepress/cache
-docs/.vitepress/dist
 docs/.vitepress/.temp
 .vitepress/cache
+
+# Turbo
+.turbo

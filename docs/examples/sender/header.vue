@@ -28,7 +28,7 @@ const submit = () => {
         </SenderHeader>
       </template>
       <template #prefix>
-        <ElButton type="text" @click="open = !open">
+        <ElButton link @click="open = !open">
           <ElIcon>
             <Link />
           </ElIcon>

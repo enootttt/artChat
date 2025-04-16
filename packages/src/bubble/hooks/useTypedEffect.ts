@@ -13,7 +13,7 @@ function useTypedEffect(
   content: Ref<string>,
   typingEnabled: boolean,
   typingStep: number,
-  typingInterval: number,
+  typingInterval: number
 ): [typedContent: Ref<() => string | VNode>, isTyping: Ref<boolean>] {
   const prevContent = ref<string>('')
   const typingIndex = ref<number>(1)
@@ -26,8 +26,7 @@ function useTypedEffect(
     () => {
       if (!mergedTypingEnabled.value && isString(content.value)) {
         typingIndex.value = content.value.length
-      }
-      else if (
+      } else if (
         isString(content.value) &&
         isString(prevContent.value) &&
         content.value.indexOf(prevContent.value) !== 0
@@ -35,7 +34,7 @@ function useTypedEffect(
         typingIndex.value = 1
       }
       prevContent.value = content.value
-    },
+    }
   )
 
   // Start typing
@@ -59,7 +58,7 @@ function useTypedEffect(
     return () => contentText
   })
   const isTyping = computed(
-    () => mergedTypingEnabled.value && typingIndex.value < content.value.length,
+    () => mergedTypingEnabled.value && typingIndex.value < content.value.length
   )
 
   return [mergedTypingContent, isTyping]

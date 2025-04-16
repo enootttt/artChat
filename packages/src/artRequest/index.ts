@@ -100,7 +100,7 @@ class ArtRequestClass {
   public create = async <Input = AnyObject, Output = SSEOutput>(
     params: ArtRequestParams & Input,
     callbacks?: ArtRequestCallbacks<Output>,
-    transformStream?: ArtStreamOptions<Output>['transformStream'],
+    transformStream?: ArtStreamOptions<Output>['transformStream']
   ) => {
     const requestInit = {
       method: 'POST',
@@ -134,8 +134,7 @@ class ArtRequestClass {
         default:
           throw new Error(`Unsupported content type: ${contentType}`)
       }
-    }
-    catch (error) {
+    } catch (error) {
       const err = error instanceof Error ? error : new Error('Unknown error!')
 
       callbacks?.onError?.(err)
@@ -176,7 +175,7 @@ class ArtRequestClass {
   private customResponseHandler = async <Output = SSEOutput>(
     response: Response,
     callbacks?: ArtRequestCallbacks<Output>,
-    transformStream?: ArtStreamOptions<Output>['transformStream'],
+    transformStream?: ArtStreamOptions<Output>['transformStream']
   ) => {
     const chunks: Output[] = []
 
@@ -194,7 +193,7 @@ class ArtRequestClass {
 
   private sseResponseHandler = async <Output = SSEOutput>(
     response: Response,
-    callbacks?: ArtRequestCallbacks<Output>,
+    callbacks?: ArtRequestCallbacks<Output>
   ) => {
     const chunks: Output[] = []
 
@@ -211,7 +210,7 @@ class ArtRequestClass {
 
   private jsonResponseHandler = async <Output = SSEOutput>(
     response: Response,
-    callbacks?: ArtRequestCallbacks<Output>,
+    callbacks?: ArtRequestCallbacks<Output>
   ) => {
     const chunk: Output = await response.json()
 

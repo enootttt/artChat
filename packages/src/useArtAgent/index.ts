@@ -99,7 +99,7 @@ export default function useArtAgent<Message = string>(config: ArtAgentConfig<Mes
             }).create,
           ...restConfig,
         }),
-      ] as const,
+      ] as const
   )
   return unref(memo)
 }

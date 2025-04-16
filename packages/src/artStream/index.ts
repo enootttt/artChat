@@ -104,8 +104,7 @@ function splitPart() {
         const key = line.slice(0, separatorIndex)
 
         // 冒号用于注释行，直接跳过
-        if (!isValidString(key))
-          return acc
+        if (!isValidString(key)) return acc
 
         // 从分隔符后的行中提取值
         const value = line.slice(separatorIndex + 1)
@@ -113,8 +112,7 @@ function splitPart() {
         return { ...acc, [key]: value }
       }, {})
 
-      if (Object.keys(sseEvent).length === 0)
-        return
+      if (Object.keys(sseEvent).length === 0) return
 
       // 将键-值对减少到单个对象中并排队
       controller.enqueue(sseEvent)
@@ -177,11 +175,9 @@ function ArtStream<Output = SSEOutput>(options: ArtStreamOptions<Output>) {
     while (true) {
       const { done, value } = await reader.read()
 
-      if (done)
-        break
+      if (done) break
 
-      if (!value)
-        continue
+      if (!value) continue
 
       // Transformed data through all transform pipes
       yield value

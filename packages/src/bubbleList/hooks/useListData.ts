@@ -13,7 +13,7 @@ export type ListItemType = ReturnType<typeof useListData>['ListData']['value'][n
 
 export default function useListData(
   items: BubbleListProps['items'],
-  roles?: BubbleListProps['roles'],
+  roles?: BubbleListProps['roles']
 ): UseListDataReturnType {
   let getRoleBubbleProps: (bubble: BubbleDataType) => Partial<BubbleProps>
 
@@ -34,7 +34,7 @@ export default function useListData(
     },
     {
       immediate: true,
-    },
+    }
   )
 
   const ListData = ref<BubbleListProps['items']>([])

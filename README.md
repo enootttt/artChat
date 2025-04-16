@@ -49,8 +49,8 @@ yarn install @artmate/chat
 
 ```ts
 // main.ts
-import { createApp } from 'vue'
 import ArtChat from '@artmate/chat'
+import { createApp } from 'vue'
 import App from './App.vue'
 
 const app = createApp(App)

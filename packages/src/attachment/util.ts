@@ -43,8 +43,7 @@ export function previewImage(file: Blob | File): Promise<string> {
         }
       })
       reader.readAsDataURL(file)
-    }
-    else if (file.type.startsWith('image/gif')) {
+    } else if (file.type.startsWith('image/gif')) {
       const reader = new FileReader()
       reader.addEventListener('load', () => {
         if (reader.result) {
@@ -52,8 +51,7 @@ export function previewImage(file: Blob | File): Promise<string> {
         }
       })
       reader.readAsDataURL(file)
-    }
-    else {
+    } else {
       img.src = window.URL.createObjectURL(file)
     }
   })

@@ -24,7 +24,7 @@ export default function useDisplayData(items: Ref<ListItemType[]>): useDisplayDa
     (newVal) => {
       displayCount.value = newVal.length
       displayList.value = newVal.slice(0, displayCount.value)
-    },
+    }
   )
 
   const ItemsWatch = () => {
@@ -39,8 +39,7 @@ export default function useDisplayData(items: Ref<ListItemType[]>): useDisplayDa
 
     if (displayList.value.length === 0) {
       displayCount.value = 1
-    }
-    else {
+    } else {
       for (let i = 0; i < displayList.value.length; i += 1) {
         if (displayList.value[i]?.key !== items.value[i]?.key) {
           displayCount.value = i

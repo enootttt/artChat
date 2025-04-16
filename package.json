@@ -8,7 +8,10 @@
     "build:packages": "turbo run build --filter=@artmate/chat",
     "postinstall": "pnpm -r run stub --if-present",
     "clean": "node ./scripts/clean.mjs",
-    "lint": "turbo run lint",
+    "lint": "pnpm run lint:es && pnpm run lint:style && pnpm run lint:prettier",
+    "lint:es": "eslint packages/**/*.{ts,js,vue} --fix",
+    "lint:style": "stylelint packages/**/*.{scss,css} --fix",
+    "lint:prettier": "prettier --write packages/**/*.{ts,js,vue,scss,css,json,md}",
     "lint:lint-staged": "lint-staged",
     "prepare": "husky",
     "commit": "git-cz"

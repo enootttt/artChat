@@ -17,7 +17,7 @@ type GroupMap = Record<string, Conversation[]>
 
 function useGroupable(
   groupable?: ConversationsProps['groupable'],
-  items: Conversation[] = [],
+  items: Conversation[] = []
 ): [groupList: GroupList, enableGroup: boolean] {
   const groupableWatch = computed(() => {
     if (!groupable) {
@@ -70,7 +70,7 @@ function useGroupable(
         : Object.keys(groupMap)
 
     // 3. groupMap 转 groupList
-    const groupList = groupKeys.map(group => ({
+    const groupList = groupKeys.map((group) => ({
       name: group === __UNGROUPED ? undefined : group,
       title: groupableWatch.value[2],
       data: groupMap[group],

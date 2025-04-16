@@ -29,7 +29,7 @@ function mockReadableStream() {
   return new ReadableStream({
     async start(controller) {
       for (const chunk of sipHeaders.concat(sdp)) {
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        await new Promise(resolve => setTimeout(resolve, 100))
         controller.enqueue(new TextEncoder().encode(chunk))
       }
       controller.close()
@@ -54,7 +54,8 @@ async function readStream() {
 }
 
 const items = computed<ThoughtChainItemProps[]>(() => {
-  if (!lines.value.length) return []
+  if (!lines.value.length)
+    return []
   return [
     {
       title: 'Mock Custom Protocol - Log',
@@ -67,7 +68,9 @@ const items = computed<ThoughtChainItemProps[]>(() => {
 
 <template>
   <div class="demo">
-    <ElButton type="primary" @click="readStream">Mock Custom Protocol - SIP</ElButton>
+    <ElButton type="primary" @click="readStream">
+      Mock Custom Protocol - SIP
+    </ElButton>
     <ThoughtChain :items="items">
       <template #icon="{ info }">
         <ElIcon size="20" :color="info.status ? 'white' : 'block'">

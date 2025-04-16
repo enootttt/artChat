@@ -44,7 +44,7 @@ async function request() {
         lines.value = [...lines.value, msg]
         console.log('onUpdate', msg)
       },
-    }
+    },
   )
 }
 

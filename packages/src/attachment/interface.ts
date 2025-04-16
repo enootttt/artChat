@@ -39,7 +39,7 @@ export interface AttachmentProps {
   classNames?: Partial<Record<SemanticType, string>>
   styles?: Partial<Record<SemanticType, CSSProperties>>
   rootStyle?: CSSProperties
-  onChange?: (files: { file: Attachment, fileList: Attachment[] }) => void
+  onChange?: (files: { file: Attachment; fileList: Attachment[] }) => void
   disabled?: boolean
   overflow?: 'scrollX' | 'scrollY' | 'wrap'
 }

@@ -23,6 +23,11 @@ export default antfu({
     'regexp/no-super-linear-backtracking': 'off', // 忽略正则表达式的超线性回溯
     'no-unmodified-loop-condition': 'off', // 忽略循环条件未修改
     'style/operator-linebreak': 'off', // 忽略换行
+    'style/comma-dangle': 'off', // 忽略最后的逗号
+    'style/brace-style': 'off', // 忽略大括号换行风格
+    'antfu/if-newline': 'off', // 忽略if语句换行
+    'style/member-delimiter-style': 'off', // 忽略对象成员分隔符风格
+    'style/arrow-parens': 'off', // 忽略箭头函数参数括号
   },
   ignores: [
     '**/dist/**',

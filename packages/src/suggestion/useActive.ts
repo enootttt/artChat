@@ -11,7 +11,7 @@ export default function useActive(
   open: MaybeRefOrGetter<boolean>,
   rtl: MaybeRefOrGetter<boolean>,
   onSelect: (value: string[]) => void,
-  onCancel: () => void,
+  onCancel: () => void
 ) {
   const activePaths = ref<string[]>([])
 
@@ -21,7 +21,7 @@ export default function useActive(
 
     for (let i = 0; i < colIndex - 1; i += 1) {
       const activePath = paths[i]
-      const activeItem = currentItems.find(item => item.value === activePath)
+      const activeItem = currentItems.find((item) => item.value === activePath)
 
       if (!activeItem) {
         break
@@ -35,7 +35,7 @@ export default function useActive(
   const getValues = (paths: string[]) => {
     return paths.map((path, index) => {
       const currentItems = getItems(index + 1, paths)
-      const currentItem = currentItems.find(item => item.value === path)
+      const currentItem = currentItems.find((item) => item.value === path)
 
       return currentItem?.value
     }) as string[]
@@ -46,7 +46,7 @@ export default function useActive(
 
     const currentItems = getItems(currentColIndex)
     const currentRowIndex = currentItems.findIndex(
-      item => item.value === activePaths.value[currentColIndex - 1],
+      (item) => item.value === activePaths.value[currentColIndex - 1]
     )
     const itemCount = currentItems.length
 
@@ -89,8 +89,7 @@ export default function useActive(
       case 'ArrowRight':
         if (toValue(rtl)) {
           offsetPrev()
-        }
-        else {
+        } else {
           offsetNext()
         }
         e.preventDefault()
@@ -99,8 +98,7 @@ export default function useActive(
       case 'ArrowLeft':
         if (toValue(rtl)) {
           offsetNext()
-        }
-        else {
+        } else {
           offsetPrev()
         }
         e.preventDefault()
@@ -128,7 +126,7 @@ export default function useActive(
         activePaths.value = [toValue(items)[0].value as string]
       }
     },
-    { immediate: true },
+    { immediate: true }
   )
 
   return [activePaths, onKeyDown] as const

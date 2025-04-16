@@ -46,7 +46,7 @@ const useCollapsible: UseCollapsible = (collapsible) => {
       }
 
       return [true, config.expandedKeys, config.onExpand]
-    },
+    }
   )
 
   // ============================ ExpandedKeys ============================
@@ -57,7 +57,7 @@ const useCollapsible: UseCollapsible = (collapsible) => {
     const customizeOnExpand = collapsibleOptions.value[2]
     const preKeys = mergedExpandedKeys.value
     const keys = preKeys.includes(curKey)
-      ? preKeys.filter(key => key !== curKey)
+      ? preKeys.filter((key) => key !== curKey)
       : [...preKeys, curKey]
     customizeOnExpand?.(keys)
     mergedExpandedKeys.value = keys
